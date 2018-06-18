@@ -24,18 +24,18 @@ const { cli, logger } = require('strapi-utils');
  * (fire up the application in our working directory).
  */
 
-module.exports = function(appPath = '') {
+module.exports = function(cliArguments) {
   // Check that we're in a valid Strapi project.
   if (!cli.isStrapiApp()) {
     return logger.error('This command can only be used inside a Strapi project.');
-  }
+  }  
 
-  appPath = path.join(process.cwd(), appPath);
+  cliArguments.path = path.join(process.cwd(), cliArguments.path);
 
   try {
     const strapi = function () {
       try {
-        return require(path.resolve(appPath, 'node_modules', 'strapi'));
+        return require(path.resolve(cliArguments.path, 'node_modules', 'strapi'));
       } catch (e) {
         return require('strapi'); // eslint-disable-line import/no-unresolved
       }
@@ -48,7 +48,7 @@ module.exports = function(appPath = '') {
 
     // Require server configurations
     const server = require(path.resolve(
-      appPath,
+      cliArguments.path,
       'config',
       'environments',
       'development',
@@ -83,7 +83,7 @@ module.exports = function(appPath = '') {
         });
       };
 
-      setFilesToWatch(appPath);
+      setFilesToWatch(cliArguments.path);
 
 
 
@@ -127,7 +127,8 @@ module.exports = function(appPath = '') {
         });
 
         return strapi.start({
-          appPath
+          appPath: cliArguments.path,
+          port: cliArguments.port
         }, afterwards);
       } else {
         return;
@@ -138,7 +139,8 @@ module.exports = function(appPath = '') {
     // run the application using the currently running version
     // of `strapi`. This is probably always the global install.
     strapi.start({
-      appPath
+      appPath: cliArguments.path,
+      port: cliArguments.port
     }, afterwards);
   } catch (e) {
     logger.error(e);

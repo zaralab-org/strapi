@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const exec = require('child_process').exec;
 const fs = require('fs-extra');
 const path = require('path');
@@ -18,38 +19,40 @@ const databases = {
 const {runCLI: jest} = require('jest-cli/build/cli');
 
 const main = async () => {
-  const clean = async () => {
+  const clean = async (type) => {
     // Drop MongoDB test databases.
-    try {
-      const instance = new Mongoose();
-      const connection = await instance.connect('mongodb://localhost');
-      const databases = await new Admin(instance.connection.db).listDatabases();
+    if (type === 'mongo') {
+      try {
+        const instance = new Mongoose();
+        const connection = await instance.connect('mongodb://localhost');
+        const databases = await new Admin(instance.connection.db).listDatabases();
 
-      const arrayOfPromises = databases.databases
-        .filter(db => db.name.indexOf('strapi-test-') !== -1)
-        .map(db => new Promise((resolve, reject) => {
-          const instance = new Mongoose();
-          console.log(`mongodb://localhost/${db.name}`);
-          instance.connect(`mongodb://localhost/${db.name}`, (err) => {
-            if (err) {
-              return reject(err);
-            }
+        const arrayOfPromises = databases.databases
+          .filter(db => db.name.indexOf('strapi-test-') !== -1)
+          .map(db => new Promise((resolve, reject) => {
+            const instance = new Mongoose();
 
-            instance.connection.db.dropDatabase();
+            instance.connect(`mongodb://localhost/${db.name}`, (err) => {
+              if (err) {
+                return reject(err);
+              }
 
-            resolve();
-          });
-        }));
+              instance.connection.db.dropDatabase();
 
-      await Promise.all(arrayOfPromises);
-    } catch (e) {
-      // Silent.
+              resolve();
+            });
+          }));
+
+        await Promise.all(arrayOfPromises);
+      } catch (e) {
+        // Silent.
+      }
     }
 
     return new Promise((resolve) => {
-      fs.exists(appName, exists => {
+      fs.exists(`${appName}_${type}`, exists => {
         if (exists) {
-          fs.removeSync(appName);
+          fs.removeSync(`${appName}_${type}`);
         }
 
         resolve();
@@ -57,14 +60,15 @@ const main = async () => {
     });
   };
 
-  const generate = (database) => {
+  const generate = (database, type) => {
     return new Promise((resolve, reject) => {
       const appCreation = exec(
-        `node ${strapiBin} new ${appName} --dev ${database}`,
+        `node ${strapiBin} new ${appName}_${type} --dev ${database} `,
+        { stdio: 'inherit' }
       );
 
       appCreation.stdout.on('data', data => {
-        console.log(data.toString());
+        console.log(_.trim(data.toString()));
 
         if (data.includes('is ready at')) {
           appCreation.kill();
@@ -79,14 +83,15 @@ const main = async () => {
     });
   };
 
-  const start = () => {
+  const start = (type) => {
     return new Promise((resolve) => {
       appStart = exec(
-        `node ${strapiBin} start ${appName}`,
+        `node ${strapiBin} start --path=${appName}_${type} --port=${(Math.floor((Math.random() * 3000) + 1500))}`,
+        { stdio: 'inherit' }
       );
 
       appStart.stdout.on('data', data => {
-        console.log(data.toString());
+        console.log(_.trim(data.toString()));
 
         if (data.includes('To shut down your server')) {
           return resolve();
@@ -94,9 +99,12 @@ const main = async () => {
       });
     });
   };
+  
+  const test = async () => {
+    console.log();
+    console.log('🏁 🏁 🏁 🏁 🏁');
+    console.log();
 
-  const test = () => {
-    console.log('Launch test suits');
     return new Promise(async (resolve) => {
       const options = {
         projects: [process.cwd()],
@@ -109,18 +117,23 @@ const main = async () => {
     });
   };
 
-  const testProcess = async (database) => {
-    await clean();
-    await generate(database);
-    await start();
-    await test();
+  const testProcess = async (database, type) => {
+    try {
+      await clean(type);
+      await generate(database, type);
+      await start(type);
+      await test();
 
-    appStart.kill();
+      appStart.kill();
+    } catch (e) {
+      console.log(e);
+      process.exit(0);
+    }
   };
 
-  await testProcess(databases.mongo);
-  await testProcess(databases.postgres);
-  await testProcess(databases.mysql);
+  await testProcess(databases.mongo, 'mongo');
+  await testProcess(databases.postgres, 'pg');
+  await testProcess(databases.mysql, 'mysql');
 };
 
 main();
