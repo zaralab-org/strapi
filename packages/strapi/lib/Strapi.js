@@ -66,8 +66,6 @@ class Strapi extends EventEmitter {
     this.config = {
       launchedAt: Date.now(),
       appPath: process.cwd(),
-      host: process.env.HOST || process.env.HOSTNAME || 'localhost',
-      port: process.env.PORT || 1337,
       environment: toLower(process.env.NODE_ENV) || 'development',
       environments: {},
       paths: {
@@ -96,6 +94,7 @@ class Strapi extends EventEmitter {
 
   async start(config = {}, cb) {
     try {
+      // Override default configuration.
       this.config = assign(this.config, config);
 
       // Emit starting event.

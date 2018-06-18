@@ -20,7 +20,7 @@ const fastMode = process.env.npm_config_fast === 'true';
 const { runCLI: jest } = require('jest-cli/build/cli');
 
 const main = async () => {
-  const clean = async (type) => {
+  const clean = async (type, fastMode) => {
     // Drop MongoDB test databases.
     if (type === 'mongo') {
       try {
@@ -48,6 +48,10 @@ const main = async () => {
       } catch (e) {
         // Silent.
       }
+    }
+
+    if (fastMode) {
+      return Promise.resolve();
     }
 
     return new Promise((resolve) => {
@@ -81,13 +85,17 @@ const main = async () => {
           return reject();
         }
       });
+
+      appCreation.stderr.on('data', data => {
+        console.log(_.trim(data.toString()));
+      });
     });
   };
 
   const start = (type, port) => {
     return new Promise((resolve) => {
       const appStart = exec(
-        `node ${strapiBin} start --path=${appName}_${type} --port=${}`,
+        `node ${strapiBin} start --path=${appName}_${type} --port=${port}`,
         { stdio: 'inherit' }
       );
 
@@ -98,24 +106,39 @@ const main = async () => {
           return resolve(appStart);
         }
       });
+
+      appStart.stderr.on('data', data => {
+        console.log(_.trim(data.toString()));
+      });
     });
   };
-  
-  const test = async (port) => {
+
+  const test = (port) => {
     console.log();
     console.log('🏁 🏁 🏁 🏁 🏁');
     console.log();
-
     return new Promise(async (resolve) => {
-      const options = {
-        projects: [process.cwd()],
-        silent: false,
-        globals: {
-          "__PORT__": port
-        }
-      };
+      // Set port to retrieve it inside the tests.
+      process.env.__PORT__ = port;
 
-      await jest(options, options.projects);
+      // Run setup tests to generate the app.
+      await jest({
+        passWithNoTests: true,
+        silent: false,
+        verbose: true
+      }, [process.cwd()]);
+
+      const packages = fs.readdirSync(path.resolve(process.cwd(), 'packages'))
+        .filter(file => file.indexOf('strapi') !== -1);
+
+      // Run tests in every packages.
+      for (let i in packages) {
+        await jest({
+          passWithNoTests: true,
+          silent: false,
+          verbose: true
+        }, [`${process.cwd()}/packages/${packages[i]}`]);
+      }
 
       resolve();
     });
@@ -123,8 +146,9 @@ const main = async () => {
 
   const testProcess = async (database, type, port) => {
     try {
+      await clean(type, fastMode);
+
       if (!fastMode) {
-        await clean(type);
         await generate(database, type);
       }
      

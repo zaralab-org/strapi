@@ -326,8 +326,8 @@ module.exports.app = async function() {
     return acc;
   }, {});
 
-  this.config.port = get(this.config.currentEnvironment, 'server.port') || this.config.port;
-  this.config.host = get(this.config.currentEnvironment, 'server.host') || this.config.host;
+  this.config.port = this.config.port || get(this.config.currentEnvironment, 'server.port') || process.env.PORT || 1337;
+  this.config.host = this.config.host || get(this.config.currentEnvironment, 'server.host') || process.env.HOST || process.env.HOSTNAME || 'localhost';
   this.config.url = `http://${this.config.host}:${this.config.port}`;
 };
 
