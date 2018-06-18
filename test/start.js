@@ -8,7 +8,6 @@ const Mongoose = require('mongoose').Mongoose;
 
 const strapiBin = path.resolve('./packages/strapi/bin/strapi.js');
 const appName = 'testApp';
-let appStart;
 
 const databases = {
   mongo: `--dbclient=mongo --dbhost=127.0.0.1 --dbport=27017 --dbname=strapi-test-${new Date().getTime()} --dbusername="" --dbpassword=""`,
@@ -16,7 +15,9 @@ const databases = {
   mysql: `--dbclient=mysql --dbhost=127.0.0.1 --dbport=3306 --dbname=strapi-test --dbusername="root" --dbpassword="root"`
 };
 
-const {runCLI: jest} = require('jest-cli/build/cli');
+const fastMode = process.env.npm_config_fast === 'true';
+
+const { runCLI: jest } = require('jest-cli/build/cli');
 
 const main = async () => {
   const clean = async (type) => {
@@ -83,10 +84,10 @@ const main = async () => {
     });
   };
 
-  const start = (type) => {
+  const start = (type, port) => {
     return new Promise((resolve) => {
-      appStart = exec(
-        `node ${strapiBin} start --path=${appName}_${type} --port=${(Math.floor((Math.random() * 3000) + 1500))}`,
+      const appStart = exec(
+        `node ${strapiBin} start --path=${appName}_${type} --port=${}`,
         { stdio: 'inherit' }
       );
 
@@ -94,13 +95,13 @@ const main = async () => {
         console.log(_.trim(data.toString()));
 
         if (data.includes('To shut down your server')) {
-          return resolve();
+          return resolve(appStart);
         }
       });
     });
   };
   
-  const test = async () => {
+  const test = async (port) => {
     console.log();
     console.log('🏁 🏁 🏁 🏁 🏁');
     console.log();
@@ -108,7 +109,10 @@ const main = async () => {
     return new Promise(async (resolve) => {
       const options = {
         projects: [process.cwd()],
-        silent: false
+        silent: false,
+        globals: {
+          "__PORT__": port
+        }
       };
 
       await jest(options, options.projects);
@@ -117,12 +121,15 @@ const main = async () => {
     });
   };
 
-  const testProcess = async (database, type) => {
+  const testProcess = async (database, type, port) => {
     try {
-      await clean(type);
-      await generate(database, type);
-      await start(type);
-      await test();
+      if (!fastMode) {
+        await clean(type);
+        await generate(database, type);
+      }
+     
+      const appStart = await start(type, port);
+      await test(port);
 
       appStart.kill();
     } catch (e) {
@@ -131,9 +138,9 @@ const main = async () => {
     }
   };
 
-  await testProcess(databases.mongo, 'mongo');
-  await testProcess(databases.postgres, 'pg');
-  await testProcess(databases.mysql, 'mysql');
+  await testProcess(databases.mongo, 'mongo', Math.floor((Math.random() * 3000) + 1500));
+  await testProcess(databases.postgres, 'pg', Math.floor((Math.random() * 3000) + 1500));
+  await testProcess(databases.mysql, 'mysql', Math.floor((Math.random() * 3000) + 1500));
 };
 
 main();

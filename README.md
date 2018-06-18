@@ -88,6 +88,18 @@ For general help using Strapi, please refer to [the official Strapi documentatio
 
 Follow our [migration guides](https://strapi.io/documentation/migration/migration-guide.html) on the website to keep your Strapi projects updated.
 
+### Tests
+
+```bash
+npm run test
+```
+
+If you've already launched the tests once, you can use the `fast` mode to avoid the project generation, etc.
+
+```bash
+npm run test --fast
+```
+
 ## License
 
 [MIT License](LICENSE.md) Copyright (c) 2015-2018 [Strapi Solutions](https://strapi.io/).
