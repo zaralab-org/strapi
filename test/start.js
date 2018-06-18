@@ -1,6 +1,9 @@
 const exec = require('child_process').exec;
 const fs = require('fs-extra');
 const path = require('path');
+const mongoose = require(`mongoose`);
+const Admin = mongoose.mongo.Admin;
+const Mongoose = require('mongoose').Mongoose;
 
 const strapiBin = path.resolve('./packages/strapi/bin/strapi.js');
 const appName = 'testApp';
@@ -15,7 +18,34 @@ const databases = {
 const {runCLI: jest} = require('jest-cli/build/cli');
 
 const main = async () => {
-  const clean = () => {
+  const clean = async () => {
+    // Drop MongoDB test databases.
+    try {
+      const instance = new Mongoose();
+      const connection = await instance.connect('mongodb://localhost');
+      const databases = await new Admin(instance.connection.db).listDatabases();
+
+      const arrayOfPromises = databases.databases
+        .filter(db => db.name.indexOf('strapi-test-') !== -1)
+        .map(db => new Promise((resolve, reject) => {
+          const instance = new Mongoose();
+          console.log(`mongodb://localhost/${db.name}`);
+          instance.connect(`mongodb://localhost/${db.name}`, (err) => {
+            if (err) {
+              return reject(err);
+            }
+
+            instance.connection.db.dropDatabase();
+
+            resolve();
+          });
+        }));
+
+      await Promise.all(arrayOfPromises);
+    } catch (e) {
+      // Silent.
+    }
+
     return new Promise((resolve) => {
       fs.exists(appName, exists => {
         if (exists) {
