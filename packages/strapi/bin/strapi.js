@@ -65,8 +65,8 @@ program
 // `$ strapi start`
 program
   .command('start')
-  .option('--path <path>', 'Application path')
-  .option('--port <port>', 'Application port')
+  .option('--path [path]', 'Application path', '')
+  .option('--port [port]', 'Application port', '')
   .description('start your Strapi application')
   .action(require('./strapi-start'));
 
