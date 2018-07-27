@@ -142,6 +142,18 @@ program
   .description('uninstall a Strapi plugin')
   .action(require('./strapi-uninstall'));
 
+// `$ strapi login`
+program
+  .command('login')
+  .description('login to Strapi solutions')
+  .action(require('./strapi-login'));
+
+// `$ strapi logout`
+program
+  .command('logout')
+  .description('logout from Strapi solutions')
+  .action(require('./strapi-logout'));
+
 /**
  * Normalize help argument
  */
