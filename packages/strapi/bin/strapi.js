@@ -160,6 +160,13 @@ program
   .description('register to Strapi solutions')
   .action(require('./strapi-register'));
 
+// `$ strapi whoami`
+program
+  .command('whoami')
+  .description('whoami to Strapi solutions')
+  .action(require('./strapi-whoami'));
+
+
 /**
  * Normalize help argument
  */

@@ -64,7 +64,7 @@ module.exports = function () {
       mask: '*'
     }]);
 
-    loader = ora('Strapi connection').start();
+    loader = ora('Register to Strapi').start();
 
     const res = await fetch(`${host}/auth/local/register`, {
       method: 'POST',
