@@ -149,5 +149,7 @@ module.exports = {
     } catch (e) {
       // Silent.
     }
-  }
+  },
+
+  marketplace: 'http://localhost:1337'
 };

@@ -21,7 +21,6 @@ const ora = require('ora');
 // Utils
 const {marketplace: host} = require('../lib/utils');
 
-
 /* eslint-disable no-useless-escape */
 const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -46,7 +45,12 @@ module.exports = function () {
 
     const auth = await inquirer.prompt([{
       type: 'string',
-      name: 'identifier',
+      name: 'username',
+      message: 'Username:',
+      required: true,
+    }, {
+      type: 'string',
+      name: 'email',
       message: 'Email:',
       required: true,
       validate: (value) => {
@@ -62,7 +66,7 @@ module.exports = function () {
 
     loader = ora('Strapi connection').start();
 
-    const res = await fetch(`${host}/auth/local`, {
+    const res = await fetch(`${host}/auth/local/register`, {
       method: 'POST',
       body: JSON.stringify(auth),
       headers: { 'Content-Type': 'application/json' }
@@ -81,7 +85,7 @@ module.exports = function () {
     fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, (err) => {
       if (err && err.code === 'ENOENT') {
         fs.writeFileSync(path.resolve(HOME, '.strapirc'), JSON.stringify({
-          email: res.user.email,
+          email: res.user.identifier,
           jwt: res.jwt
         }), 'utf8');
         console.log(`You are ${green('successfully')} logged in as ${cyan(res.user.username)}.`);

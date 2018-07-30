@@ -18,6 +18,9 @@ const fetch = require('node-fetch');
 // Logger.
 const { cli, logger, packageManager } = require('strapi-utils');
 
+// Utils
+const {marketplace: host} = require('../lib/utils');
+
 /**
  * `$ strapi install`
  *
@@ -30,7 +33,6 @@ module.exports = async function (plugin, cliArguments) {
   const pluginID = `${pluginPrefix}${plugin}`;
   const pluginPath = `./plugins/${plugin}`;
   const HOME = process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME'];
-  const host = 'http://localhost:1337';
 
   // Check that we're in a valid Strapi project.
   if (!cli.isStrapiApp()) {

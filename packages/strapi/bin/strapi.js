@@ -154,6 +154,12 @@ program
   .description('logout from Strapi solutions')
   .action(require('./strapi-logout'));
 
+// `$ strapi register`
+program
+  .command('register')
+  .description('register to Strapi solutions')
+  .action(require('./strapi-register'));
+
 /**
  * Normalize help argument
  */
