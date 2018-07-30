@@ -8,12 +8,16 @@ const fs = require('fs');
 const path = require('path');
 const { map } = require('async'); // eslint-disable-line import/order
 const { setWith, merge, get, difference, intersection, isObject, isFunction } = require('lodash');
+const ora = require('ora');
+const dns = require('dns');
 const os = require('os');
 const vm = require('vm');
 const fetch = require('node-fetch');
 const Buffer = require('buffer').Buffer;
 const crypto = require('crypto');
 const exposer = require('./exposer');
+
+const HOME = process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME'];
 
 module.exports = {
   loadFile: function(url) {
@@ -151,5 +155,54 @@ module.exports = {
     }
   },
 
-  marketplace: 'http://localhost:1337'
+  marketplace: 'http://localhost:1337',
+
+  internet: () => {
+    return new Promise((resolve) => {
+      let loader = ora('Test internet connection').start();
+
+      dns.lookup('strapi.io', async (err) => {
+        if (err) {
+          loader.fail('No internet access...');
+          process.exit(1);
+        }
+
+        loader.stop();
+        resolve();
+      });
+    });
+  },
+
+  getConfig: () => {
+    return new Promise((resolve) => {
+      fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, async (err) => {
+        if (err) {
+          return resolve({});
+        }
+
+        resolve(JSON.parse(fs.readFileSync(path.resolve(HOME, '.strapirc'), 'utf8')));
+      });
+    });
+  },
+
+  writeConfig: (config, options = {}) => {
+    return new Promise((resolve) => {
+      fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, (err) => {
+        if (err) {
+          fs.writeFileSync(path.resolve(HOME, '.strapirc'), JSON.stringify(config), 'utf8');
+          return resolve();
+        }
+
+        const currentJSON = fs.readFileSync(path.resolve(HOME, '.strapirc'), 'utf8');
+        let newJSON = Object.assign({}, JSON.parse(currentJSON), config);
+
+        if (options.force === true) {
+          newJSON = config;
+        }
+
+        fs.writeFileSync(path.resolve(HOME, '.strapirc'), JSON.stringify(newJSON), 'utf8');
+        resolve();
+      });
+    });
+  }
 };
