@@ -52,7 +52,12 @@ module.exports = async () => {
     method: 'POST',
     body: JSON.stringify(auth),
     headers: { 'Content-Type': 'application/json' }
-  }).then(res => res.json());
+  })
+    .then(res => res.json())
+    .catch(() => {
+      loader.fail('Server error, please contact support@strapi.io');
+      process.exit(1);
+    });
 
   if (!res.jwt) {
     loader.fail(res.message);

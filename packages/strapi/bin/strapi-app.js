@@ -46,7 +46,12 @@ module.exports = async () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${config.jwt}`
       }
-    }).then(res => res.json());
+    })
+      .then(res => res.json())
+      .catch(() => {
+        loader.fail('Server error, please contact support@strapi.io');
+        process.exit(1);
+      });
 
     loader.stop();
 
@@ -92,7 +97,12 @@ module.exports = async () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${config.jwt}`
       }
-    }).then(res => res.json());
+    })
+      .then(res => res.json())
+      .catch(() => {
+        loader.fail('Server error, please contact support@strapi.io');
+        process.exit(1);
+      });
 
     loader.stop();
 
