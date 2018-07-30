@@ -30,7 +30,7 @@ const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
 /* eslint-disable prefer-template */
 /* eslint-disable no-console */
 module.exports = function () {
-  const host = 'https://marketplace.strapi.io';
+  const host = 'http://localhost:1337';
 
   let loader = ora('Test internet connection').start();
   // First, check the internet connectivity.

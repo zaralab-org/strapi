@@ -12,6 +12,9 @@ const path = require('path');
 const fs = require('fs-extra');
 const shell = require('shelljs');
 
+// Public node modules.
+const fetch = require('node-fetch');
+
 // Logger.
 const { cli, logger, packageManager } = require('strapi-utils');
 
@@ -21,11 +24,13 @@ const { cli, logger, packageManager } = require('strapi-utils');
  * Install a Strapi plugin.
  */
 
-module.exports = function (plugin, cliArguments) {
+module.exports = async function (plugin, cliArguments) {
   // Define variables.
   const pluginPrefix = 'strapi-plugin-';
   const pluginID = `${pluginPrefix}${plugin}`;
   const pluginPath = `./plugins/${plugin}`;
+  const HOME = process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME'];
+  const host = 'http://localhost:1337';
 
   // Check that we're in a valid Strapi project.
   if (!cli.isStrapiApp()) {
@@ -36,6 +41,48 @@ module.exports = function (plugin, cliArguments) {
   if (fs.existsSync(pluginPath)) {
     logger.error(`It looks like this plugin is already installed. Please check in \`${pluginPath}\`.`);
     process.exit(1);
+  }
+
+  const pluginInfo = await fetch(`${host}/plugin/${pluginPrefix}${plugin}`)
+    .then(res => res.json());
+
+  if (pluginInfo.price !== 0) {
+    await new Promise((resolve) => {
+      fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, async (err) => {
+        if (err) {
+          console.log('⛔️ You have to be logged to install this plugin.');
+          process.exit();
+        } else {
+          const config = JSON.parse(fs.readFileSync(path.resolve(HOME, '.strapirc'), 'utf8'));
+
+          if (!config.jwt) {
+            console.log('⛔️ You have to be logged to install this plugin.');
+            process.exit();
+          }
+
+          const pkg = require(path.join(process.cwd(), 'package'));
+
+          console.log({
+            uuid: pkg.strapi.uuid
+          });
+
+          const {available} = await fetch(`${host}/validation/${pkg.strapi.uuid}/${pluginPrefix}${plugin}`, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${config.jwt}`
+            }
+          })
+            .then(res => res.json());
+
+          if (available !== true) {
+            console.log('⛔️ You are not authorized to install this plugin.');
+            process.exit();
+          }
+        }
+
+        resolve();
+      });
+    });
   }
 
   // Progress message.
@@ -66,10 +113,10 @@ module.exports = function (plugin, cliArguments) {
       fs.writeFileSync(`${pluginPath}/package.json`, JSON.stringify({}), 'utf8');
     }
 
-    const cmd = isStrapiInstalledWithNPM ? `npm install ${pluginID}@alpha --ignore-scripts --no-save --prefix ${pluginPath}` : `yarn --cwd ${pluginPath} add ${pluginID}@alpha --ignore-scripts --no-save`;
+    const cmd = isStrapiInstalledWithNPM ? `npm install ${pluginID}@alpha --ignore-scripts --no-save --prefix ${pluginPath} --registry ${pluginInfo.registry}` : `yarn --cwd ${pluginPath} add ${pluginID}@alpha --ignore-scripts --no-save`;
     exec(cmd, (err) => {
       if (err) {
-        logger.error(`An error occurred during plugin installation. \nPlease make sure this plugin is available on npm: https://www.npmjs.com/package/${pluginID}`);
+        logger.error(`An error occurred during plugin installation. \nPlease make sure this plugin is available on npm: ${pluginInfo.registry}/package/${pluginID}`);
         process.exit(1);
       }
 

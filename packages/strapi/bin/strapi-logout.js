@@ -22,7 +22,7 @@ module.exports = function () {
   const HOME = process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME'];
 
   // Try to access the `.strapirc` at $HOME.
-  fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, function (err) {
+  fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, (err) => {
     if (err) {
       console.log('You are not logged in.');
     } else {
