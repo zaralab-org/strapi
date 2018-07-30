@@ -18,6 +18,8 @@ const crypto = require('crypto');
 const exposer = require('./exposer');
 
 const HOME = process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME'];
+const strapirc = '.strapirc';
+const npmrc = '.npmrc';
 
 module.exports = {
   loadFile: function(url) {
@@ -175,32 +177,65 @@ module.exports = {
 
   getConfig: () => {
     return new Promise((resolve) => {
-      fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, async (err) => {
+      fs.access(path.resolve(HOME, strapirc), fs.F_OK | fs.R_OK | fs.W_OK, async (err) => {
         if (err) {
           return resolve({});
         }
 
-        resolve(JSON.parse(fs.readFileSync(path.resolve(HOME, '.strapirc'), 'utf8')));
+        resolve(JSON.parse(fs.readFileSync(path.resolve(HOME, strapirc), 'utf8')));
       });
     });
   },
 
   writeConfig: (config, options = {}) => {
     return new Promise((resolve) => {
-      fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, (err) => {
+      fs.access(path.resolve(HOME, strapirc), fs.F_OK | fs.R_OK | fs.W_OK, (err) => {
         if (err) {
-          fs.writeFileSync(path.resolve(HOME, '.strapirc'), JSON.stringify(config), 'utf8');
+          fs.writeFileSync(path.resolve(HOME, strapirc), JSON.stringify(config), 'utf8');
           return resolve();
         }
 
-        const currentJSON = fs.readFileSync(path.resolve(HOME, '.strapirc'), 'utf8');
+        const currentJSON = fs.readFileSync(path.resolve(HOME, strapirc), 'utf8');
         let newJSON = Object.assign({}, JSON.parse(currentJSON), config);
 
         if (options.force === true) {
           newJSON = config;
         }
 
-        fs.writeFileSync(path.resolve(HOME, '.strapirc'), JSON.stringify(newJSON), 'utf8');
+        fs.writeFileSync(path.resolve(HOME, strapirc), JSON.stringify(newJSON), 'utf8');
+        resolve();
+      });
+    });
+  },
+
+  npmAuth: (registry, token) => {
+    return new Promise((resolve) => {
+      fs.access(path.resolve(HOME, npmrc), fs.F_OK | fs.R_OK | fs.W_OK, async (err) => {
+        if (err) {
+          fs.writeFileSync(path.resolve(HOME, npmrc), '', 'utf8');
+        }
+
+        const contents = fs.readFileSync(path.resolve(HOME, npmrc), 'utf8');
+        const lines = contents ? contents.split('\n') : [];
+
+        const authWrite = lines.findIndex((element, index, array) => {
+          /* eslint-disable no-useless-escape */
+          if (element.indexOf(`${registry.slice(registry.search(/\:\/\//, '') + 1)}/:_authToken=`) !== -1) {
+            array[index] = element.replace(/authToken\=.*/, `authToken="${token}"`);
+            return true;
+          }
+        });
+
+        if (authWrite === -1) {
+          lines.push(`${registry.slice(registry.search(/\:\/\//, '') + 1)}/:_authToken="${token}"`);
+        }
+
+        const toWrite = lines.filter((element) => {
+          return (element === '') ? false : true;
+        });
+
+        fs.writeFileSync(path.resolve(HOME, npmrc), toWrite.join('\n') + '\n');
+
         resolve();
       });
     });

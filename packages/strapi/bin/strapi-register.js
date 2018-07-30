@@ -50,7 +50,7 @@ module.exports = async () => {
     mask: '*'
   }]);
 
-  loader = ora('Register to Strapi').start();
+  const loader = ora('Register to Strapi').start();
 
   const res = await fetch(`${host}/auth/local/register`, {
     method: 'POST',

@@ -19,7 +19,7 @@ const fetch = require('node-fetch');
 const { cli, logger, packageManager } = require('strapi-utils');
 
 // Utils
-const {marketplace: host} = require('../lib/utils');
+const {marketplace: host, getConfig, npmAuth} = require('../lib/utils');
 
 /**
  * `$ strapi install`
@@ -27,12 +27,11 @@ const {marketplace: host} = require('../lib/utils');
  * Install a Strapi plugin.
  */
 
-module.exports = async function (plugin, cliArguments) {
+module.exports = async (plugin, cliArguments) => {
   // Define variables.
   const pluginPrefix = 'strapi-plugin-';
   const pluginID = `${pluginPrefix}${plugin}`;
   const pluginPath = `./plugins/${plugin}`;
-  const HOME = process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME'];
 
   // Check that we're in a valid Strapi project.
   if (!cli.isStrapiApp()) {
@@ -46,45 +45,39 @@ module.exports = async function (plugin, cliArguments) {
   }
 
   const pluginInfo = await fetch(`${host}/plugin/${pluginPrefix}${plugin}`)
-    .then(res => res.json());
-
-  if (pluginInfo.price !== 0) {
-    await new Promise((resolve) => {
-      fs.access(path.resolve(HOME, '.strapirc'), fs.F_OK | fs.R_OK | fs.W_OK, async (err) => {
-        if (err) {
-          console.log('⛔️ You have to be logged to install this plugin.');
-          process.exit();
-        } else {
-          const config = JSON.parse(fs.readFileSync(path.resolve(HOME, '.strapirc'), 'utf8'));
-
-          if (!config.jwt) {
-            console.log('⛔️ You have to be logged to install this plugin.');
-            process.exit();
-          }
-
-          const pkg = require(path.join(process.cwd(), 'package'));
-
-          console.log({
-            uuid: pkg.strapi.uuid
-          });
-
-          const {available} = await fetch(`${host}/validation/${pkg.strapi.uuid}/${pluginPrefix}${plugin}`, {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${config.jwt}`
-            }
-          })
-            .then(res => res.json());
-
-          if (available !== true) {
-            console.log('⛔️ You are not authorized to install this plugin.');
-            process.exit();
-          }
-        }
-
-        resolve();
-      });
+    .then(res => res.json())
+    .catch(() => {
+      return {};
     });
+
+  if (pluginInfo.price && pluginInfo.price !== 0) {
+    const config = await getConfig();
+
+    if (!config.jwt) {
+      console.log('⛔️ You have to be logged to install this plugin.');
+      process.exit(1);
+    }
+
+    const pkg = require(path.join(process.cwd(), 'package'));
+
+    const {available, token} = await fetch(`${host}/validation/${pkg.strapi.uuid}/${pluginPrefix}${plugin}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.jwt}`
+      }
+    })
+      .then(res => res.json())
+      .catch(() => {
+        loader.fail('Server error, please contact support@strapi.io');
+        process.exit(1);
+      });
+
+    if (available !== true) {
+      console.log('⛔️ You are not authorized to install this plugin.');
+      process.exit();
+    }
+
+    await npmAuth(pluginInfo.registry, token);
   }
 
   // Progress message.
