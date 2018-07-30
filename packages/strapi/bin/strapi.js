@@ -166,6 +166,17 @@ program
   .description('whoami to Strapi solutions')
   .action(require('./strapi-whoami'));
 
+// `$ strapi app:list`
+program
+  .command('app:list')
+  .description('list your linked applications')
+  .action(require('./strapi-app'));
+
+// `$ strapi app:link`
+program
+  .command('app:link')
+  .description('link your applications')
+  .action(require('./strapi-app'));
 
 /**
  * Normalize help argument
