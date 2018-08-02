@@ -102,7 +102,7 @@ module.exports = async (plugin, cliArguments) => {
 
     if (!isStrapiInstalledWithNPM) {
       // Create the directory yarn doesn't do it it
-      shell.exec(`mkdir ${pluginPath}`);
+      shell.exec('mkdir', [pluginPath]);
       // Add a package.json so it installs the dependencies
       shell.touch(`${pluginPath}/package.json`);
       fs.writeFileSync(`${pluginPath}/package.json`, JSON.stringify({}), 'utf8');
