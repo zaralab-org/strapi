@@ -160,7 +160,8 @@ module.exports = {
                   module.exports.addRelation.call(model, {
                     id: getValuePrimaryKey(value, this.primaryKey),
                     values: value,
-                    foreignKey: current
+                    foreignKey: details.via,
+                    alias: association.alias
                   })
                 );
               });
@@ -302,7 +303,7 @@ module.exports = {
   },
 
   addRelation: async function (params) {
-    const association = this.associations.find(x => x.via === params.foreignKey);
+    const association = this.associations.find(x => x.alias === params.foreignKey && x.via === params.alias);
 
     if (!association) {
       // Resolve silently.
