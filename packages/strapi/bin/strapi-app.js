@@ -55,6 +55,11 @@ module.exports = async () => {
 
     loader.stop();
 
+    if (apps.message) {
+      loader.fail(apps.message);
+      process.exit(1);
+    }
+
     let uuid;
     try {
       const pkg = require(path.join(process.cwd(), 'package'));

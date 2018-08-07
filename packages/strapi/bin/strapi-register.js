@@ -50,7 +50,7 @@ module.exports = async () => {
     mask: '*'
   }]);
 
-  const loader = ora('Register to Strapi').start();
+  let loader = ora('Register to Strapi').start();
 
   const res = await fetch(`${host}/auth/local/register`, {
     method: 'POST',
@@ -75,5 +75,30 @@ module.exports = async () => {
     jwt: res.jwt
   });
 
-  console.log(`You are ${green('successfully')} registered and logged in as ${cyan(res.user.username)}.`);
+  console.log('📨 You receive an email to validate your account.');
+
+  loader = ora('Waiting for email account validation').start();
+
+  await new Promise((resolve) => {
+    const interval = setInterval(async () => {
+      const user = await fetch(`${host}/user/me`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${res.jwt}`
+        }
+      })
+        .then(res => res.json())
+        .catch(() => {
+          loader.fail('Server error, please contact support@strapi.io');
+          process.exit(1);
+        });
+
+      if (user.verified === true) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 5000);
+  });
+
+  loader.succeed(`You are ${green('successfully')} registered and logged in as ${cyan(res.user.username)}.`);
 };
