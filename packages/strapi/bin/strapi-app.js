@@ -123,7 +123,7 @@ module.exports = async () => {
 
     let subscription;
     if (available.length === 0 && subscriptions.find((subscription) => {
-      return (subscriptions.value.app && subscription.value.app.uuid === pkg.strapi.uuid);
+      return (subscription.value.app && subscription.value.app.uuid === pkg.strapi.uuid);
     })) {
       console.log('This app is already linked');
       process.exit(1);
@@ -145,11 +145,12 @@ module.exports = async () => {
     }
 
     if (subscription.app) {
-      console.log(`It will lost your plugins in the other app!`);
+      console.log(`⚠️  You will lost the usability of your plugins in ${cyan(subscription.app.name)} application!`);
       const confirm = await inquirer.prompt([{
         type: 'confirm',
         name: 'confirm',
-        message: '⛔️ Are you sure?',
+        prefix: '⛔️',
+        message: 'Are you sure?',
       }]);
     }
 
