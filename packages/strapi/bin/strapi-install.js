@@ -44,13 +44,13 @@ module.exports = async (plugin, cliArguments) => {
     process.exit(1);
   }
 
-  const pluginInfo = await fetch(`${host}/plugin/${pluginPrefix}${plugin}`)
+  const pluginInfo = await fetch(`${host}/plugin/${pluginID}`)
     .then(res => res.json())
     .catch(() => {
       return {};
     });
 
-  if (pluginInfo.price && pluginInfo.price !== 0) {
+  if (pluginInfo.premium) {
     const config = await getConfig();
 
     if (!config.jwt) {
@@ -60,7 +60,7 @@ module.exports = async (plugin, cliArguments) => {
 
     const pkg = require(path.join(process.cwd(), 'package'));
 
-    const {available, token} = await fetch(`${host}/validation/${pkg.strapi.uuid}/${pluginPrefix}${plugin}`, {
+    const {available, token} = await fetch(`${host}/validation/${pkg.strapi.uuid}/${pluginID}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${config.jwt}`
