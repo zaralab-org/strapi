@@ -91,6 +91,14 @@ export function* submitChanges(action) {
           const paramsKey = includes(key, 'Value') ? replace(key,'Value', '') : key;
           unset(body.attributes[index].params, paramsKey);
         }
+
+        if (attribute.params.type === 'json' && key === 'default') {
+          unset(body.attributes[index].params, 'default');
+        }
+
+        if (attribute.params.type !== 'text') {
+          unset(body.attributes[index].params, 'appearance');
+        }
       });
     });
     const pluginModel = action.modelName.split('&source=')[1];
@@ -104,6 +112,7 @@ export function* submitChanges(action) {
     const requestUrl = method === 'POST' ? baseUrl : `${baseUrl}${body.name}`;
     const opts = { method, body };
     const response = yield call(request, requestUrl, opts, true);
+
 
     if (response.ok) {
       if (method === 'POST') {

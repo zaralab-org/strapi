@@ -69,6 +69,13 @@ function editPageReducer(state = initialState, action) {
         .update('isCreating', () => action.isCreating)
         .update('modelName', () => action.modelName)
         .update('record', () => fromJS(action.record))
+        .update('isLoading', () => {
+          if (action.isCreating) {
+            return false;
+          }
+
+          return true;
+        })
         .update('source', () => action.source);
     case MOVE_ATTR:
       return state

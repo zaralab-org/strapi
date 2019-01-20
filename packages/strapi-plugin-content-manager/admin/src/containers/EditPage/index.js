@@ -404,8 +404,8 @@ export class EditPage extends React.Component {
     } = this.props;
 
     return (
-      (isLoading && !this.isCreating()) ||
-      (isLoading && get(layout, this.getModelName()) === undefined)
+      (isLoading) ||
+      (get(layout, this.getModelName()) === undefined)
     );
   };
 

@@ -22,7 +22,7 @@ import 'codemirror/theme/blackboard.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/theme/cobalt.css';
 
-import { isEmpty, isObject, trimStart } from 'lodash';
+import { isEmpty, trimStart } from 'lodash';
 import jsonlint from './jsonlint';
 import styles from './styles.scss';
 
@@ -67,16 +67,14 @@ class InputJSON extends React.Component {
   setInitValue = () => {
     const { value } = this.props;
 
-    if (isObject(value) && value !== null) {
-      try {
-        parse(stringify(value));
-        this.setState({ hasInitValue: true });
+    try {
+      parse(stringify(value));
+      this.setState({ hasInitValue: true });
 
-        return this.codeMirror.setValue(stringify(value, null, 2));
-      } catch(err) {
+      return this.codeMirror.setValue(stringify(value, null, 2));
+    } catch(err) {
 
-        return this.setState({ error: true });
-      }
+      return this.setState({ error: true });
     }
   }
 
