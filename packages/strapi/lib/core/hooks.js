@@ -70,11 +70,17 @@ const mountHooks = function (files, cwd, source) {
         let dependencies = [];
         if (source === 'node_modules') {
           try {
+            // Clear cache.
+            delete require.cache[require.resolve(path.resolve(this.config.appPath, 'node_modules', `strapi-hook-${name}`, 'package.json'))];
+            // Require.
             dependencies = get(require(path.resolve(this.config.appPath, 'node_modules', `strapi-hook-${name}`, 'package.json')), 'strapi.dependencies', []);
           } catch(err) {
             // Silent
           }
         }
+
+        // Clear cache.
+        delete require.cache[require.resolve(path.resolve(cwd, p))];
 
         if (endsWith(p, 'index.js') && !this.hook[name].load) {
           // Lazy loading.

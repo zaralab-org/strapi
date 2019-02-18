@@ -77,8 +77,10 @@ module.exports = strapi => {
         // `node_modules` directory.
         let client;
         try {
+          console.log(path.resolve(strapi.config.appPath, 'node_modules', connection.settings.client));
           client = require(path.resolve(strapi.config.appPath, 'node_modules', connection.settings.client));
         } catch (err) {
+          console.log(err);
           strapi.log.error('The client `' + connection.settings.client + '` is not installed.');
           strapi.log.error('You can install it with `$ npm install ' + connection.settings.client + ' --save`.');
           strapi.stop();

@@ -134,6 +134,9 @@ const requireMiddlewares = function (files, cwd) {
 
         // Lazy loading.
         if (!this.koaMiddlewares.hasOwnProperty(name)) {
+          // Clear cache.
+          delete require.cache[require.resolve(path.resolve(cwd, p))];
+          
           Object.defineProperty(this.koaMiddlewares, name, {
             configurable: false,
             enumerable: true,

@@ -37,13 +37,16 @@ class Strapi extends EventEmitter {
 
     this.setMaxListeners(100);
 
-    this.reload = this.reload();
+    // this.reload = this.reload();
 
     // Expose `koa`.
     this.app = new Koa();
 
+    // Listeners.
+    this.listener = this.app.callback();
+
     // Mount the HTTP server.
-    this.server = http.createServer(this.app.callback());
+    this.server = http.createServer(this.listener);
 
     // Logger.
     this.log = logger;
@@ -95,6 +98,56 @@ class Strapi extends EventEmitter {
     this.loadFile = utils.loadFile.bind(this);
   }
 
+  async teardown() {
+    // Clear require cache for the project files.
+    Object.keys(require.cache)
+      .filter(key => key.indexOf(strapi.config.appPath) !== -1 && key.indexOf('node_modules') === -1)
+      .forEach(key => {
+        delete require.cache[key];
+      });
+
+    // Remove listeners.
+    if (this.server) {
+      this.server.removeAllListeners('connection');
+      this.server.removeAllListeners('error');
+    }
+
+    // Reset configurations.
+    this.config = {
+      launchedAt: Date.now(),
+      appPath: process.cwd(),
+      host: process.env.HOST || process.env.HOSTNAME || 'localhost',
+      port: process.env.PORT || 1337,
+      environment: toLower(process.env.NODE_ENV) || 'development',
+      environments: {},
+      admin: {},
+      paths: {
+        admin: 'admin',
+        api: 'api',
+        config: 'config',
+        controllers: 'controllers',
+        models: 'models',
+        plugins: 'plugins',
+        policies: 'policies',
+        tmp: '.tmp',
+        services: 'services',
+        static: 'public',
+        validators: 'validators',
+        views: 'views',
+      },
+      middleware: {},
+      hook: {},
+      functions: {},
+      routes: {},
+    };
+
+    // Keys to reset.
+    const keys = ['api', 'admin', 'plugins', 'controllers', 'models', 'services', 'hook', 'middleware', 'connections', 'koaMiddlewares'];
+
+    // Reset keys.
+    keys.forEach(key => this[key] = {});
+  }
+
   async start(config = {}, cb) {
     try {
       this.config = assign(this.config, config);
@@ -107,7 +160,7 @@ class Strapi extends EventEmitter {
       // Run bootstrap function.
       await this.bootstrap();
       // Freeze object.
-      await this.freeze();
+      // await this.freeze();
       // Update source admin.
       await admin.call(this);
       // Init first start
@@ -234,47 +287,87 @@ class Strapi extends EventEmitter {
     await plugins.call(this);
   }
 
-  reload() {
-    const state = {
-      shouldReload: 0
-    };
+  async reload(config = {}, cb) {
+    // Clean everything.
+    await this.teardown();
+    // Apply custom configuration.
+    this.config = assign(this.config, config);
+    // New Koa instance.
+    this.app = new Koa();
+    // Reload the entire project (configurations, api, models, plugins)
+    await this.load();
+    // Run bootstrap function.
+    await this.bootstrap();
+    // Update source admin.
+    await admin.call(this);
 
-    const reload = function () {
-      if (state.shouldReload > 0) {
-        // Reset the reloading state
-        state.shouldReload -= 1;
-        reload.isReloading = false;
-        return;
+    // Reject all incoming requests.
+    if (this.server) {
+      this.server.removeListener('request', this.listener);
+      // Prepare new app to listen.
+      this.listener = this.app.callback();
+      // Listen all incoming requests, then redirect to the new app.
+      this.server.on('request', this.listener);
+
+      this.log.info('Time: ' + new Date());
+      this.log.info('Launched in: ' + (Date.now() - this.config.launchedAt) + ' ms');
+      this.log.info('Environment: ' + this.config.environment);
+      this.log.info('Process PID: ' + process.pid);
+      this.log.info(`Version: ${this.config.info.strapi} (node v${this.config.info.node})`);
+      this.log.info('To shut down your server, press <CTRL> + C at any time');
+      console.log();
+      this.log.info(`☄️  Admin panel: ${this.config.admin.url}`);
+      this.log.info(`⚡️ Server: ${this.config.url}`);
+      console.log();
+
+      // Emit started event.
+      this.emit('server:started');
+
+      if (cb && typeof cb === 'function') {
+        cb();
       }
+    }
 
-      if (
-        cluster.isWorker &&
-        this.config.environment === 'development' &&
-        get(this.config, 'currentEnvironment.server.autoReload.enabled', true) === true
-      ) {
-        process.send('reload');
-      }
-    };
+    // const state = {
+    //   shouldReload: 0
+    // };
 
-    Object.defineProperty(reload, 'isWatching', {
-      configurable: true,
-      enumerable: true,
-      set: value => {
-        // Special state when the reloader is disabled temporarly (see GraphQL plugin example).
-        if (state.isWatching === false && value === true) {
-          state.shouldReload += 1;
-        }
-        state.isWatching = value;
-      },
-      get: () => {
-        return state.isWatching;
-      },
-    });
+    // const reload = function () {
+    //   if (state.shouldReload > 0) {
+    //     // Reset the reloading state
+    //     state.shouldReload -= 1;
+    //     reload.isReloading = false;
+    //     return;
+    //   }
 
-    reload.isReloading = false;
-    reload.isWatching = true;
+    //   if (
+    //     cluster.isWorker &&
+    //     this.config.environment === 'development' &&
+    //     get(this.config, 'currentEnvironment.server.autoReload.enabled', true) === true
+    //   ) {
+    //     process.send('reload');
+    //   }
+    // };
 
-    return reload;
+    // Object.defineProperty(reload, 'isWatching', {
+    //   configurable: true,
+    //   enumerable: true,
+    //   set: value => {
+    //     // Special state when the reloader is disabled temporarly (see GraphQL plugin example).
+    //     if (state.isWatching === false && value === true) {
+    //       state.shouldReload += 1;
+    //     }
+    //     state.isWatching = value;
+    //   },
+    //   get: () => {
+    //     return state.isWatching;
+    //   },
+    // });
+
+    // reload.isReloading = false;
+    // reload.isWatching = true;
+
+    // return reload;
   }
 
   async bootstrap() {
