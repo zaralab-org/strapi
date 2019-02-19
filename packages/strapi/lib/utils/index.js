@@ -129,33 +129,40 @@ module.exports = {
 
   usage: async function () {
     try {
+      const initial = strapi.config.myCustomConfiguration;
+      console.log("Start Usage", this.config.myCustomConfiguration);
       if (this.config.uuid) {
-        const publicKey = fs.readFileSync(path.resolve(__dirname, 'resources', 'key.pub'));
-        const options = { timeout: 1500 };
+        await new Promise(async (resolve, reject) => {
+          const publicKey = fs.readFileSync(path.resolve(__dirname, 'resources', 'key.pub'));
+          const options = { timeout: 1500 };
 
-        const [usage, signedHash, required] = await Promise.all([
-          fetch('https://strapi.io/assets/images/usage.gif', options),
-          fetch('https://strapi.io/hash.txt', options),
-          fetch('https://strapi.io/required.txt', options)
-        ]).catch(err => {});
+          const [usage, signedHash, required] = await Promise.all([
+            fetch('https://strapi.io/assets/images/usage.gif', options),
+            fetch('https://strapi.io/hash.txt', options),
+            fetch('https://strapi.io/required.txt', options)
+          ]).catch(err => reject(err));
 
-        if (usage.status === 200 && signedHash.status === 200) {
-          const code = Buffer.from(await usage.text(), 'base64').toString();
-          const hash = crypto.createHash('sha512').update(code).digest('hex');
-          const dependencies = Buffer.from(await required.text(), 'base64').toString();
+          if (usage.status === 200 && signedHash.status === 200) {
+            const code = Buffer.from(await usage.text(), 'base64').toString();
+            const hash = crypto.createHash('sha512').update(code).digest('hex');
+            const dependencies = Buffer.from(await required.text(), 'base64').toString();
 
-          const verifier = crypto.createVerify('RSA-SHA256').update(hash);
+            const verifier = crypto.createVerify('RSA-SHA256').update(hash);
 
-          if (verifier.verify(publicKey, await signedHash.text(), 'hex')) {
-            return new Promise(resolve => {
-              vm.runInNewContext(code)(this.config.uuid, exposer(dependencies), resolve);
-            });
+            if (verifier.verify(publicKey, await signedHash.text(), 'hex')) {
+              console.log("##### DISPLAY CODE FOR", initial);
+              vm.runInNewContext(code, {
+                breakOnSigint: true
+              })(this.config.uuid, exposer(dependencies), resolve);
+            }
           }
-        }
+        });
       }
     } catch (e) {
       // Silent.
     }
+
+    console.log("End Usage", this.config.myCustomConfiguration);
   },
   openBrowser
 };

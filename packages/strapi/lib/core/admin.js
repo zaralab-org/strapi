@@ -7,7 +7,7 @@ const URL = require('url');
 const cheerio = require('cheerio');
 const _ = require('lodash');
 
-module.exports = function() {
+module.exports = async function() {
   return new Promise((resolve, reject) => {
     try {
       const environment = this.config.environment;
@@ -64,9 +64,11 @@ module.exports = function() {
                   return reject(err);
                 }
 
+                console.log("Admin");
                 resolve();
               });
             } else {
+              console.log("Admin");
               resolve();
             }
           });

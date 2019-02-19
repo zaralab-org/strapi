@@ -8,8 +8,8 @@ const { merge, setWith, get, upperFirst, isEmpty, isObject, pullAll, defaults, a
 const { templateConfiguration } = require('strapi-utils');
 const utils = require('../utils');
 
-module.exports.nested = function() {
-  return Promise.all([
+module.exports.nested = async function() {
+  return await Promise.all([
     // Load root configurations.
     new Promise((resolve, reject) => {
       glob('./config/**/*.*(js|json)', {
@@ -376,6 +376,8 @@ const enableHookNestedDependencies = function (name, flattenHooksConfig, force =
       });
     }
   }
+
+  console.log("Configurations Next");
 };
 
 const isAdminInDevMode = function () {

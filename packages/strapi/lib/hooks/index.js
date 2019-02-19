@@ -5,7 +5,7 @@ const { after, includes, indexOf, drop, dropRight, uniq, defaultsDeep, get, set,
 /* eslint-disable prefer-template */
 module.exports = async function() {
   // Method to initialize hooks and emit an event.
-  const initialize = (module, hook) => (resolve, reject) => {
+  const initialize = (module, hook) => async (resolve, reject) => {
     let timeout = true;
 
     setTimeout(() => {
@@ -15,8 +15,9 @@ module.exports = async function() {
     }, this.config.hook.timeout || 1000);
 
     const loadedModule = module(this);
+    const initializer = loadedModule.initialize.bind(module);
 
-    loadedModule.initialize.call(module, err => {
+    await initializer(err => {
       timeout = false;
 
       if (err) {
@@ -33,6 +34,7 @@ module.exports = async function() {
       // Remove listeners.
       this.removeAllListeners('hook:' + hook + ':loaded');
 
+      console.log('hook:' + hook + ':loaded');
       resolve();
     });
   };

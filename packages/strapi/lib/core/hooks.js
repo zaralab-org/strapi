@@ -6,10 +6,10 @@ const glob = require('glob');
 const { parallel } = require('async');
 const { endsWith, get } = require('lodash');
 
-module.exports = function() {
+module.exports = async function() {
   this.hook = {};
 
-  return Promise.all([
+  return await Promise.all([
     new Promise((resolve, reject) => {
       const cwd = this.config.appPath;
 

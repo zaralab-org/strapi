@@ -6,11 +6,11 @@ const glob = require('glob');
 const { parallel } = require('async');
 const { upperFirst, lowerFirst, endsWith } = require('lodash');
 
-module.exports = function() {
+module.exports = async function() {
   this.middleware = {};
   this.koaMiddlewares = {};
 
-  return Promise.all([
+  return await Promise.all([
     new Promise((resolve, reject) => {
       const cwd = path.resolve(__dirname, '..', '..');
 

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function () {
+module.exports = async function () {
   return new Promise((resolve) => {
     this.models['core_store'] = {
       connection: 'default',
@@ -131,6 +131,8 @@ module.exports = function () {
         set
       };
     };
+
+    console.log("Store");
 
     resolve();
   });

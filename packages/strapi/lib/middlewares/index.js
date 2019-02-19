@@ -40,7 +40,8 @@ module.exports = async function() {
       this.emit('middleware:' + middleware + ':loaded');
       // Remove listeners.
       this.removeAllListeners('middleware:' + middleware + ':loaded');
-
+      
+      console.log('middleware:' + middleware + ':loaded');
       resolve();
     });
   };

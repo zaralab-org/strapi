@@ -4,7 +4,7 @@
 const glob = require('glob');
 const utils = require('../utils');
 
-module.exports = function() {
+module.exports = async function() {
   return Promise.all([
     new Promise((resolve, reject) => {
       // Load configurations.

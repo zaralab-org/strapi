@@ -50,7 +50,7 @@ module.exports = function (strapi) {
      * Initialize the hook
      */
 
-    initialize: cb =>
+    initialize: async cb =>
       _.forEach(_.pickBy(strapi.config.connections, {connector: 'strapi-hook-mongoose'}), async (connection, connectionName) => {
         const instance = new Mongoose();
         const { uri, host, port, username, password, database, srv } = _.defaults(connection.settings, strapi.config.hook.settings.mongoose);

@@ -147,4 +147,6 @@ module.exports = async function() {
       encoding: 'utf8',
     }),
   ]);
+
+  console.log("Plugins");
 };

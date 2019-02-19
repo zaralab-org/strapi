@@ -99,6 +99,9 @@ class Strapi extends EventEmitter {
   }
 
   async teardown() {
+    // Kill process.
+    process.emit('SIGINT');
+
     // Clear require cache for the project files.
     Object.keys(require.cache)
       .filter(key => key.indexOf(strapi.config.appPath) !== -1 && key.indexOf('node_modules') === -1)
@@ -233,6 +236,8 @@ class Strapi extends EventEmitter {
         connections[key].destroy();
       }
     };
+
+    console.log("Enhancer");
   }
 
   stop() {
@@ -270,6 +275,8 @@ class Strapi extends EventEmitter {
       middlewares.call(this),
       hooks.call(this),
     ]);
+
+    console.log("Configurations");
 
     // Populate AST with configurations.
     await appConfigurations.call(this);
@@ -326,6 +333,8 @@ class Strapi extends EventEmitter {
       if (cb && typeof cb === 'function') {
         cb();
       }
+    } else {
+      console.log("--- NO SERVER");
     }
 
     // const state = {
@@ -371,50 +380,55 @@ class Strapi extends EventEmitter {
   }
 
   async bootstrap() {
-    const execBootstrap = fn =>
-      !fn
-        ? Promise.resolve()
-        : new Promise((resolve, reject) => {
-          const timeoutMs = this.config.bootstrapTimeout || 3500;
-          const timer = setTimeout(() => {
-            this.log.warn(
-              `Bootstrap is taking unusually long to execute its callback ${timeoutMs} miliseconds).`,
-            );
-            this.log.warn('Perhaps you forgot to call it?');
-          }, timeoutMs);
+    const execBootstrap = async fn => {
+      if (!fn) {
+        return Promise.resolve();
+      }
 
-          let ranBootstrapFn = false;
+      return await new Promise((resolve, reject) => {
+        const timeoutMs = this.config.bootstrapTimeout || 3500;
+        const timer = setTimeout(() => {
+          this.log.warn(
+            `Bootstrap is taking unusually long to execute its callback ${timeoutMs} miliseconds).`,
+          );
+          this.log.warn('Perhaps you forgot to call it?');
+        }, timeoutMs);
 
-          try {
-            fn(err => {
-              if (ranBootstrapFn) {
-                this.log.error('You called the callback in `strapi.config.boostrap` more than once!');
+        let ranBootstrapFn = false;
 
-                return reject();
-              }
-
-              ranBootstrapFn = true;
-              clearTimeout(timer);
-
-              return resolve(err);
-            });
-          } catch (e) {
+        try {
+          fn(err => {
             if (ranBootstrapFn) {
-              this.log.error('The bootstrap function threw an error after its callback was called.');
+              this.log.error('You called the callback in `strapi.config.boostrap` more than once!');
 
-              return reject(e);
+              return reject();
             }
 
             ranBootstrapFn = true;
             clearTimeout(timer);
 
-            return resolve(e);
-          }
-        });
+            return resolve(err);
+          });
+        } catch (e) {
+          if (ranBootstrapFn) {
+            this.log.error('The bootstrap function threw an error after its callback was called.');
 
-    return Promise.all(
+            return reject(e);
+          }
+
+          ranBootstrapFn = true;
+          clearTimeout(timer);
+
+          return resolve(e);
+        }
+      });
+    };
+
+    await Promise.all(
       Object.values(this.plugins).map(x => execBootstrap(get(x, 'config.functions.bootstrap'))),
     ).then(() => execBootstrap(this.config.functions.bootstrap));
+
+    console.log("Bootstrap");
   }
 
   async freeze() {

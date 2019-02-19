@@ -48,15 +48,17 @@ module.exports = function(appPath = '') {
     }
 
     // Require server configurations
-    const server = require(path.resolve(
-      appPath,
-      'config',
-      'environments',
-      'development',
-      'server.json',
-    ));
+    // const server = require(path.resolve(
+    //   appPath,
+    //   'config',
+    //   'environments',
+    //   'development',
+    //   'server.json',
+    // ));
 
-    if (process.env.NODE_ENV === 'development' && _.get(server, 'autoReload.enabled') === true) {
+    if (false) {
+      console.log("Never should pass there!");
+
       const restart = path => {
         if (strapi.reload.isWatching && cluster.isWorker && !strapi.reload.isReloading) {
           strapi.reload.isReloading = true;
