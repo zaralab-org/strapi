@@ -15,7 +15,7 @@
   },
   "main": "./lib",
   "scripts": {
-    "test": "echo \"Error: no test specified yet!\""
+    "test": "jest -i"
   },
   "dependencies": {
     "commander": "^2.11.0",
@@ -48,5 +48,16 @@
     "node": ">= 10.0.0",
     "npm": ">= 6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "lib/**/*.js"
+    ],
+    "coverageReporters": [
+      "json",
+      "text",
+      "html"
+    ]
+  }
 }

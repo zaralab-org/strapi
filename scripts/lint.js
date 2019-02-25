@@ -21,7 +21,9 @@ const watcher = (label, pckgName) => {
   const cmd = pckgName.includes('strapi-helper-plugin') ? cmdHelper : `${cmdFront} && ${cmdBack}`;
 
   const data = shell.exec(cmd, { silent: true });
+
   shell.echo(chalk(eslintErrorsFormatter(data.stdout)));
+  shell.echo(chalk(eslintErrorsFormatter(data.stderr)));
   shell.cd('../..');
 
   if (data.code !== 0) {
