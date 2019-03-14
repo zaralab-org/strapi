@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import RelationBodyModal from '../index';
+import RelationContainer from '../index';
 
 // import mountWithIntl from 'testUtils/mountWithIntl';
 // import formatMessagesWithPluginId from 'testUtils/formatMessages';
@@ -12,14 +12,14 @@ import RelationBodyModal from '../index';
 // import pluginId from '../../../pluginId';
 // import pluginTradsEn from '../../../translations/en.json';
 
-// import { RelationBodyModal } from '../index';
+// import { RelationContainer } from '../index';
 
 // const messages = formatMessagesWithPluginId(pluginId, pluginTradsEn);
-// const renderComponent = (props = {}) => mountWithIntl(<RelationBodyModal {...props} />, messages);
+// const renderComponent = (props = {}) => mountWithIntl(<RelationContainer {...props} />, messages);
 
-describe('<RelationBodyModal />', () => {
+describe('<RelationContainer />', () => {
   it('should not crash', () => {
-    shallow(<RelationBodyModal />);
+    shallow(<RelationContainer />);
 
     // renderComponent({});
   });

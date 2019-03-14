@@ -3,11 +3,12 @@
  * App actions
  *
  */
-import { pick, set } from 'lodash';
+import { pick, set, camelCase } from 'lodash';
 import {
   ADD_ATTRIBUTE_TO_TEMP_CONTENT_TYPE,
   CANCEL_NEW_CONTENT_TYPE,
   CLEAR_TEMPORARY_ATTRIBUTE,
+  CLEAR_TEMPORARY_ATTRIBUTE_RELATION,
   CREATE_TEMP_CONTENT_TYPE,
   DELETE_MODEL,
   DELETE_MODEL_SUCCEEDED,
@@ -15,6 +16,8 @@ import {
   GET_DATA_SUCCEEDED,
   ON_CHANGE_NEW_CONTENT_TYPE,
   ON_CREATE_ATTRIBUTE,
+  SUBMIT_TEMP_CONTENT_TYPE,
+  SUBMIT_TEMP_CONTENT_TYPE_SUCCEEDED,
 } from './constants';
 
 export function addAttributeToTempContentType(attributeType) {
@@ -33,6 +36,11 @@ export function cancelNewContentType() {
 export function clearTemporaryAttribute() {
   return {
     type: CLEAR_TEMPORARY_ATTRIBUTE,
+  };
+}
+export function clearTemporaryAttributeRelation() {
+  return {
+    type: CLEAR_TEMPORARY_ATTRIBUTE_RELATION,
   };
 }
 
@@ -80,10 +88,12 @@ export function getDataSucceeded({ allModels, models }, connections) {
 }
 
 export function onChangeNewContentType({ target }) {
+  const value = target.name === 'name' ? camelCase(target.value.trim()).toLowerCase() : target.value.trim();
+
   return {
     type: ON_CHANGE_NEW_CONTENT_TYPE,
     keys: target.name.split('.'),
-    value: target.value,
+    value,
   };
 }
 
@@ -92,6 +102,18 @@ export function onCreateAttribute({ target }) {
     type: ON_CREATE_ATTRIBUTE,
     keys: target.name.split('.'),
     value: target.value,
+  };
+}
+
+export function submitTempContentType() {
+  return {
+    type: SUBMIT_TEMP_CONTENT_TYPE,
+  };
+}
+
+export function submitTempContentTypeSucceeded() {
+  return {
+    type: SUBMIT_TEMP_CONTENT_TYPE_SUCCEEDED,
   };
 }
 

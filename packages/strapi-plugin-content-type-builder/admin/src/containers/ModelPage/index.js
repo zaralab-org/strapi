@@ -41,7 +41,9 @@ import ModelForm from '../ModelForm';
 import {
   addAttributeToTempContentType,
   clearTemporaryAttribute,
+  clearTemporaryAttributeRelation,
   onCreateAttribute,
+  submitTempContentType,
 } from '../App/actions';
 
 import CustomLink from './CustomLink';
@@ -56,7 +58,7 @@ export class ModelPage extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   getFormData = () => {
     const {
-      location: { search },
+      location: { search }, 
       newContentType,
     } = this.props;
 
@@ -127,6 +129,32 @@ export class ModelPage extends React.Component {
   getModelRelationShipsLength = () =>
     Object.keys(this.getModelRelationShips()).length;
 
+  getPluginHeaderActions = () => {
+    const { submitTempContentType } = this.props;
+
+    if (
+      this.isUpdatingTemporaryContentType() &&
+      this.getModelAttributesLength() > 0
+    ) {
+      return [
+        {
+          label: `${pluginId}.form.button.cancel`,
+          onClick: () => {},
+          kind: 'secondary',
+          type: 'button',
+        },
+        {
+          label: `${pluginId}.form.button.save`,
+          onClick: submitTempContentType,
+          kind: 'primary',
+          type: 'submit',
+          id: 'saveData',
+        },
+      ];
+    }
+
+    return [];
+  };
   getSectionTitle = () => {
     const base = `${pluginId}.menu.section.contentTypeBuilder.name.`;
 
@@ -143,10 +171,11 @@ export class ModelPage extends React.Component {
 
   handleClickOpenModalCreateCT = () => {
     const {
+      canOpenModalAddContentType,
       history: { push },
     } = this.props;
 
-    if (this.shouldOpenModalAddCT()) {
+    if (canOpenModalAddContentType) {
       push({
         search: 'modalType=model&settingType=base&actionType=create',
       });
@@ -179,12 +208,6 @@ export class ModelPage extends React.Component {
     const { isTemporary } = currentModel;
 
     return isTemporary;
-  };
-
-  shouldOpenModalAddCT = () => {
-    const { models } = this.props;
-
-    return models.every(model => model.isTemporary === false);
   };
 
   shouldRedirect = () => {
@@ -240,6 +263,7 @@ export class ModelPage extends React.Component {
       onChangeNewContentType,
       onCreateAttribute,
       temporaryAttribute,
+      temporaryAttributeRelation,
     } = this.props;
 
     if (this.shouldRedirect()) {
@@ -280,6 +304,7 @@ export class ModelPage extends React.Component {
                   description={this.getModelDescription()}
                   icon="fa fa-pencil"
                   title={this.getModelName()}
+                  actions={this.getPluginHeaderActions()}
                 />
                 {this.getModelAttributesLength() === 0 ? (
                   <EmptyAttributesBlock
@@ -348,6 +373,7 @@ export class ModelPage extends React.Component {
         />
         <AttributeForm
           activeTab={settingType}
+          alreadyTakenAttributes={Object.keys(this.getModelAttributes())}
           attributeType={attributeType}
           isContentTypeTemporary={this.isUpdatingTemporaryContentType()}
           isOpen={modalType === 'attributeForm' && attributeType !== 'relation'}
@@ -363,8 +389,8 @@ export class ModelPage extends React.Component {
           attributeType={attributeType}
           isContentTypeTemporary={this.isUpdatingTemporaryContentType()}
           isOpen={modalType === 'attributeForm' && attributeType === 'relation'}
-          modifiedData={temporaryAttribute}
-          onCancel={clearTemporaryAttribute}
+          modifiedData={temporaryAttributeRelation}
+          onCancel={clearTemporaryAttributeRelation}
           onChange={onCreateAttribute}
           onSubmit={this.handleSubmit}
           push={push}
@@ -387,12 +413,19 @@ export class ModelPage extends React.Component {
   }
 }
 
+ModelPage.defaultProps = {
+  canOpenModalAddContentType: true,
+};
+
 ModelPage.propTypes = {
   ...routerPropTypes({ params: PropTypes.string }).isRequired,
+  canOpenModalAddContentType: PropTypes.bool,
   clearTemporaryAttribute: PropTypes.func.isRequired,
+  clearTemporaryAttributeRelation: PropTypes.func.isRequired,
   initialData: PropTypes.object.isRequired,
   models: PropTypes.array.isRequired,
   onCreateAttribute: PropTypes.func.isRequired,
+  submitTempContentType: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -404,7 +437,9 @@ export function mapDispatchToProps(dispatch) {
     {
       addAttributeToTempContentType,
       clearTemporaryAttribute,
+      clearTemporaryAttributeRelation,
       onCreateAttribute,
+      submitTempContentType,
     },
     dispatch,
   );

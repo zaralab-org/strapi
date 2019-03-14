@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import pluginId from '../../pluginId';
@@ -17,14 +17,22 @@ import FooterModal from '../../components/FooterModal';
 import HeaderModal from '../../components/HeaderModal';
 import HeaderModalNavContainer from '../../components/HeaderModalNavContainer';
 import HeaderNavLink from '../../components/HeaderNavLink';
-import RelationBodyModal from '../../components/RelationBodyModal';
+import RelationContainer from '../../components/RelationContainer';
 import WrapperModal from '../../components/WrapperModal';
+
+//import supportedAttributes from './supportedAttributes.json';
 
 import styles from './styles.scss';
 
-const NAVLINKS = [{ id: 'base' }, { id: 'advanced' }];
+const NAVLINKS = [{ id: 'base', name: 'relation' }, { id: 'advanced', name: 'advanced' }];
 
-function RelationModal({ attributeType, activeTab, isOpen, push }) {
+function RelationModal({ attributeType, activeTab, isOpen, push, modifiedData }) {
+  // const getCurrentForm = () => {
+  //   const { activeTab, attributeType } = this.props;
+
+  //   return get(supportedAttributes, [attributeType, activeTab, 'items'], []);
+  // };
+
   const handleToggle = () => {
     push({ search: '' });
   };
@@ -40,6 +48,8 @@ function RelationModal({ attributeType, activeTab, isOpen, push }) {
       <HeaderNavLink
         isActive={activeTab === link.id}
         key={link.id}
+        name={link.name}
+        id={link.id}
         {...link}
         onClick={handleGoTo}
         nextTab={index === NAVLINKS.length - 1 ? 0 : index + 1}
@@ -49,15 +59,8 @@ function RelationModal({ attributeType, activeTab, isOpen, push }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-
     // TODO - Send new relation
   };
-
-  const renderModalBody = () => {
-    return <RelationBodyModal />;
-  };
-
-  console.log(activeTab);
 
   return (
     <WrapperModal
@@ -81,9 +84,7 @@ function RelationModal({ attributeType, activeTab, isOpen, push }) {
       </HeaderModal>
       <form onSubmit={handleSubmit}>
         <BodyModal>
-          {/* {showForm && currentForm.map(this.renderInput)} */}
-
-          {renderModalBody()}
+          <RelationContainer activeTab={activeTab} relation={modifiedData} />
         </BodyModal>
         <FooterModal>
           <ButtonModalSecondary

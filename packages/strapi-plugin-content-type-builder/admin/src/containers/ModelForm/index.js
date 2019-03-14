@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { camelCase, get } from 'lodash';
+import { get } from 'lodash';
 
 import Input from 'components/InputsIndex';
 
@@ -38,21 +38,6 @@ const NAVLINKS = [
 
 export class ModelForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = { didCheckErrors: false, formErrors: {}, isVisible: false };
-
-  handleBlur = (e) => {
-    let value = e.target.value.trim();
-
-    if (e.target.name === 'name') {
-      value = camelCase(value).toLowerCase();
-    }
-
-    const target = {
-      name: e.target.name,
-      value,
-    };
-
-    this.props.onChangeNewContentType({ target });
-  }
 
   handleCancel = () => {
     const { actionType, cancelNewContentType, push } = this.props;
@@ -136,7 +121,6 @@ export class ModelForm extends React.Component { // eslint-disable-line react/pr
         didCheckErrors={didCheckErrors}
         errors={errors}
         onChange={onChangeNewContentType}
-        onBlur={this.handleBlur}
         selectOptions={connections}
         value={get(modifiedData, [input.name], '')}
       />
