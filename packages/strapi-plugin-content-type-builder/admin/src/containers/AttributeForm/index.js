@@ -27,25 +27,23 @@ import WrapperModal from '../../components/WrapperModal';
 
 import supportedAttributes from './supportedAttributes.json';
 
-const NAVLINKS = [
-  { id: 'base' },
-  { id: 'advanced' },
-];
+const NAVLINKS = [{ id: 'base' }, { id: 'advanced' }];
 
-class AttributeForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class AttributeForm extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   state = { didCheckErrors: false, formErrors: {}, showForm: false };
 
   getCurrentForm = () => {
     const { activeTab, attributeType } = this.props;
 
     return get(supportedAttributes, [attributeType, activeTab, 'items'], []);
-  }
+  };
 
   handleCancel = () => {
     const { push } = this.props;
 
     push({ search: '' });
-  }
+  };
 
   handleGoTo = to => {
     const { attributeType, push } = this.props;
@@ -53,18 +51,18 @@ class AttributeForm extends React.Component { // eslint-disable-line react/prefe
     push({
       search: `modalType=attributeForm&attributeType=${attributeType}&settingType=${to}&actionType=create`,
     });
-  }
+  };
 
   handleOnClosed = () => {
     const { onCancel } = this.props;
 
     onCancel();
     this.setState({ formErrors: {}, showForm: false });
-  }
+  };
 
   handleOnOpened = () => this.setState({ showForm: true });
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
 
     const { modifiedData, onSubmit } = this.props;
@@ -77,7 +75,9 @@ class AttributeForm extends React.Component { // eslint-disable-line react/prefe
 
     // TODO NEED TO HANDLE OTHER VALIDATIONS
     formErrors = Object.keys(modifiedData).reduce((acc, current) => {
-      const { custom, validations } = currentForm.find(input => input.name === current) || { validations: {} };
+      const { custom, validations } = currentForm.find(
+        input => input.name === current,
+      ) || { validations: {} };
       const value = modifiedData[current];
 
       if (validations.required === true && value === '' && custom === true) {
@@ -95,13 +95,13 @@ class AttributeForm extends React.Component { // eslint-disable-line react/prefe
     if (isEmpty(formErrors)) {
       onSubmit();
     }
-  }
+  };
 
   handleToggle = () => {
     const { push } = this.props;
 
     push({ search: '' });
-  }
+  };
 
   renderInput = (input, index) => {
     const { modifiedData, onChange } = this.props;
@@ -135,7 +135,7 @@ class AttributeForm extends React.Component { // eslint-disable-line react/prefe
         value={value}
       />
     );
-  }
+  };
 
   renderNavLink = (link, index) => {
     const { activeTab } = this.props;
@@ -149,7 +149,7 @@ class AttributeForm extends React.Component { // eslint-disable-line react/prefe
         nextTab={index === NAVLINKS.length - 1 ? 0 : index + 1}
       />
     );
-  }
+  };
 
   render() {
     const { attributeType, isOpen } = this.props;
@@ -167,7 +167,9 @@ class AttributeForm extends React.Component { // eslint-disable-line react/prefe
           <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
             <FormattedMessage id={`${pluginId}.popUpForm.create`} />
             &nbsp;
-            <span style={{ fontStyle: 'italic', textTransform: 'capitalize' }}>{attributeType}</span>
+            <span style={{ fontStyle: 'italic', textTransform: 'capitalize' }}>
+              {attributeType}
+            </span>
             &nbsp;
             <FormattedMessage id={`${pluginId}.popUpForm.field`} />
           </div>
@@ -176,13 +178,21 @@ class AttributeForm extends React.Component { // eslint-disable-line react/prefe
           </HeaderModalNavContainer>
         </HeaderModal>
         <form onSubmit={this.handleSubmit}>
-          <BodyModal>
-            {showForm && currentForm.map(this.renderInput)}
-          </BodyModal>
+          <BodyModal>{showForm && currentForm.map(this.renderInput)}</BodyModal>
           <FooterModal>
-            <ButtonModalSecondary message={`${pluginId}.form.button.cancel`} onClick={this.handleCancel} />
-            <ButtonModalPrimary message={`${pluginId}.form.button.continue`} type="submit" add />
-            <ButtonModalPrimary message={`${pluginId}.form.button.save`} type="button" />
+            <ButtonModalSecondary
+              message={`${pluginId}.form.button.cancel`}
+              onClick={this.handleCancel}
+            />
+            <ButtonModalPrimary
+              message={`${pluginId}.form.button.continue`}
+              type="submit"
+              add
+            />
+            <ButtonModalPrimary
+              message={`${pluginId}.form.button.save`}
+              type="button"
+            />
           </FooterModal>
         </form>
       </WrapperModal>

@@ -35,6 +35,7 @@ import Ul from '../../components/Ul';
 
 import AttributeForm from '../AttributeForm';
 import AttributesModalPicker from '../AttributesPickerModal';
+import RelationModal from '../RelationModal';
 import ModelForm from '../ModelForm';
 
 import {
@@ -51,16 +52,20 @@ import saga from './saga';
 import styles from './styles.scss';
 import DocumentationSection from './DocumentationSection';
 
-export class ModelPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class ModelPage extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   getFormData = () => {
-    const { location: { search }, newContentType } = this.props;
+    const {
+      location: { search },
+      newContentType,
+    } = this.props;
 
     if (getQueryParameters(search, 'actionType') === 'create') {
       return newContentType;
     }
 
     return null;
-  }
+  };
 
   getModel = () => {
     const { modifiedData, newContentType } = this.props;
@@ -70,11 +75,12 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
     }
 
     return get(modifiedData, this.getModelName(), {});
-  }
+  };
 
   getModelAttributes = () => get(this.getModel(), 'attributes', {});
 
-  getModelAttributesLength = () => Object.keys(this.getModelAttributes()).length;
+  getModelAttributesLength = () =>
+    Object.keys(this.getModelAttributes()).length;
 
   getModelDescription = () => {
     const { initialData } = this.props;
@@ -86,20 +92,28 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
     );
 
     // eslint-disable-next-line no-extra-boolean-cast
-    return !!description ? description : { id: `${pluginId}.modelPage.contentHeader.emptyDescription.description` };
-  }
+    return !!description
+      ? description
+      : {
+        id: `${pluginId}.modelPage.contentHeader.emptyDescription.description`,
+      };
+  };
 
   getModelName = () => {
-    const { match: { params: { modelName } } } = this.props;
+    const {
+      match: {
+        params: { modelName },
+      },
+    } = this.props;
 
     return modelName.split('&')[0];
-  }
+  };
 
   getModelsNumber = () => {
     const { models } = this.props;
 
     return models.length;
-  }
+  };
 
   getModelRelationShips = () => {
     const attributes = this.getModelAttributes();
@@ -108,64 +122,76 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
     });
 
     return relations;
-  }
+  };
 
-  getModelRelationShipsLength = () => Object.keys(this.getModelRelationShips()).length;
+  getModelRelationShipsLength = () =>
+    Object.keys(this.getModelRelationShips()).length;
 
   getSectionTitle = () => {
     const base = `${pluginId}.menu.section.contentTypeBuilder.name.`;
 
     return this.getModelsNumber() > 1 ? `${base}plural` : `${base}singular`;
-  }
-
+  };
 
   handleClickOpenModalChooseAttributes = () => {
-    const { history: { push } } = this.props;
+    const {
+      history: { push },
+    } = this.props;
 
     push({ search: 'modalType=chooseAttributes' });
-  }
+  };
 
   handleClickOpenModalCreateCT = () => {
-    const { history: { push } } = this.props;
+    const {
+      history: { push },
+    } = this.props;
 
     if (this.shouldOpenModalAddCT()) {
       push({
         search: 'modalType=model&settingType=base&actionType=create',
       });
     } else {
-      strapi.notification.info(`${pluginId}.notification.info.contentType.creating.notSaved`);
+      strapi.notification.info(
+        `${pluginId}.notification.info.contentType.creating.notSaved`,
+      );
     }
-  }
+  };
 
   handleSubmit = () => {
-    const { addAttributeToTempContentType, history: { push }, location: { search } } = this.props;
+    const {
+      addAttributeToTempContentType,
+      history: { push },
+      location: { search },
+    } = this.props;
     const attributeType = getQueryParameters(search, 'attributeType');
 
     addAttributeToTempContentType(attributeType);
     push({ search: '' });
-  }
+  };
 
   isUpdatingTemporaryContentType = () => {
     const { models } = this.props;
     /* istanbul ignore next */
-    const currentModel = models.find(model => model.name === this.getModelName()) || { isTemporary: true };
+    const currentModel = models.find(
+      model => model.name === this.getModelName(),
+    ) || { isTemporary: true };
 
     const { isTemporary } = currentModel;
 
     return isTemporary;
-  }
+  };
 
   shouldOpenModalAddCT = () => {
     const { models } = this.props;
 
-    return models.every(model => (model.isTemporary === false));
-  }
+    return models.every(model => model.isTemporary === false);
+  };
 
   shouldRedirect = () => {
     const { models } = this.props;
 
     return models.findIndex(model => model.name === this.getModelName()) === -1;
-  }
+  };
 
   renderLinks = () => {
     const { models } = this.props;
@@ -187,13 +213,19 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
     });
 
     return links;
-  }
+  };
 
   renderLi = attribute => {
     const attributeInfos = get(this.getModelAttributes(), attribute, {});
 
-    return <AttributeLi key={attribute} name={attribute} attributeInfos={attributeInfos} />;
-  }
+    return (
+      <AttributeLi
+        key={attribute}
+        name={attribute}
+        attributeInfos={attributeInfos}
+      />
+    );
+  };
 
   render() {
     const listTitleMessageIdBasePrefix = `${pluginId}.modelPage.contentType.list.title`;
@@ -235,7 +267,9 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
                 </ul>
               </LeftMenuSection>
               <LeftMenuSection>
-                <LeftMenuSectionTitle id={`${pluginId}.menu.section.documentation.name`} />
+                <LeftMenuSectionTitle
+                  id={`${pluginId}.menu.section.documentation.name`}
+                />
                 <DocumentationSection />
               </LeftMenuSection>
             </LeftMenu>
@@ -262,7 +296,11 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
                         {this.getModelAttributesLength()}
                         &nbsp;
                         <FormattedMessage
-                          id={`${listTitleMessageIdBasePrefix}.${this.getModelAttributesLength() > 1 ? 'plural' : 'singular'}`}
+                          id={`${listTitleMessageIdBasePrefix}.${
+                            this.getModelAttributesLength() > 1
+                              ? 'plural'
+                              : 'singular'
+                          }`}
                         />
                         {this.getModelRelationShipsLength() > 0 && (
                           <React.Fragment>
@@ -274,7 +312,11 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
                             {this.getModelRelationShipsLength()}
                             &nbsp;
                             <FormattedMessage
-                              id={`${pluginId}.modelPage.contentType.list.relationShipTitle.${this.getModelRelationShipsLength() > 1 ? 'plural' : 'singular'}`}
+                              id={`${pluginId}.modelPage.contentType.list.relationShipTitle.${
+                                this.getModelRelationShipsLength() > 1
+                                  ? 'plural'
+                                  : 'singular'
+                              }`}
                             />
                           </React.Fragment>
                         )}
@@ -289,7 +331,9 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
                     </Flex>
                     <div>
                       <Ul id="attributesList">
-                        {Object.keys(this.getModelAttributes()).map(this.renderLi)}
+                        {Object.keys(this.getModelAttributes()).map(
+                          this.renderLi,
+                        )}
                       </Ul>
                     </div>
                   </Block>
@@ -313,6 +357,19 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
           onSubmit={this.handleSubmit}
           push={push}
         />
+
+        <RelationModal
+          activeTab={settingType}
+          attributeType={attributeType}
+          isContentTypeTemporary={this.isUpdatingTemporaryContentType()}
+          isOpen={modalType === 'attributeForm' && attributeType === 'relation'}
+          modifiedData={temporaryAttribute}
+          onCancel={clearTemporaryAttribute}
+          onChange={onCreateAttribute}
+          onSubmit={this.handleSubmit}
+          push={push}
+        />
+
         <ModelForm
           actionType={actionType}
           activeTab={settingType}
@@ -331,9 +388,7 @@ export class ModelPage extends React.Component { // eslint-disable-line react/pr
 }
 
 ModelPage.propTypes = {
-  ...routerPropTypes(
-    { params: PropTypes.string },
-  ).isRequired,
+  ...routerPropTypes({ params: PropTypes.string }).isRequired,
   clearTemporaryAttribute: PropTypes.func.isRequired,
   initialData: PropTypes.object.isRequired,
   models: PropTypes.array.isRequired,
@@ -355,16 +410,23 @@ export function mapDispatchToProps(dispatch) {
   );
 }
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 /* Remove this line if the container doesn't have a route and
-*  check the documentation to see how to create the container's store
-*/
-const withReducer = strapi.injectReducer({ key: 'modelPage', reducer, pluginId });
+ *  check the documentation to see how to create the container's store
+ */
+const withReducer = strapi.injectReducer({
+  key: 'modelPage',
+  reducer,
+  pluginId,
+});
 
 /* Remove the line below the container doesn't have a route and
-*  check the documentation to see how to create the container's store
-*/
+ *  check the documentation to see how to create the container's store
+ */
 const withSaga = strapi.injectSaga({ key: 'modelPage', saga, pluginId });
 
 export default compose(
