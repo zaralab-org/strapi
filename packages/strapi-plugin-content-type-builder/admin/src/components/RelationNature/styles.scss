@@ -1,3 +1,17 @@
 .relationNature {
-
+  display: inline-block;
+  width: 29.5rem;
+  position: relative;
+  padding-top: 4.5rem;
+  padding-left: 25px;
+  padding-right: 25px;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 9.2rem;
+    height: 2px;
+    width: 100%;
+    background-color: #1c5de7;
+    z-index: 0;
+  }
 }

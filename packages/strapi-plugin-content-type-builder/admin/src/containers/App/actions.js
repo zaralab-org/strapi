@@ -16,6 +16,7 @@ import {
   GET_DATA_SUCCEEDED,
   ON_CHANGE_NEW_CONTENT_TYPE,
   ON_CREATE_ATTRIBUTE,
+  ON_CREATE_ATTRIBUTE_RELATION,
   SUBMIT_TEMP_CONTENT_TYPE,
   SUBMIT_TEMP_CONTENT_TYPE_SUCCEEDED,
 } from './constants';
@@ -100,6 +101,17 @@ export function onChangeNewContentType({ target }) {
 export function onCreateAttribute({ target }) {
   return {
     type: ON_CREATE_ATTRIBUTE,
+    keys: target.name.split('.'),
+    value: target.value,
+  };
+}
+
+export function onCreateAttributeRelation({ target }) {
+  console.log("Action");
+  console.log(target);
+
+  return {
+    type: ON_CREATE_ATTRIBUTE_RELATION,
     keys: target.name.split('.'),
     value: target.value,
   };

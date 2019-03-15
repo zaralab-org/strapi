@@ -1,3 +1,21 @@
-.relationContainer {
+// Base tab
+.relationBase {
+  width: 100%;
+  .relationBoxWrapper, .relationNatureWrapper {
+    display: inline-block;
+    vertical-align: bottom;
+  }
+  .relationBoxWrapper {
+    background-color: red;
+    width: 30%;
+  }
+  .relationNatureWrapper {
+    background-color: yellow;
+    width: 40%;
+  }
+}
 
+// Advanced tab
+.relationAdvanced {
+  
 }

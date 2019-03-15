@@ -43,6 +43,7 @@ import {
   clearTemporaryAttribute,
   clearTemporaryAttributeRelation,
   onCreateAttribute,
+  onCreateAttributeRelation,
   submitTempContentType,
 } from '../App/actions';
 
@@ -198,6 +199,23 @@ export class ModelPage extends React.Component {
     push({ search: '' });
   };
 
+  handleSubmitRelation = () => {
+
+    
+    // const {
+    //   addAttributeToTempContentType,
+    //   history: { push },
+    //   location: { search },
+    // } = this.props;
+    // const attributeType = getQueryParameters(search, 'attributeType');
+
+    // console.log(attributeType);
+    // console.log(attributeType);
+
+    // addAttributeToTempContentType(attributeType);
+    // push({ search: '' });
+  }
+
   isUpdatingTemporaryContentType = () => {
     const { models } = this.props;
     /* istanbul ignore next */
@@ -262,6 +280,7 @@ export class ModelPage extends React.Component {
       modifiedData,
       onChangeNewContentType,
       onCreateAttribute,
+      onCreateAttributeRelation,
       temporaryAttribute,
       temporaryAttributeRelation,
     } = this.props;
@@ -386,14 +405,17 @@ export class ModelPage extends React.Component {
 
         <RelationModal
           activeTab={settingType}
+          alreadyTakenAttributes={Object.keys(this.getModelAttributes())}
           attributeType={attributeType}
           isContentTypeTemporary={this.isUpdatingTemporaryContentType()}
           isOpen={modalType === 'attributeForm' && attributeType === 'relation'}
           modifiedData={temporaryAttributeRelation}
           onCancel={clearTemporaryAttributeRelation}
-          onChange={onCreateAttribute}
-          onSubmit={this.handleSubmit}
+          onChange={onCreateAttributeRelation}
+          onSubmit={this.handleSubmitRelation}
           push={push}
+          modelName={this.getModelName()}
+          models={models}
         />
 
         <ModelForm
@@ -425,6 +447,7 @@ ModelPage.propTypes = {
   initialData: PropTypes.object.isRequired,
   models: PropTypes.array.isRequired,
   onCreateAttribute: PropTypes.func.isRequired,
+  onCreateAttributeRelation: PropTypes.func.isRequired,
   submitTempContentType: PropTypes.func.isRequired,
 };
 
@@ -439,6 +462,7 @@ export function mapDispatchToProps(dispatch) {
       clearTemporaryAttribute,
       clearTemporaryAttributeRelation,
       onCreateAttribute,
+      onCreateAttributeRelation,
       submitTempContentType,
     },
     dispatch,

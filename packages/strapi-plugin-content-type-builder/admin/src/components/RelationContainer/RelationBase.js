@@ -14,24 +14,26 @@ import styles from './styles.scss';
 
 function RelationBase({
   relation,
+  modelsInfos,
+  currentForm,
 }) {
 
-  const { nature, plugin, target, targetColumnName, key } = relation;
-
-  console.log("YO");
-  console.log(relation);
+  const { nature } = relation;
 
   return (
     <div className={styles.relationBase}>
-
-      {/* Left box - main content type */}
-      <RelationBox isMainContentType={true} />
-
-      {/* Nature picker */}
-      <RelationNature />
-
-      {/* Right box - main content type */}
-      <RelationBox />
+      <div className={styles.relationBoxWrapper}>
+        {/* Left box - main content type */}
+        <RelationBox isMainContentType={true} modelsInfos={modelsInfos} relation={relation} currentForm={currentForm}/>
+      </div>
+      <div className={styles.relationNatureWrapper}>
+        {/* Nature picker */}
+        <RelationNature nature={nature}/>
+      </div>
+      <div className={styles.relationBoxWrapper}>
+        {/* Right box - main content type */}
+        <RelationBox modelsInfos={modelsInfos} relation={relation} currentForm={currentForm} />
+      </div>
     </div>
   );
 }
@@ -46,6 +48,10 @@ RelationBase.propTypes = {
     target: PropTypes.string,
     targetColumnName: PropTypes.string,
     key: PropTypes.string,
+  }).isRequired,
+  modelsInfos: PropTypes.shape({
+    modelName: PropTypes.string,
+    models: PropTypes.array,
   }).isRequired,
 };
 

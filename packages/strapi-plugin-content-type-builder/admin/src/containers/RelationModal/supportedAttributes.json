@@ -1,10 +1,21 @@
 {
   "relation": {
     "base": {
-      "items": [
-        {
+      "items": {
+        "key": {
           "label": {
-            "id": "content-type-builder.form.attribute.item.string.name"
+            "id": "content-type-builder.form.attribute.item.defineRelation.fieldName"
+          },
+          "name": "key",
+          "type": "string",
+          "defaultValue": "",
+          "validations": {
+            "required": true
+          }
+        },
+        "name": {
+          "label": {
+            "id": "content-type-builder.form.attribute.item.defineRelation.fieldName"
           },
           "name": "name",
           "type": "string",
@@ -12,8 +23,19 @@
           "validations": {
             "required": true
           }
+        },
+        "target": {
+          "label": {
+            "id": "content-type-builder.form.attribute.item.defineRelation.fieldName"
+          },
+          "name": "target",
+          "type": "string",
+          "defaultValue": "",
+          "validations": {
+            "required": true
+          }
         }
-      ]
+      }
     },
     "advanced": {
       "items": [

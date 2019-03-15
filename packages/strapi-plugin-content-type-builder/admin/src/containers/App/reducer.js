@@ -15,6 +15,7 @@ import {
   GET_DATA_SUCCEEDED,
   ON_CHANGE_NEW_CONTENT_TYPE,
   ON_CREATE_ATTRIBUTE,
+  ON_CREATE_ATTRIBUTE_RELATION,
   SUBMIT_TEMP_CONTENT_TYPE_SUCCEEDED,
 } from './constants';
 
@@ -129,6 +130,13 @@ function appReducer(state = initialState, action) {
     case ON_CREATE_ATTRIBUTE:
       return state.updateIn(
         ['temporaryAttribute', ...action.keys],
+        () => action.value,
+      );
+    case ON_CREATE_ATTRIBUTE_RELATION:
+    console.log("Reducer");
+    console.log(action);
+      return state.updateIn(
+        ['temporaryAttributeRelation', ...action.keys],
         () => action.value,
       );
     case SUBMIT_TEMP_CONTENT_TYPE_SUCCEEDED:
