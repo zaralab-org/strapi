@@ -7,7 +7,7 @@
             "id": "content-type-builder.form.attribute.item.defineRelation.fieldName"
           },
           "name": "key",
-          "type": "string",
+          "type": "text",
           "defaultValue": "",
           "validations": {
             "required": true
@@ -18,7 +18,7 @@
             "id": "content-type-builder.form.attribute.item.defineRelation.fieldName"
           },
           "name": "name",
-          "type": "string",
+          "type": "text",
           "defaultValue": "",
           "validations": {
             "required": true
@@ -29,7 +29,7 @@
             "id": "content-type-builder.form.attribute.item.defineRelation.fieldName"
           },
           "name": "target",
-          "type": "string",
+          "type": "select",
           "defaultValue": "",
           "validations": {
             "required": true

@@ -28,6 +28,8 @@ import styles from './styles.scss';
 const NAVLINKS = [{ id: 'base', name: 'relation' }, { id: 'advanced', name: 'advanced' }];
 
 class RelationModal extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
+  state = { didCheckErrors: false, formErrors: {}, showForm: false };
   
   getCurrentForm = () => {
     const { activeTab, attributeType } = this.props;
@@ -45,26 +47,27 @@ class RelationModal extends React.Component {
     });
   }
 
-  handleOnClosed = () => {
-    const { onCancel } = this.props;
-
-    onCancel();
-    this.setState({ formErrors: {} });
-  };
-
-  handleToggle = () => {
+  handleCancel = () => {
     const { push } = this.props;
 
     push({ search: '' });
   };
 
   handleGoTo = to => {
-    const { push } = this.props;
+    const { attributeType, push } = this.props;
 
     push({
       search: `modalType=attributeForm&attributeType=${attributeType}&settingType=${to}&actionType=create`,
     });
   };
+
+  handleOnClosed = () => {
+    const { onCancel } = this.props;
+
+    onCancel();
+  };
+
+  handleOnOpened = () => this.setState({ showForm: true });
 
   handleSubmit = e => {
     e.preventDefault();
@@ -109,6 +112,12 @@ class RelationModal extends React.Component {
     }
   };
 
+  handleToggle = () => {
+    this.setState({ formErrors: {}, showForm: false });
+    const { push } = this.props;
+    push({ search: '' });
+  };
+
   renderNavLink = (link, index) => {
     const { activeTab } = this.props;
 
@@ -137,20 +146,19 @@ class RelationModal extends React.Component {
     // }
 
     return <RelationBase relation={modifiedData} modelsInfos={modelsInfos} currentForm={currentForm} />;
-
-    // return (
-    //   <RelationContainer activeTab={activeTab} relation={modifiedData} modelsInfos={modelInfos} currentForm={currentForm} />
-    // );
   };
 
   render() {
     const { attributeType, isOpen } = this.props;
+    const { showForm } = this.state;
 
     return (
       <WrapperModal
-        isOpen={isOpen}
-        onToggle={this.handleToggle}
         className={styles.relationModal}
+        isOpen={isOpen}
+        onClosed={this.handleOnClosed}
+        onOpened={this.handleOnOpened}
+        onToggle={this.handleToggle}
       >
         <HeaderModal>
           <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
@@ -168,7 +176,7 @@ class RelationModal extends React.Component {
         </HeaderModal>
         <form onSubmit={this.handleSubmit}>
           <BodyModal>
-            {this.renderRelationTab()}
+            {showForm && this.renderRelationTab()}
           </BodyModal>
           <FooterModal>
             <ButtonModalSecondary
@@ -334,6 +342,8 @@ RelationModal.defaultProps = {
   activeTab: 'base',
   attributeType: 'string',
   isOpen: false,
+  onCancel: () => {},
+  onChange: () => {},
   push: () => {},
   modelName: '',
   models: [],
@@ -342,6 +352,8 @@ RelationModal.defaultProps = {
 RelationModal.propTypes = {
   activeTab: PropTypes.string,
   attributeType: PropTypes.string,
+  onCancel: PropTypes.func,
+  onChange: PropTypes.func,
   isOpen: PropTypes.bool,
   push: PropTypes.func,
   modalName: PropTypes.string,

@@ -1,17 +1,81 @@
+$oneWay: "../../assets/images/one_way.svg";
+$oneWaySelected: "../../assets/images/one_way_selected.svg";
+
+$oneToOne: "../../assets/images/one_to_one.svg";
+$oneToOneSelected: "../../assets/images/one_to_one_selected.svg";
+
+$oneToMany: "../../assets/images/one_to_many.svg";
+$oneToManySelected: "../../assets/images/one_to_many_selected.svg";
+
+$manyToOne: "../../assets/images/many_to_one.svg";
+$manyToOneSelected: "../../assets/images/many_to_one_selected.svg";
+
+$manyToMany: "../../assets/images/many_to_many.svg";
+$manyToManySelected: "../../assets/images/many_to_many_selected.svg";
+
 .relationNature {
-  display: inline-block;
-  width: 29.5rem;
-  position: relative;
-  padding-top: 4.5rem;
-  padding-left: 25px;
-  padding-right: 25px;
-  &:before {
-    content: "";
-    position: absolute;
-    top: 9.2rem;
-    height: 2px;
-    width: 100%;
-    background-color: #1c5de7;
-    z-index: 0;
+  .naturesWrapper {
+    display: table;
+    position: relative;
+    margin: 0 auto;
+  }
+  .naturesText {
+    text-align: center;
+  }
+  .formGroup {
+    display: inline-block;
+    vertical-align: top;
+    width: 41px;
+    height: 41px;
+    margin: 0 3px;
+    input {
+      display: none;
+    }
+    label {
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+  }
+  .oneWay {
+    label {
+      background-image: url($oneWay);
+    }
+    input:checked + label {
+      background-image: url($oneWaySelected);
+    }
+  }
+  .oneToOne {
+    label {
+      background-image: url($oneToOne);
+    }
+    input:checked + label {
+      background-image: url($oneToOneSelected);
+    }
+  }
+  .oneToMany {
+    label {
+      background-image: url($oneToMany);
+    }
+    input:checked + label {
+      background-image: url($oneToManySelected);
+    }
+  }
+  .manyToOne {
+    label {
+      background-image: url($manyToOne);
+    }
+    input:checked + label {
+      background-image: url($manyToOneSelected);
+    }
+  }
+  .manyToMany {
+    label {
+      background-image: url($manyToMany);
+    }
+    input:checked + label {
+      background-image: url($manyToManySelected);
+    }
   }
 }

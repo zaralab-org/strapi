@@ -4,15 +4,11 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, get } from 'lodash';
-
-// import { DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-// import Input from 'components/InputsIndex';
-import { Input } from 'reactstrap';
+import { FormattedMessage } from 'react-intl';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import InputText from 'components/InputsIndex';
-import InputSelect from 'components/InputSelect';
 
 import styles from './styles.scss';
 
@@ -23,14 +19,17 @@ function RelationBox({
   relation,
   errors,
 }) {
+  const [isOpen, toggleIsOpen] = useState(false);
   const { modelName, models, onChange} = modelsInfos;
-  const { key, name, target} = currentForm;
+  const { key, name} = currentForm;
+  const { target} = relation;
 
-  const selectOptions = () => {
-    return models.map(model => {
-      return {value : model.name};
-    })
-  }
+  console.log(target);
+
+  const selectTarget = e => {
+    onChange({target: e.currentTarget});
+    console.log(e.currentTarget);
+  };
 
   return (
     <div className={styles.relationBox}>
@@ -38,27 +37,49 @@ function RelationBox({
         {isMainContentType ? (
           <p><i className={`fa fa-caret-square-o-right`} />{modelName}</p>
         ) : (
-          <Input type="select" name={target.name} id={target.name} className={styles.inputText}>
-            {selectOptions().map(option => {
-              return (
-                // Change with formatted message
-                <option key={option.value} value={option.value}>{option.value}</option>
-              );
-            })}
-          </Input>
+
+          <Dropdown isOpen={isOpen} toggle={() => toggleIsOpen(!isOpen)}>
+            <DropdownToggle caret>
+              {target}
+            </DropdownToggle>
+            <DropdownMenu>
+              {models.map(option => {
+                const id = option.source ? `${option.name}.${option.source}` : `${option.name}. `;
+
+                return (
+                  <DropdownItem key={option.name} onClick={selectTarget} id={id}>
+                    <p>
+                      <i className={`fa fa-caret-square-o-right`} />
+                      {option.name}
+                      {option.source && (
+                        <FormattedMessage id="content-type-builder.from">
+                          {message => (
+                            <span style={{ fontStyle: 'italic' }}>
+                              ({message}: {option.source})
+                            </span>
+                          )}
+                        </FormattedMessage>
+                      )}
+                    </p>
+                  </DropdownItem>
+                )
+              })}
+            </DropdownMenu>
+          </Dropdown>
         )}
       </div>
-
       <div className={styles.relationBoxBody}>
         {isMainContentType ? (
           <InputText
             {...key}
+            type="text"
             onChange={onChange}
             value={relation.key}
           />
         ) : (
           <InputText
             {...name}
+            type="text"
             onChange={onChange}
             value={relation.name}
           />
@@ -73,6 +94,7 @@ RelationBox.propTypes = {
   modelsInfos: PropTypes.shape({
     modelName: PropTypes.string,
     models: PropTypes.array,
+    onChange: PropTypes.func,
   }).isRequired,
 };
 
