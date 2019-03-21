@@ -200,17 +200,12 @@ export class ModelPage extends React.Component {
   };
 
   handleSubmitRelation = () => {
-
-    
     // const {
     //   addAttributeToTempContentType,
     //   history: { push },
     //   location: { search },
     // } = this.props;
     // const attributeType = getQueryParameters(search, 'attributeType');
-
-    // console.log(attributeType);
-    // console.log(attributeType);
 
     // addAttributeToTempContentType(attributeType);
     // push({ search: '' });

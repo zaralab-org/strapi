@@ -24,11 +24,8 @@ function RelationBox({
   const { key, name} = currentForm;
   const { target} = relation;
 
-  console.log(target);
-
   const selectTarget = e => {
     onChange({target: e.currentTarget});
-    console.log(e.currentTarget);
   };
 
   return (
@@ -90,12 +87,12 @@ function RelationBox({
 }
 
 RelationBox.propTypes = {
-  relation: PropTypes.object,
   modelsInfos: PropTypes.shape({
     modelName: PropTypes.string,
     models: PropTypes.array,
     onChange: PropTypes.func,
   }).isRequired,
+  relation: PropTypes.object,
 };
 
 export default RelationBox;

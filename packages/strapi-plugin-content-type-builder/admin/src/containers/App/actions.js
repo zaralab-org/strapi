@@ -107,9 +107,6 @@ export function onCreateAttribute({ target }) {
 }
 
 export function onCreateAttributeRelation({ target }) {
-  console.log("Action");
-  console.log(target);
-
   return {
     type: ON_CREATE_ATTRIBUTE_RELATION,
     keys: target.name.split('.'),
