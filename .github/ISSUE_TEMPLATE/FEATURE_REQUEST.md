@@ -7,7 +7,7 @@ about: Suggest an idea for this project 💡!
 
 <!-- ⚠️ Make sure to browse the opened and closed issues before submitting your issue. -->
 
-<!-- 
+<!--
 Please also submit your idea on the Strapi Product Board:
 https://portal.productboard.com/strapi/tabs/2-under-consideration/submit-idea
 
@@ -19,4 +19,3 @@ but will still accept public discussion.
 - [ ] **I have looked at all the other requests on the Product Board before I submitted this issue**
 
 **Please describe your feature request:**
-

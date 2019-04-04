@@ -26,9 +26,8 @@ import {
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import Helmet from 'react-helmet';
-import { router } from 'app';
-
 import InputSelect from 'strapi-helper-plugin/lib/src/components/InputSelect';
+import { router } from 'app';
 
 import pluginId from '../../pluginId';
 // design
@@ -412,7 +411,9 @@ export class HomePage extends React.Component {
 
     return (
       <span>
-        {availableContentNumber}&nbsp;{titleDisplay}
+        {availableContentNumber}
+        &nbsp;
+        {titleDisplay}
       </span>
     );
   };
@@ -455,7 +456,7 @@ export class HomePage extends React.Component {
         this.props.home.selectOptions.options[0].value;
 
       return (
-        <div className={`col-md-6`} key={item.name}>
+        <div className="col-md-6" key={item.name}>
           <div className={styles.modalLanguageLabel}>
             <FormattedMessage id={`settings-manager.${item.name}`} />
           </div>

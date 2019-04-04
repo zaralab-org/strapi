@@ -136,7 +136,9 @@ class Li extends React.Component {
 
                   return (
                     <div key={key} className={styles.truncate}>
-                      {Math.round(size * 100) / 100}&nbsp;{unit}
+                      {Math.round(size * 100) / 100}
+                      &nbsp;
+                      {unit}
                     </div>
                   );
                 }

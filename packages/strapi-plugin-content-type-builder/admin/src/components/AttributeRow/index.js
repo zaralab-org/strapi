@@ -92,7 +92,8 @@ class AttributeRow extends React.Component {
         <FormattedMessage id="content-type-builder.from">
           {message => (
             <span style={{ fontStyle: 'italic' }}>
-              {capitalize(this.props.row.params.target)}&nbsp;
+              {capitalize(this.props.row.params.target)}
+              &nbsp;
               {this.props.row.params.pluginValue
                 ? `(${message}: ${this.props.row.params.pluginValue})`
                 : ''}

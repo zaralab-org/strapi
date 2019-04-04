@@ -32,13 +32,19 @@ function Filter({ filter, index, onClick, onClickOpen, schema }) {
         onClickOpen(index);
       }}
     >
-      <span>{upperFirst(filter.attr)}&nbsp;</span>
+      <span>
+        {upperFirst(filter.attr)}
+        &nbsp;
+      </span>
       <FormattedMessage
         id={`content-manager.components.FilterOptions.FILTER_TYPES.${
           filter.filter
         }`}
       />
-      <span>&nbsp;{toString(value)}</span>
+      <span>
+        &nbsp;
+        {toString(value)}
+      </span>
       <Separator />
       <Remove
         onClick={e => {

@@ -5,8 +5,8 @@
 - Rename hook name
 - New settings for content manager plugin
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.13](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.13)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.12.7...v3.0.0-alpha.13.0.1](https://github.com/strapi/strapi/compare/v3.0.0-alpha.12.7...v3.0.0-alpha.13.0.1)
 

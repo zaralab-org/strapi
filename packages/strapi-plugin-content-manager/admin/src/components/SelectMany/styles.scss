@@ -1,8 +1,9 @@
-.selectMany { /* stylelint-disable */
+.selectMany {
+  /* stylelint-disable */
   padding-bottom: 20px;
   margin-bottom: 0px;
 
-  label{
+  label {
     font-size: 1.3rem;
     font-weight: 500;
     text-transform: capitalize;
@@ -14,31 +15,31 @@
     }
   }
 
-  label + div{
+  label + div {
     margin: 3px 0 26px;
 
-    &:focus{
+    &:focus {
       outline: none;
     }
 
-    >div{
+    > div {
       box-shadow: none !important;
-      border-color: #E3E9F3 !important;
+      border-color: #e3e9f3 !important;
 
-      >span:last-of-type{
-        span{
-          border-color: #B3B5B9 transparent transparent;
+      > span:last-of-type {
+        span {
+          border-color: #b3b5b9 transparent transparent;
         }
       }
     }
   }
 }
 
-.selectManyUpdate{
+.selectManyUpdate {
   padding-bottom: 15px !important;
 }
 
-.select{
+.select {
   margin-bottom: 0px !important;
 }
 
@@ -54,7 +55,6 @@
     overflow: auto;
     max-height: 110px;
   }
- 
 }
 
 .sortableListLong {
@@ -72,7 +72,7 @@
     width: calc(100% + 10px);
     height: 1px;
     margin-bottom: -25px;
-    box-shadow: 0px -2px 4px 0px rgba(227, 233, 243, .5);
+    box-shadow: 0px -2px 4px 0px rgba(227, 233, 243, 0.5);
   }
 }
 
@@ -90,21 +90,21 @@
   height: 27px;
   background-color: transparent !important;
 
-  &:active{
-    .dragHandle{
+  &:active {
+    .dragHandle {
       // cursor: pointer;
-  
+
       > span {
-        background: #AED4FB;
-      } 
+        background: #aed4fb;
+      }
     }
   }
 
-  .dragHandle{
+  .dragHandle {
     outline: none;
     text-decoration: none;
     margin-top: -1px;
-  
+
     > span {
       vertical-align: middle;
       position: relative;
@@ -112,31 +112,31 @@
       width: 6px;
       height: 1px;
       padding: 0px !important;
-      background: #B3B5B9;
+      background: #b3b5b9;
       overflow: visible !important;
-      transition: background .25s ease-out;
-      
-      &:before, &:after{
+      transition: background 0.25s ease-out;
+
+      &:before,
+      &:after {
         content: '';
         display: inline-block;
         width: 6px;
         height: 1px;
         background: inherit;
       }
-  
-      &:before{
+
+      &:before {
         position: absolute;
         top: -2px;
         left: 0;
       }
-  
-      &:after{
+
+      &:after {
         position: absolute;
         bottom: -2px;
         left: 0;
       }
     }
-    
   }
 
   > div {
@@ -146,36 +146,36 @@
       text-overflow: ellipsis;
     }
 
-    &:first-of-type{
+    &:first-of-type {
       display: flex;
       align-items: center;
-      transition: color .25s ease-out;
+      transition: color 0.25s ease-out;
 
-      &:hover{
-        .dragHandle{
+      &:hover {
+        .dragHandle {
           > span {
-            background: #007EFF;
+            background: #007eff;
           }
         }
 
-        color: #007EFF;
+        color: #007eff;
       }
 
       span {
-        &:last-of-type{
+        &:last-of-type {
           padding-left: 10px;
         }
       }
     }
 
-    &:last-of-type{
+    &:last-of-type {
       display: inline-block;
       height: 100%;
       line-height: 27px;
       text-align: right;
       padding-right: 0px;
 
-      img{
+      img {
         display: inline-block;
         height: 14px;
       }

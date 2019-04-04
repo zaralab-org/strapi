@@ -5,21 +5,21 @@
   }
 }
 
-.main_wrapper{
+.main_wrapper {
   background: #ffffff;
   padding: 22px 28px 0px;
   border-radius: 2px;
-  box-shadow: 0 2px 4px #E3E9F3;
+  box-shadow: 0 2px 4px #e3e9f3;
 }
 
 .ctmForm {
   padding-top: 2.6rem;
 }
 
-.separatorHigher{
+.separatorHigher {
   margin-top: 19px;
   margin-bottom: 18px;
-  border-top: 1px solid #F6F6F6;
+  border-top: 1px solid #f6f6f6;
 }
 
 .draggedWrapper {
@@ -41,7 +41,7 @@
 
   > p {
     margin-bottom: 29px;
-    color: #787E8F;
+    color: #787e8f;
     font-weight: 400;
   }
 }
@@ -54,7 +54,7 @@
 
   > p {
     margin-bottom: 0;
-    color: #787E8F;
+    color: #787e8f;
     font-weight: 400;
   }
 }
@@ -62,8 +62,8 @@
 .editWrapper {
   min-height: 246px;
   padding: 24px 30px 0px;
-  background-color: #FAFAFB;
-  border-radius: 2px; 
+  background-color: #fafafb;
+  border-radius: 2px;
 }
 
 .dropDownNotAllowed {
@@ -82,7 +82,7 @@
     justify-content: space-between;
     background: #ffffff;
     color: #333740;
-    border: 1px solid #E3E9F3;
+    border: 1px solid #e3e9f3;
     border-radius: 2px;
     > button {
       position: relative;
@@ -96,8 +96,11 @@
       border: none;
       font-size: 13px;
       font-weight: 500;
-      &:focus, &:active, &:hover, &:visited {
-        background-color: transparent!important;
+      &:focus,
+      &:active,
+      &:hover,
+      &:visited {
+        background-color: transparent !important;
         box-shadow: none;
         color: #333740;
       }
@@ -106,7 +109,7 @@
         margin-left: 20px;
         margin-bottom: 0;
         margin-top: -1px;
-        color: #007EFF !important;
+        color: #007eff !important;
         font-size: 13px !important;
       }
       &:before {
@@ -116,7 +119,7 @@
         content: '\f067';
         font-family: FontAwesome;
         font-size: 10px;
-        color: #007EFF;
+        color: #007eff;
       }
     }
     > div {
@@ -127,21 +130,21 @@
       padding: 0;
       border-top-left-radius: 0 !important;
       border-top-right-radius: 0;
-      border-color: #E3E9F3 !important;
-      border-top-color: #AED4FB !important;
-      box-shadow: 0 2px 3px rgba(227, 233, 245, .5);
+      border-color: #e3e9f3 !important;
+      border-top-color: #aed4fb !important;
+      box-shadow: 0 2px 3px rgba(227, 233, 245, 0.5);
 
       overflow: scroll;
-      
+
       button {
         height: 30px;
-        padding-left:  10px !important;
+        padding-left: 10px !important;
         line-height: 26px;
         cursor: pointer;
         font-size: 13px !important;
         &:hover {
-          background-color: #FAFAFB !important;
-        } 
+          background-color: #fafafb !important;
+        }
         div {
           margin: 0;
           white-space: nowrap;
@@ -155,8 +158,8 @@
 
 .dropdownWrapperOpen {
   > div {
-    background-color: #E6F0FB !important;
-    border-color: #AED4FB !important;
+    background-color: #e6f0fb !important;
+    border-color: #aed4fb !important;
   }
 }
 
@@ -171,7 +174,7 @@
   margin-bottom: 10px;
   padding-top: 10px;
   padding-left: 15px !important;
-  border: 1px dashed #E3E9F3;
+  border: 1px dashed #e3e9f3;
   border-radius: 2px;
   > div {
     padding: 0 10px;
@@ -198,9 +201,8 @@
   padding-bottom: 1px;
 }
 
-
 .sectionTitle {
-  color: #787E8F;
+  color: #787e8f;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.77px;

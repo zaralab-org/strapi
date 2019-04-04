@@ -2,7 +2,6 @@
 
 By default, this plugin comes with only one template (reset password) for the moment. More templates will come later. The templates use Lodash' template() method to populate the variables.
 
-
 ### Reset Password
 
 - `USER` (object)

@@ -10,9 +10,8 @@ import { find, get, join, isObject } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 // utils
-import getFlag, { formatLanguageLocale } from '../../utils/getFlag';
-
 import PopUpWarning from 'components/PopUpWarning';
+import getFlag, { formatLanguageLocale } from '../../utils/getFlag';
 
 /* eslint-disable react/require-default-props  */
 class RowLanguage extends React.Component {

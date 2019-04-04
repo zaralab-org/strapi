@@ -6,8 +6,8 @@
 - GraphQL Aggregation Feature
 - Email confirmation and block user feature
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.13.1...v3.0.0-alpha.14](https://github.com/strapi/strapi/compare/v3.0.0-alpha.13.1...v3.0.0-alpha.14)
 
@@ -70,6 +70,7 @@ Hope you will enjoy this new feature.
 <br>
 
 ## Heroku setups
+
 It's necessary to add `DATABASE_NAME` into your environment variable otherwise your app doesn't start.
 
 <br>

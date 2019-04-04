@@ -6,6 +6,7 @@
 - Improve GraphQL performances
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.20](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.20)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.19...v3.0.0-alpha.20](https://github.com/strapi/strapi/compare/v3.0.0-alpha.19...v3.0.0-alpha.20)
 

@@ -1,8 +1,9 @@
-.tableListContainer { /* stylelint-disable */
+.tableListContainer {
+  /* stylelint-disable */
   padding: 2rem 0 0rem 0;
-  background: #FFFFFF;
+  background: #ffffff;
   font-family: Lato;
-  box-shadow: 0 2px 4px #E3E9F3;
+  box-shadow: 0 2px 4px #e3e9f3;
 }
 
 .headerContainer {
@@ -11,7 +12,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 }
 
 .titleContainer {
@@ -31,14 +31,14 @@
     > li:first-child {
       margin-top: 0.1rem;
       border-radius: 2px 2px 0 0;
-      background-color: #F3F3F4;
+      background-color: #f3f3f4;
     }
     > li:not(:first-child) {
-      margin-top: 0!important;
+      margin-top: 0 !important;
     }
     > li:nth-child(2) {
       min-height: 5.7rem;
-      padding-top: .3rem;
+      padding-top: 0.3rem;
     }
     > li:last-child {
       margin-bottom: 0;
@@ -52,7 +52,7 @@
 .liHeaderContainer {
   height: 3rem;
   margin: 0;
-  padding: 0 4.6rem .3rem 1.9rem;
+  padding: 0 4.6rem 0.3rem 1.9rem;
   font-size: 1.3rem;
 
   line-height: 1.6rem;
@@ -67,16 +67,16 @@
 }
 
 .liInnerContainer {
-  margin: 0 3.2rem 0 1.9rem ;
+  margin: 0 3.2rem 0 1.9rem;
   padding: 0 1.4rem 0 0rem;
-  border-bottom: 1px solid rgba(14,22,34,0.04);
+  border-bottom: 1px solid rgba(14, 22, 34, 0.04);
   color: #333740;
   font-size: 1.3rem;
   > div {
     padding: 0;
     align-self: center;
   }
-  > div:first-child{
+  > div:first-child {
     padding-left: 1.4rem;
   }
   > div:last-child {
@@ -87,9 +87,8 @@
   }
 }
 
-
 .italic {
-    font-weight: 600;
+  font-weight: 600;
   > span:nth-child(2) {
     font-style: italic;
   }
@@ -103,7 +102,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
   }
   > i {
     align-self: center;

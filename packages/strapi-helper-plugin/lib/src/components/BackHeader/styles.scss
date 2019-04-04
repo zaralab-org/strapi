@@ -6,11 +6,11 @@
   line-height: 6rem;
   z-index: 1050;
   text-align: center;
-  background-color: #FFFFFF;
-  color: #81848A;
-  border-top: 1px solid #F3F4F4;
-  border-right: 1px solid #F3F4F4;
-  border-left: 1px solid #F3F4F4;
+  background-color: #ffffff;
+  color: #81848a;
+  border-top: 1px solid #f3f4f4;
+  border-right: 1px solid #f3f4f4;
+  border-left: 1px solid #f3f4f4;
   cursor: pointer;
   &:before {
     content: '\F053';
@@ -19,6 +19,6 @@
     font-weight: bolder;
   }
   &:hover {
-    background-color: #F3F4F4;
+    background-color: #f3f4f4;
   }
 }

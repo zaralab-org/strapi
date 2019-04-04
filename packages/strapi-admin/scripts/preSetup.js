@@ -1,5 +1,5 @@
-const shell = require('shelljs');
 const path = require('path');
+const shell = require('shelljs');
 
 shell.echo(`
 🕓  The setup process can take few minutes.

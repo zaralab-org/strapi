@@ -23,48 +23,48 @@ module.exports = scope => {
       routes: [
         {
           method: 'GET',
-          path: '/' + scope.idPluralized,
-          handler: scope.globalID + '.find',
+          path: `/${scope.idPluralized}`,
+          handler: `${scope.globalID}.find`,
           config: {
             policies: [],
           },
         },
         {
           method: 'GET',
-          path: '/' + scope.idPluralized + '/count',
-          handler: scope.globalID + '.count',
+          path: `/${scope.idPluralized}/count`,
+          handler: `${scope.globalID}.count`,
           config: {
             policies: [],
           },
         },
         {
           method: 'GET',
-          path: '/' + scope.idPluralized + '/:' + tokenID,
-          handler: scope.globalID + '.findOne',
+          path: `/${scope.idPluralized}/:${tokenID}`,
+          handler: `${scope.globalID}.findOne`,
           config: {
             policies: [],
           },
         },
         {
           method: 'POST',
-          path: '/' + scope.idPluralized,
-          handler: scope.globalID + '.create',
+          path: `/${scope.idPluralized}`,
+          handler: `${scope.globalID}.create`,
           config: {
             policies: [],
           },
         },
         {
           method: 'PUT',
-          path: '/' + scope.idPluralized + '/:' + tokenID,
-          handler: scope.globalID + '.update',
+          path: `/${scope.idPluralized}/:${tokenID}`,
+          handler: `${scope.globalID}.update`,
           config: {
             policies: [],
           },
         },
         {
           method: 'DELETE',
-          path: '/' + scope.idPluralized + '/:' + tokenID,
-          handler: scope.globalID + '.destroy',
+          path: `/${scope.idPluralized}/:${tokenID}`,
+          handler: `${scope.globalID}.destroy`,
           config: {
             policies: [],
           },

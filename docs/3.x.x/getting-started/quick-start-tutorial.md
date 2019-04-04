@@ -1,4 +1,4 @@
-# Tutorial 
+# Tutorial
 
 This Tutorial is written for developers who prefer a more detailed step-by-step introduction. (A less detailed introduction can be found at [Quick Start Guide](/3.x.x/getting-started/quick-start.html).)
 
@@ -6,13 +6,12 @@ This Tutorial is written for developers who prefer a more detailed step-by-step 
   <iframe width="800" height="450" src="https://www.youtube.com/embed/nux0djdHmY8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-By following this tutorial, we will get Strapi installed globally onto your system, and then create your first Strapi project. 
+By following this tutorial, we will get Strapi installed globally onto your system, and then create your first Strapi project.
 
 ::: tip NOTE
 
-You need to have ***Node.js and npm*** installed on your system prior to following these steps. If you do not have Node.js and npm installed or are not sure, please visit our [Installation Requirements](http://localhost:8080/documentation/3.x.x/getting-started/install-requirements.html).
+You need to have **_Node.js and npm_** installed on your system prior to following these steps. If you do not have Node.js and npm installed or are not sure, please visit our [Installation Requirements](http://localhost:8080/documentation/3.x.x/getting-started/install-requirements.html).
 :::
-
 
 **Table of contents:**
 
@@ -58,9 +57,6 @@ Commands:
   help                                           output the help
   *
 ```
-
-
-
 
 ## 2. Create a new project
 
@@ -113,11 +109,9 @@ $ cd cms
 $ strapi start
 ```
 
-
 This will open your default browser to the Welcome page for creating an admin user.
 
 ![Strapi Welcome Page for creating admin user](../assets/quick-start-detailed/strapi-welcome-screen.png 'Strapi Welcome Page for creating admin user')
-
 
 ::: tip NOTE
 Using the `--quickstart` flag will install Strapi using a [SQLite](https://www.sqlite.org/index.html) database. You may leave off the flag, but will need to follow the configuration steps for a different database.
@@ -151,11 +145,11 @@ From here you can add and edit users.
 
 ## 4. Create a Content Type
 
-At this point, your project is empty. You need to create a **Content Type**. 
+At this point, your project is empty. You need to create a **Content Type**.
 
-We can define a **Content Type** as a collection of entered data represented by fields.  For example, a **Content Type** called `restaurant` may be intended to display information regarding restaurants. A `restaurant` has a `name`, a main `image`, a `description`, maybe even a link to the `restaurant menu`. 
+We can define a **Content Type** as a collection of entered data represented by fields. For example, a **Content Type** called `restaurant` may be intended to display information regarding restaurants. A `restaurant` has a `name`, a main `image`, a `description`, maybe even a link to the `restaurant menu`.
 
-Another example, is a **Content Type** called `menu` which is made up of `menu items`.  These have a `name`, `description of the menu item`, an `image` and perhaps even a `list of ingredients`.  
+Another example, is a **Content Type** called `menu` which is made up of `menu items`. These have a `name`, `description of the menu item`, an `image` and perhaps even a `list of ingredients`.
 
 Any collection of entered data that can have fields can be a **Content Type**. They allow you to manage a class of information in an organized manner.
 
@@ -177,7 +171,7 @@ Content Type `name` is always **singular**. For example, `restaurant` not `resta
 
 The Restaurant Content Type will have a **String** field for the restaurant name, and a **Text** field (with a **WYSIWYG editor**) for the restaurant description.
 
-1. Let's now add a content type. 
+1. Let's now add a content type.
 
 Click the **"+ Add Content Type"** button.
 
@@ -293,7 +287,6 @@ A new directory has been created in the `Project/cms/` folder of your applicatio
 
 ---
 
-
 ## 5. Manage and add data to Content Type
 
 After creating the **Content Types**, we now need to manage and add data to the new Content Types.
@@ -350,7 +343,6 @@ If you want to add Categories directly from the **Restaurants** Content Type, yo
 
 :::
 
-
 ---
 
 ## 6. Set roles and permissions
@@ -395,10 +387,11 @@ Forbidden Access Looks like this:
 
 ::: tip CONGRATULATIONS
 👏 Congratulations, you have now completed the Strapi Quick Start. Where to go next?
- - Learn how to use Strapi with React ([Gatsby](https://blog.strapi.io/building-a-static-website-using-gatsby-and-strapi) or [Next.js](https://blog.strapi.io/strapi-next-setup/)) or Vue.js ([Nuxt.js](https://blog.strapi.io/cooking-a-deliveroo-clone-with-nuxt-vue-js-graphql-strapi-and-stripe-setup-part-1-7/)).
- - Read the [concepts](../concepts/concepts.html) and [articles](../articles/) to deep dive into Strapi.
- - Get help on [StackOverflow](https://stackoverflow.com/questions/tagged/strapi).
- - Read the [source code](https://github.com/strapi/strapi), [contribute](https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md) or [give a star](https://github.com/strapi/strapi) on GitHub.
- - Follow us on [Twitter](https://twitter.com/strapijs) to get the latest news.
- - [Join the vibrant and active Strapi community](https://slack.strapi.io) on Slack. 
-:::
+
+- Learn how to use Strapi with React ([Gatsby](https://blog.strapi.io/building-a-static-website-using-gatsby-and-strapi) or [Next.js](https://blog.strapi.io/strapi-next-setup/)) or Vue.js ([Nuxt.js](https://blog.strapi.io/cooking-a-deliveroo-clone-with-nuxt-vue-js-graphql-strapi-and-stripe-setup-part-1-7/)).
+- Read the [concepts](../concepts/concepts.html) and [articles](../articles/) to deep dive into Strapi.
+- Get help on [StackOverflow](https://stackoverflow.com/questions/tagged/strapi).
+- Read the [source code](https://github.com/strapi/strapi), [contribute](https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md) or [give a star](https://github.com/strapi/strapi) on GitHub.
+- Follow us on [Twitter](https://twitter.com/strapijs) to get the latest news.
+- [Join the vibrant and active Strapi community](https://slack.strapi.io) on Slack.
+  :::

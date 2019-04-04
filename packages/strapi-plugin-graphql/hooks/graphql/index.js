@@ -5,8 +5,8 @@
  */
 
 // Public node modules.
-const _ = require('lodash');
 const path = require('path');
+const _ = require('lodash');
 const glob = require('glob');
 const { ApolloServer } = require('apollo-server-koa');
 const depthLimit = require('graphql-depth-limit');

@@ -1,4 +1,6 @@
-packages/strapi-generate-new/files/public/**
-packages/strapi-generate-admin/files/admin/public/**
-website/
-**/node_modules/**
+dist
+build
+node_modules
+
+packages/strapi-middleware-views
+packages/strapi-plugin-settings-manager

@@ -6,7 +6,7 @@
 }
 
 .modal-content {
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   border: none;
 }
@@ -17,7 +17,7 @@
 
 button {
   &.close {
-    margin-top: -.8rem;
+    margin-top: -0.8rem;
     margin-right: -2rem;
   }
 }

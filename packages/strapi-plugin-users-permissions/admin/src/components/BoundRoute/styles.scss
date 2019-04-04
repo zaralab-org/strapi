@@ -2,14 +2,14 @@
   display: flex;
   height: 2.4rem;
   border-radius: 3px;
-  background-color: #E9EAEB;
+  background-color: #e9eaeb;
   line-height: 2.4rem;
 }
 
 .verb {
   padding: 0 1rem;
   border-radius: 3px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -31,29 +31,29 @@
   font-weight: 600;
 
   > span:not(:first-child) {
-    color: #787E8F;
+    color: #787e8f;
     font-size: 16px;
     font-weight: 500;
   }
 
   > span:last-child {
-    color: #1642E1;
+    color: #1642e1;
     font-weight: 600;
   }
 }
 
 .get {
-  background-color: #008DFE;
+  background-color: #008dfe;
 }
 
 .post {
-  background-color: #69BA05;
+  background-color: #69ba05;
 }
 
 .put {
-  background-color: #F68E0E;
+  background-color: #f68e0e;
 }
 
 .delete {
-  background-color: #F64D0A;
+  background-color: #f64d0a;
 }

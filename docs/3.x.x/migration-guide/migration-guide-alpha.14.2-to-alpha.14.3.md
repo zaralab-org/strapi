@@ -5,8 +5,8 @@
 - Many little fixes
 - Update missing translations
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.3](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.3)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.2...v3.0.0-alpha.14.3](https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.2...v3.0.0-alpha.14.3)
 

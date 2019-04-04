@@ -63,7 +63,8 @@ class ListRow extends React.Component {
             </div>
             <div className="col-md-7">{this.props.item.description}</div>
             <div className="col-md-1">
-              <strong>{this.props.item.nb_users || 0}</strong>&nbsp;
+              <strong>{this.props.item.nb_users || 0}</strong>
+              &nbsp;
               {this.props.item.nb_users > 1 ? 'users' : 'user'}
             </div>
             <div className="col-md-2">

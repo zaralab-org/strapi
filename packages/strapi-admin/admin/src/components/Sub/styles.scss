@@ -1,6 +1,6 @@
 .subBordered {
   margin-bottom: 18px;
-  border-bottom: 1px solid #F7F8F8;
+  border-bottom: 1px solid #f7f8f8;
 }
 
 .subWrapper {
@@ -14,7 +14,7 @@
     font-size: 20px;
     color: #333740;
     letter-spacing: 0;
-    transition: color .2s ease;
+    transition: color 0.2s ease;
   }
 
   p {
@@ -24,22 +24,24 @@
     margin-top: 18px;
     color: #333740;
     font-size: 14px;
-    transition: color .2s ease;
+    transition: color 0.2s ease;
   }
 }
 
-
 .underlinedTitle {
-  border-bottom: 3px solid #F0B41E;
+  border-bottom: 3px solid #f0b41e;
 }
 
-.link{
-  &:hover, &:focus, &:active{
+.link {
+  &:hover,
+  &:focus,
+  &:active {
     text-decoration: none;
   }
 
-  &:hover{
-    > span, p {
+  &:hover {
+    > span,
+    p {
       color: lighten(#333740, 20%);
     }
   }

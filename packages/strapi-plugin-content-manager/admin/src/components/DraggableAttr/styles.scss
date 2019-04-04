@@ -5,13 +5,13 @@
   margin-bottom: 6px;
   padding-left: 10px;
   justify-content: space-between;
-  background: #FAFAFB;
+  background: #fafafb;
   line-height: 28px;
   color: #333740;
   font-size: 13px;
-  border: 1px solid #E3E9F3;
+  border: 1px solid #e3e9f3;
   border-radius: 2px;
-  &:hover{
+  &:hover {
     cursor: move;
   }
   > img {
@@ -22,13 +22,13 @@
 }
 
 .draggableAttrOvered {
-  border: 1px solid #AED4FB!important;
+  border: 1px solid #aed4fb !important;
 }
 
 .editingAttr {
-  background: #E6F0FB!important;
-  border: 1px solid #AED4FB!important;
-  color: #007EFF;
+  background: #e6f0fb !important;
+  border: 1px solid #aed4fb !important;
+  color: #007eff;
   font-weight: 500;
 }
 
@@ -36,7 +36,7 @@
   position: absolute;
   top: 0;
   right: 40px;
-  color: #B4B6BA;
+  color: #b4b6ba;
   font-style: italic;
 }
 
@@ -44,12 +44,12 @@
   position: absolute;
   top: 0;
   right: 40px;
-  color: #858B9A;
+  color: #858b9a;
   font-weight: 400;
 }
 
-.infoLabelHover{
-  color: #007EFF; 
+.infoLabelHover {
+  color: #007eff;
 }
 
 .dragged {
@@ -57,23 +57,23 @@
   height: 30px !important;
   width: 100%;
   margin-bottom: 6px;
-  box-shadow: 0!important;
+  box-shadow: 0 !important;
   padding-left: 10px;
   justify-content: space-between;
-  background: #E6F0FB !important;
+  background: #e6f0fb !important;
   line-height: 30px;
   color: #333740;
-  border: 1px solid darken(#AED4FB, 20%)!important;
+  border: 1px solid darken(#aed4fb, 20%) !important;
   border-radius: 2px;
   cursor: move !important;
 
   > i {
     margin-right: 10px;
     font-size: 10px;
-    color: #B3B5B9;
+    color: #b3b5b9;
   }
 
   > span:last-child {
-    background:#AED4FB;
+    background: #aed4fb;
   }
 }

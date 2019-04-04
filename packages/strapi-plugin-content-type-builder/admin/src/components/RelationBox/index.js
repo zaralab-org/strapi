@@ -87,7 +87,8 @@ class RelationBox extends React.Component {
                       style={divStyle}
                       id={id}
                     />
-                    {value.name}&nbsp;
+                    {value.name}
+                    &nbsp;
                     {value.source && (
                       <FormattedMessage id="content-type-builder.from">
                         {message => (
@@ -112,7 +113,8 @@ class RelationBox extends React.Component {
       <div className={styles.relationBox}>
         <div className={styles.headerContainer}>
           <i className={`fa ${get(this.props.header, 'icon')}`} />
-          {startCase(get(this.props.header, 'name'))}&nbsp;
+          {startCase(get(this.props.header, 'name'))}
+          &nbsp;
           <span style={{ fontStyle: 'italic', fontWeight: '500' }}>
             {get(this.props.header, 'source')
               ? `(${get(this.props.header, 'source')})`

@@ -1,6 +1,7 @@
 # Migration guide from alpha.14.3 to alpha.14.4
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.4.0](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.4.0)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.3...v3.0.0-alpha.14.4.0](https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.3...v3.0.0-alpha.14.4.0)
 

@@ -5,8 +5,8 @@
 - Generated API routes are now pluralized 💥
 - Fix send email method
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.2](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.2)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.1...v3.0.0-alpha.14.2](https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.1...v3.0.0-alpha.14.2)
 

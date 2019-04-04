@@ -20,15 +20,16 @@ try {
       Object.keys(packageJSON.dependencies || [])
         .filter(dependency => dependency.indexOf('strapi-') !== -1)
         .forEach(dependency => {
-          packageJSON.dependencies[dependency] = 'file:../' + dependency;
+          packageJSON.dependencies[dependency] = `file:../${dependency}`;
         });
 
       if (packageJSON.devDependencies) {
         Object.keys(packageJSON.devDependencies || [])
           .filter(devDependency => devDependency.indexOf('strapi-') !== -1)
           .forEach(devDependency => {
-            packageJSON.devDependencies[devDependency] =
-              'file:../' + devDependency;
+            packageJSON.devDependencies[
+              devDependency
+            ] = `file:../${devDependency}`;
           });
       }
 

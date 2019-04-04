@@ -1,7 +1,7 @@
 .container {
   padding-top: 1.6rem;
-  background-color: #FFFFFF;
-  box-shadow: 0 2px 4px #E3E9F3;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px #e3e9f3;
 }
 
 .titleContainer {
@@ -28,7 +28,7 @@
       > div:first-child {
         margin: 0;
         > div:first-child {
-          padding-left: 0!important;
+          padding-left: 0 !important;
           // margin-right: 1.5rem;
         }
       }
@@ -51,7 +51,6 @@
   }
   > span:last-child {
     font-size: 13px;
-
   }
 }
 
@@ -61,7 +60,7 @@
   margin: auto 0;
   line-height: 36px;
   text-align: center;
-  border: 1px solid rgba(28,93,231,0.1);
+  border: 1px solid rgba(28, 93, 231, 0.1);
   border-radius: 3px;
   font-size: 20px;
 }

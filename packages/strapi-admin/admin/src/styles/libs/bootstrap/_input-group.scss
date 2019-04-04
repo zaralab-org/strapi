@@ -43,7 +43,6 @@
   vertical-align: middle; // Match the inputs
 }
 
-
 // Sizing options
 //
 // Remix the default form control sizing classes into new ones for easier
@@ -59,7 +58,6 @@
 .input-group-sm > .input-group-btn > .btn {
   @extend .form-control-sm;
 }
-
 
 //
 // Text input groups
@@ -92,13 +90,12 @@
 
   // scss-lint:disable QualifyingElement
   // Nuke default margins from checkboxes and radios to vertically center within.
-  input[type="radio"],
-  input[type="checkbox"] {
+  input[type='radio'],
+  input[type='checkbox'] {
     margin-top: 0;
   }
   // scss-lint:enable QualifyingElement
 }
-
 
 //
 // Reset rounded corners
@@ -109,7 +106,8 @@
 .input-group-btn:not(:last-child) > .btn,
 .input-group-btn:not(:last-child) > .btn-group > .btn,
 .input-group-btn:not(:last-child) > .dropdown-toggle,
-.input-group-btn:not(:first-child) > .btn:not(:last-child):not(.dropdown-toggle),
+.input-group-btn:not(:first-child)
+  > .btn:not(:last-child):not(.dropdown-toggle),
 .input-group-btn:not(:first-child) > .btn-group:not(:last-child) > .btn {
   @include border-right-radius(0);
 }

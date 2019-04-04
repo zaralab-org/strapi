@@ -17,7 +17,7 @@
     > p {
       margin-top: -1px;
       font-size: 14px;
-      color: #919BAE;
+      color: #919bae;
     }
   }
 }
@@ -33,13 +33,13 @@
 .ide {
   padding-top: 2.3rem;
   > p {
-    color: #006EE7;
+    color: #006ee7;
     font-size: 14px;
   }
   > div {
     width: 455px;
-    background: #FFFFFF;
-    color: #787E8F;
+    background: #ffffff;
+    color: #787e8f;
     font-size: 12px;
     > ul {
       padding-left: 20px;
@@ -60,11 +60,11 @@
   border: none;
   font-weight: 500;
   min-width: 15rem;
-  background: linear-gradient(315deg, #0097F6 0%, #005EEA 100%);
+  background: linear-gradient(315deg, #0097f6 0%, #005eea 100%);
   -webkit-font-smoothing: antialiased;
   color: white;
   &:active {
-    box-shadow: inset 1px 1px 3px rgba(0,0,0,.15);
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.15);
   }
   padding-top: 4px;
   padding-left: 1.6rem;

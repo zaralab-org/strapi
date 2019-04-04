@@ -8,7 +8,9 @@
 //
 
 @at-root {
-  @-ms-viewport { width: device-width; }
+  @-ms-viewport {
+    width: device-width;
+  }
 }
 
 html {
@@ -22,16 +24,16 @@ html {
   box-sizing: inherit;
 }
 
-@import "functions";
-@import "variables";
+@import 'functions';
+@import 'variables';
 
 //
 // Grid mixins
 //
 
-@import "mixins/breakpoints";
-@import "mixins/grid-framework";
-@import "mixins/grid";
+@import 'mixins/breakpoints';
+@import 'mixins/grid-framework';
+@import 'mixins/grid';
 
-@import "grid";
-@import "utilities/flex";
+@import 'grid';
+@import 'utilities/flex';

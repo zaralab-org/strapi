@@ -1,6 +1,6 @@
 const fs = require('fs');
-const shell = require('shelljs');
 const path = require('path');
+const shell = require('shelljs');
 const _ = require('lodash');
 
 const pwd = shell.pwd();

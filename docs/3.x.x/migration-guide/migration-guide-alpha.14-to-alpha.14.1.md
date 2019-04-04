@@ -5,8 +5,8 @@
 - Improve developer experience (Open browser, update documentation)
 - Fix auto reload
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.1](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.1)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.14...v3.0.0-alpha.14.1](https://github.com/strapi/strapi/compare/v3.0.0-alpha.14...v3.0.0-alpha.14.1)
 

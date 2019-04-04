@@ -6,8 +6,8 @@
 - Add bulk actions in content-manager
 - Add Enumeration type to content type builder
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.12.4](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.12.4)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.12.3...v3.0.0-alpha.12.4](https://github.com/strapi/strapi/compare/v3.0.0-alpha.12.3...v3.0.0-alpha.12.4)
 

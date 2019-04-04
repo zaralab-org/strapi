@@ -1,6 +1,6 @@
 # Quick start
 
-To facilitate the development of a plugin, we drastically reduce the amount of commands necessary to install the entire development environment. Before getting started, you need to have Node.js (v8)  and npm (v5) installed.
+To facilitate the development of a plugin, we drastically reduce the amount of commands necessary to install the entire development environment. Before getting started, you need to have Node.js (v8) and npm (v5) installed.
 
 ## Development Environment Setup
 
@@ -36,7 +36,7 @@ When finished with plugin modifications:
 To rebuild plugins:
 
 Run this inside the cloned or forked repo of `strapi`
-1. `cd strapi && npm run setup:build`
 
+1. `cd strapi && npm run setup:build`
 
 Your are now ready to develop your own plugin and live-test your updates! The working local URI should be localhost:4000/admin.

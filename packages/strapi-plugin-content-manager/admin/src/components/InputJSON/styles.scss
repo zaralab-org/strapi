@@ -4,10 +4,10 @@
   margin-bottom: -14px;
   line-height: 18px;
 
-  >div {
+  > div {
     border-radius: 3px;
 
-    >div:last-of-type{
+    > div:last-of-type {
       min-height: 320px;
       max-height: 635px;
       font-weight: 500;
@@ -19,7 +19,8 @@
 .select {
   z-index: 100;
   position: absolute;
-  bottom: 0; right: 0;
+  bottom: 0;
+  right: 0;
   height: 24px;
   padding: 0 10px;
   background: rgba(255, 255, 255, 0.04);
@@ -27,9 +28,10 @@
   border-top-left-radius: 3px !important;
   -webkit-appearance: none;
   text-transform: capitalize;
-  color: #787E8F;
-  
-  &:focus, &:active {
+  color: #787e8f;
+
+  &:focus,
+  &:active {
     outline: 0;
   }
 }

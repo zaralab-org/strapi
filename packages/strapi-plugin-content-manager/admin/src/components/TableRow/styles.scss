@@ -1,20 +1,21 @@
-.tableRow { /* stylelint-disable */
+.tableRow {
+  /* stylelint-disable */
   height: 54px;
   background: #ffffff;
 
   &:hover {
     cursor: pointer;
-    background: #F7F8F8;
+    background: #f7f8f8;
   }
 
-  td{
+  td {
     height: 53px;
     line-height: 53px;
     font-size: 1.3rem;
     font-weight: 400;
     color: #333740;
     border-collapse: collapse;
-    border-top: 1px solid #F1F1F2 !important;
+    border-top: 1px solid #f1f1f2 !important;
   }
 }
 
@@ -36,9 +37,9 @@
   i {
     margin-left: 15px;
     font-size: 1.1rem;
-    color: #0E1622;
+    color: #0e1622;
 
-    &:first-of-type{
+    &:first-of-type {
       margin-left: 0px;
     }
   }

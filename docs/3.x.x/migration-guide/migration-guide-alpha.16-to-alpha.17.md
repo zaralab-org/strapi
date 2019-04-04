@@ -7,6 +7,7 @@
 - Fix mongoose float/decimal
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.17](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.17)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.16...v3.0.0-alpha.17](https://github.com/strapi/strapi/compare/v3.0.0-alpha.16...v3.0.0-alpha.17)
 

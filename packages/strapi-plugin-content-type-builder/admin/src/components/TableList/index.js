@@ -22,7 +22,8 @@ class TableList extends React.Component {
           <div className="row">
             <div className={styles.headerContainer}>
               <div className={styles.titleContainer}>
-                {this.props.availableNumber}&nbsp;
+                {this.props.availableNumber}
+                &nbsp;
                 <FormattedMessage {...{ id: this.props.title }} />
               </div>
               <div className={styles.buttonContainer}>

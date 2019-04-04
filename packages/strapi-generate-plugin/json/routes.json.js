@@ -11,7 +11,7 @@ module.exports = scope => {
         {
           method: 'GET',
           path: '/',
-          handler: scope.globalID + '.index',
+          handler: `${scope.globalID}.index`,
           config: {
             policies: [],
           },

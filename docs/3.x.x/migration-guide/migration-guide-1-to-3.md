@@ -37,7 +37,6 @@ The structure of the configurations has been harmonised and simplified. Files ha
 
 Please refer to the [new documentation](https://github.com/strapi/strapi/blob/master/docs/3.x.x/en/configurations/configurations.md) to set the correct values in each file.
 
-
 ::: note
 Don't forget that middlewares has been removed. Please refers to the right section of this document for more details.
 :::
@@ -83,27 +82,27 @@ The format of the routes has changed to easily integrate multiple strategies to 
     {
       "method": "GET",
       "path": "/post",
-      "handler": "Post.find",
+      "handler": "Post.find"
     },
     {
       "method": "GET",
       "path": "/post/:id",
-      "handler": "Post.findOne",
+      "handler": "Post.findOne"
     },
     {
       "method": "POST",
       "path": "/post",
-      "handler": "Post.create",
+      "handler": "Post.create"
     },
     {
       "method": "PUT",
       "path": "/post/:id",
-      "handler": "Post.update",
+      "handler": "Post.update"
     },
     {
       "method": "DELETE",
       "path": "/post/:id",
-      "handler": "Post.delete",
+      "handler": "Post.delete"
     }
   ]
 }
@@ -111,30 +110,30 @@ The format of the routes has changed to easily integrate multiple strategies to 
 
 ## Controllers
 
-Koa@1.x.x was based on generators whereas Koa@2.x.x is based on async functions. It means that the `yield` word has been replaced by the `await` word. Then the `context` was passed via the function context itself. Now, the `context` is passed  through the function's parameters. Also, you don't need to apply the `try/catch` pattern in each controller's actions.
+Koa@1.x.x was based on generators whereas Koa@2.x.x is based on async functions. It means that the `yield` word has been replaced by the `await` word. Then the `context` was passed via the function context itself. Now, the `context` is passed through the function's parameters. Also, you don't need to apply the `try/catch` pattern in each controller's actions.
 
 #### v1.x
 
 ```js
 module.exports = {
-  find: function *() {
+  find: function*() {
     try {
       this.body = yield Post.find(this.params);
     } catch (error) {
       this.body = error;
     }
-  }
-}
+  },
+};
 ```
 
 #### v3.x
 
 ```js
 module.exports = {
-  find: async (ctx) => {
+  find: async ctx => {
     ctx.body = await Post.find(this.params);
-  }
-}
+  },
+};
 ```
 
 ## Services
@@ -230,7 +229,7 @@ We were based on the popular Waterline ORM. As we said in our blog posts, Waterl
 
 ```js
 module.exports = {
-  find: function *() {
+  find: function*() {
     try {
       this.body = yield Post.find(this.params);
     } catch (error) {
@@ -238,7 +237,7 @@ module.exports = {
     }
   },
 
-  findOne: function *() {
+  findOne: function*() {
     try {
       this.body = yield Post.findOne(this.params);
     } catch (error) {
@@ -247,7 +246,7 @@ module.exports = {
   },
 
   // POST request
-  create: function *() {
+  create: function*() {
     try {
       this.body = yield Post.create(this.request.body);
     } catch (error) {
@@ -256,7 +255,7 @@ module.exports = {
   },
 
   // PUT request
-  update: function *() {
+  update: function*() {
     try {
       this.body = yield Post.update(this.params.id, this.request.body);
     } catch (error) {
@@ -265,13 +264,13 @@ module.exports = {
   },
 
   // DELETE request
-  delete: function *() {
+  delete: function*() {
     try {
       this.body = yield Post.destroy(this.params);
     } catch (error) {
       this.body = error;
     }
-  }
+  },
 };
 ```
 
@@ -279,43 +278,43 @@ module.exports = {
 
 ```js
 module.exports = {
-  find: async (ctx) => {
+  find: async ctx => {
     // Bookshelf
     ctx.body = await Post.forge(this.params).fetchAll();
     // Mongoose
     ctx.body = await Post.find(this.params);
   },
 
-  findOne: async (ctx) => {
+  findOne: async ctx => {
     // Bookshelf
     ctx.body = await Post.forge(this.params).fetch();
     // Mongoose
     ctx.body = await Post.findOne(this.params);
   },
 
-  create: async (ctx) => {
+  create: async ctx => {
     // Bookshelf
     ctx.body = await Post.forge(this.request.body).save();
     // Mongoose
     ctx.body = await Post.create(this.request.body);
   },
 
-  update: async (ctx) => {
+  update: async ctx => {
     // Bookshelf
     ctx.body = await Post.forge({ id: 1234 }).save(this.request.body, {
-      patch: true
+      patch: true,
     });
     // Mongoose
     ctx.body = await Post.update({ id: 1234 }, this.request.body);
   },
 
-  delete: async (ctx) => {
+  delete: async ctx => {
     // Bookshelf
     ctx.body = await Post.forge({ id: 1234 }).destroy();
     // Mongoose
     ctx.body = await Post.findOneAndRemove({ id: 1234 });
-  }
-}
+  },
+};
 ```
 
 ::: note
@@ -347,6 +346,7 @@ You should take a look at these articles to configure SSL and proxy with nginx:
 It works exactly as before. You need to add `strapi-views` into your app's dependencies and configure the views as below:
 
 **Path —** `./config/environments/**/custom.json`
+
 ```json
 {
   "views": {
@@ -374,7 +374,7 @@ Boom is deeply integrated into the core which allows you to enjoy the entire [Bo
 ```js
 module.exports = {
   // GET request
-  find: function *() {
+  find: function*() {
     try {
       const posts = yield Post.find(this.params);
 
@@ -387,7 +387,7 @@ module.exports = {
     } catch (error) {
       this.body = error;
     }
-  }
+  },
 };
 ```
 
@@ -396,7 +396,7 @@ module.exports = {
 ```js
 module.exports = {
   // GET request
-  find: async (ctx) => {
+  find: async ctx => {
     const posts = await Post.find(this.params);
 
     if (post.length === 0) {
@@ -404,6 +404,6 @@ module.exports = {
     } else {
       ctx.send(posts); // Set status to 200.
     }
-  }
+  },
 };
 ```

@@ -1,4 +1,5 @@
-.inputCheckboxWithNestedInputs { /* stylelint-disable */
+.inputCheckboxWithNestedInputs {
+  /* stylelint-disable */
   font-size: 1.3rem;
   font-family: Lato;
   margin-bottom: 1.5rem;
@@ -27,13 +28,13 @@
 
 .descriptionContainer {
   width: 150%;
-  padding-top: .2rem;
+  padding-top: 0.2rem;
   padding-left: 2.5rem;
   line-height: 1.2rem;
   -webkit-font-smoothing: antialiased;
   > small {
     -webkit-font-smoothing: antialiased;
-    color: #9EA7B8;
+    color: #9ea7b8;
     font-family: Lato;
     font-size: 1.2rem;
   }

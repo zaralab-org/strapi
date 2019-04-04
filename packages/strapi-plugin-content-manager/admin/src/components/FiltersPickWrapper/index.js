@@ -137,7 +137,8 @@ class FiltersPickWrapper extends React.PureComponent {
     <FormattedMessage id="content-manager.components.FiltersPickWrapper.PluginHeader.title.filter">
       {message => (
         <span>
-          {this.props.modelName}&nbsp;-&nbsp;
+          {this.props.modelName}
+          &nbsp;-&nbsp;
           <SpanStyled>{message}</SpanStyled>
         </span>
       )}

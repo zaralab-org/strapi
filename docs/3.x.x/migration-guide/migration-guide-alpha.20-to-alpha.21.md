@@ -6,6 +6,7 @@
 - Fix production start
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.21](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.21)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.20...v3.0.0-alpha.21](https://github.com/strapi/strapi/compare/v3.0.0-alpha.20...v3.0.0-alpha.21)
 

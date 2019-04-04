@@ -10,9 +10,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl } from 'react-intl';
 import { bindActionCreators, compose } from 'redux';
-import pluginId from 'pluginId';
-
 import Button from 'components/Button';
+import pluginId from 'pluginId';
 
 import styles from './styles.scss';
 import { loadData } from './actions';
@@ -46,7 +45,7 @@ export class ExamplePage extends React.Component {
         <div className="row">
           <div className="col-md-12">
             <p>This is an example of a fake API call.</p>
-            <p>Loading: {this.props.loading ? 'yes' : 'no'}.</p>
+            <p>Loading:{this.props.loading ? 'yes' : 'no'}.</p>
             {dataBlock}
             <Button
               label={this.props.loading ? 'Loading...' : 'Submit'}

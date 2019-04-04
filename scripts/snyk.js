@@ -12,7 +12,7 @@ try {
   packages
     .filter(pkg => pkg.indexOf('strapi') !== -1)
     .forEach(pkg => {
-      shell.cd('../' + pkg);
+      shell.cd(`../${pkg}`);
       shell.echo(`Testing ${pkg} dependencies`);
 
       const data = shell.exec('snyk test --severity-threshold=high', {

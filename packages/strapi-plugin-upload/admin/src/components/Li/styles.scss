@@ -13,7 +13,7 @@
   margin-left: 20px;
   margin-right: 20px;
   line-height: 48px;
-  border-bottom: 1px solid rgba(14,22,34,0.04);
+  border-bottom: 1px solid rgba(14, 22, 34, 0.04);
   justify-content: space-between;
 
   > div:first-child {
@@ -60,7 +60,7 @@
 }
 
 .copied {
-  background-color: #FAFAFB;
+  background-color: #fafafb;
 
   > div {
     display: flex;
@@ -68,12 +68,12 @@
     justify-content: center;
     padding-top: 1px;
     text-align: center;
-    color: #868FA1;
+    color: #868fa1;
     font-size: 12px;
     font-weight: 500;
     line-height: 54px;
     text-transform: uppercase;
-    letter-spacing: .05rem;
+    letter-spacing: 0.05rem;
   }
 }
 
@@ -85,18 +85,19 @@
     height: 14px;
     width: 14px;
     margin-right: 10px;
-    background-color: #2DD210;
-    border: 1px solid rgba(16,22,34,0.10);
+    background-color: #2dd210;
+    border: 1px solid rgba(16, 22, 34, 0.1);
     border-radius: 3px;
     &:after {
       content: '\f00c';
       position: absolute;
-      top: 0; left: 2px;
+      top: 0;
+      left: 2px;
       font-size: 10px;
       font-family: 'FontAwesome';
       font-weight: 100;
       color: #fff;
-      transition: all .2s;
+      transition: all 0.2s;
     }
   }
 }

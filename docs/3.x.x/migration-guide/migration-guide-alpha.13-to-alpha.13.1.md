@@ -6,8 +6,8 @@
 - New email and login providers
 - Admin security fix
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.13.1](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.13.1)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.13.0.1...v3.0.0-alpha.13.1](https://github.com/strapi/strapi/compare/v3.0.0-alpha.13.0.1...v3.0.0-alpha.13.1)
 

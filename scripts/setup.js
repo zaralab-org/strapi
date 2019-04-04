@@ -36,12 +36,12 @@ const watcher = (label, cmd, withSuccess = true) => {
   }
 };
 
-const asyncWatcher = (label, cmd, withSuccess = true, resolve) => {
+const asyncWatcher = (label, cmd, _, resolve) => {
   if (label.length > 0) {
     shell.echo(label);
   }
 
-  return shell.exec(cmd, { silent, async: true }, (code, stdout, stderr) => {
+  return shell.exec(cmd, { silent, async: true }, (code, _, stderr) => {
     if (stderr && code !== 0) {
       console.error(stderr);
       process.exit(1);
@@ -60,9 +60,6 @@ shell.rm('-f', '/usr/local/bin/strapi.js');
 
 shell.cd('packages/strapi-utils');
 watcher('📦  Linking strapi-utils...', 'npm link');
-
-shell.cd('../strapi-lint');
-watcher('📦  Linking strapi-lint', 'npm link');
 
 shell.cd('../strapi-generate');
 watcher('', 'npm install ../strapi-utils');

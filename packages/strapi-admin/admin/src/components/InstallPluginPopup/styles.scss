@@ -5,7 +5,7 @@
   height: 30px;
   margin-left: 20px;
   border-radius: 0.3rem;
-  background: linear-gradient(315deg, #0097F6 0%, #005EEA 100%);
+  background: linear-gradient(315deg, #0097f6 0%, #005eea 100%);
 
   color: white;
   font-size: 13px;
@@ -40,7 +40,7 @@
     > i {
       margin-right: 10px;
     }
-    color: #5A9E06;
+    color: #5a9e06;
   }
 
   > div:nth-child(2) {
@@ -71,8 +71,8 @@
   flex-shrink: 0;
   width: 144px;
   height: 144px;
-  background: #FAFAFB;
-  border: 1px solid #F3F3F7;
+  background: #fafafb;
+  border: 1px solid #f3f3f7;
   border-radius: 3px;
   background-size: contain;
   line-height: 144px;
@@ -80,7 +80,6 @@
   > img {
     min-width: 72px;
     // max-height: 72px;
-
   }
 }
 
@@ -90,15 +89,16 @@
   border-bottom: 0 !important;
   > button {
     margin-right: -1rem !important;
-    color: #C3C5C8;
+    color: #c3c5c8;
     opacity: 1;
     font-size: 1.8rem;
     font-weight: 100;
     z-index: 999;
-    &:hover, &:focus {
-      color: #C3C5C8;
+    &:hover,
+    &:focus {
+      color: #c3c5c8;
       opacity: 1;
-      outline: 0!important;
+      outline: 0 !important;
       cursor: pointer;
     }
     > span {
@@ -121,7 +121,7 @@
 
 .modalPosition {
   > div {
-    border:none;
+    border: none;
     border-radius: 2px;
     width: 74.5rem;
     padding-left: 0;
@@ -144,7 +144,7 @@
   margin-top: 38px;
   padding: 0 30px;
 
-  background-color: #FAFAFB;
+  background-color: #fafafb;
   font-size: 13px;
   font-weight: 600;
   text-transform: capitalize;
@@ -158,11 +158,11 @@
 }
 
 .navLink {
-  border-top: 2px solid #1C5DE7;
+  border-top: 2px solid #1c5de7;
 }
 
 .notAllowed {
-  opacity: .3;
+  opacity: 0.3;
   cursor: not-allowed !important;
 }
 .pluginDescription {
@@ -184,13 +184,13 @@
 .starsContainer {
   display: flex;
   > div {
-    color: #EED348;
+    color: #eed348;
     > i {
       margin-right: 2px;
     }
   }
   > div:last-child {
-    color: #B3B5B9;
+    color: #b3b5b9;
   }
 }
 

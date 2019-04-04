@@ -3,7 +3,12 @@
 // Easily pump out default styles, as well as :hover, :focus, :active,
 // and disabled options for all buttons
 
-@mixin button-variant($background, $border, $active-background: darken($background, 7.5%), $active-border: darken($border, 10%)) {
+@mixin button-variant(
+  $background,
+  $border,
+  $active-background: darken($background, 7.5%),
+  $active-border: darken($border, 10%)
+) {
   @include color-yiq($background);
   background-color: $background;
   border-color: $border;
@@ -19,9 +24,9 @@
   &.focus {
     // Avoid using mixin so we can pass custom focus shadow properly
     @if $enable-shadows {
-      box-shadow: $btn-box-shadow, 0 0 0 3px rgba($border, .5);
+      box-shadow: $btn-box-shadow, 0 0 0 3px rgba($border, 0.5);
     } @else {
-      box-shadow: 0 0 0 0px rgba($border, .5);
+      box-shadow: 0 0 0 0px rgba($border, 0.5);
     }
   }
 
@@ -56,7 +61,7 @@
 
   &:focus,
   &.focus {
-    box-shadow: 0 0 0 3px rgba($color, .5);
+    box-shadow: 0 0 0 3px rgba($color, 0.5);
   }
 
   &.disabled,
@@ -75,7 +80,13 @@
 }
 
 // Button sizes
-@mixin button-size($padding-y, $padding-x, $font-size, $line-height, $border-radius) {
+@mixin button-size(
+  $padding-y,
+  $padding-x,
+  $font-size,
+  $line-height,
+  $border-radius
+) {
   padding: $padding-y $padding-x;
   font-size: $font-size;
   line-height: $line-height;

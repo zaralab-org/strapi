@@ -1,4 +1,5 @@
-.contentHeader { /* stylelint-disable */
+.contentHeader {
+  /* stylelint-disable */
   position: relative;
   margin: 2.3rem 0rem 3.3rem 0rem;
   font-family: Lato;
@@ -18,14 +19,14 @@
     margin-top: 1.1rem;
     margin-left: 1rem;
     font-size: 1.4rem;
-    color: rgba(16,22,34,0.35);
+    color: rgba(16, 22, 34, 0.35);
     cursor: pointer;
   }
 }
 
 .subTitle {
   margin-top: 0rem;
-  color: #787E8F;
+  color: #787e8f;
   font-size: 1.3rem;
   line-height: 1.5rem;
 }
@@ -38,7 +39,7 @@
 .icoContainer {
   // padding-top: .3rem;
   font-size: 1.2rem;
-  color: rgba(16,22,34,0.35);;
+  color: rgba(16, 22, 34, 0.35);
   > i {
     margin-left: 1rem;
   }
@@ -46,7 +47,7 @@
 }
 
 .buttonContainer {
-  padding-top: .4rem;
+  padding-top: 0.4rem;
   > button:last-child {
     margin-right: 0;
   }

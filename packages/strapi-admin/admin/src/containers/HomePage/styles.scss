@@ -4,7 +4,7 @@
   height: auto;
   margin-top: 41px;
   padding: 22px 25px 19px 96px;
-  background: #F7F8F8;
+  background: #f7f8f8;
   border-radius: 3px;
   line-height: 18px;
   text-decoration: none;
@@ -17,7 +17,7 @@
   > p {
     font-family: Lato-Regular;
     font-size: 13px;
-    color: #919BAE;
+    color: #919bae;
     letter-spacing: 0;
     line-height: 18px;
     margin: 0;
@@ -33,7 +33,7 @@
     position: absolute;
     left: 3rem;
     top: 4rem;
-    color: #42B88E;
+    color: #42b88e;
     font-family: 'FontAwesome';
     font-size: 38px;
   }
@@ -45,7 +45,7 @@
     position: absolute;
     left: 3rem;
     top: 4rem;
-    color: #F0811E;
+    color: #f0811e;
     font-family: 'FontAwesome';
     font-size: 38px;
   }
@@ -55,7 +55,7 @@
   position: relative;
   min-height: 34rem;
   margin-bottom: 20px;
-  background-image: linear-gradient(45deg, #1A67DA 0%, #0097F6 100%) !important;
+  background-image: linear-gradient(45deg, #1a67da 0%, #0097f6 100%) !important;
   line-height: 18px;
   > div {
     position: absolute;
@@ -64,7 +64,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    color: #FFFFFF;
+    color: #ffffff;
 
     > p {
       max-width: 400px;
@@ -93,7 +93,7 @@
   max-width: 49rem !important;
   margin-top: 0 !important;
   margin-bottom: 51px;
-  color: #919BAE !important;
+  color: #919bae !important;
 }
 
 .containerFluid {
@@ -124,7 +124,7 @@
     border-bottom-right-radius: 0;
 
     &:focus {
-      border-color: #E3E9F3;
+      border-color: #e3e9f3;
     }
 
     &::-webkit-input-placeholder {
@@ -136,12 +136,12 @@
     float: left;
     min-width: 100px;
     height: 3.4rem;
-    margin-top: .9rem;
+    margin-top: 0.9rem;
     padding-left: 20px;
     padding-right: 20px;
     text-align: center;
     background: #333740;
-    color: #FFFFFF;
+    color: #ffffff;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     font-size: 12px;
@@ -211,7 +211,7 @@
   height: auto;
   min-width: 50%;
   padding: 20px 20px;
-  background: #F7F8F8;
+  background: #f7f8f8;
   border-radius: 3px;
   line-height: 18px;
   > div {
@@ -255,7 +255,7 @@
 }
 
 .welcomeContentA {
-  color: #005FEA;
+  color: #005fea;
   text-decoration: none;
   &:hover {
     text-decoration: none;
@@ -284,6 +284,10 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

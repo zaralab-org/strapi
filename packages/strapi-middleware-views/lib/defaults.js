@@ -1,5 +1,5 @@
-{
-  "views": {
-    "enabled": false
-  }
-}
+module.exports = {
+  views: {
+    enabled: false,
+  },
+};

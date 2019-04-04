@@ -7,6 +7,7 @@
 - Fix write file on production environment
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.19](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.19)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.18...v3.0.0-alpha.19](https://github.com/strapi/strapi/compare/v3.0.0-alpha.18...v3.0.0-alpha.19)
 

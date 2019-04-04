@@ -7,6 +7,7 @@
 - Update documentation and translations
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.5](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.14.5)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.4.0...v3.0.0-alpha.14.5](https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.4.0...v3.0.0-alpha.14.5)
 

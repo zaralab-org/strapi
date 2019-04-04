@@ -56,7 +56,7 @@ class List extends React.Component {
       ''
     ) : (
       <ButtonPrimaryHotline
-        buttonBackground={'secondaryAddType'}
+        buttonBackground="secondaryAddType"
         label={this.props.listButtonLabel}
         handlei18n={this.props.handlei18n}
         addShape

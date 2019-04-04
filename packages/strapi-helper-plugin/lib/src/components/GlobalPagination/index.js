@@ -175,8 +175,8 @@ GlobalPagination.propTypes = {
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onChangeParams: PropTypes.func,
   params: PropTypes.shape({
-    _page: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     _limit: PropTypes.number,
+    _page: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
 };
 

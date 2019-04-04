@@ -1,12 +1,13 @@
-.containerFluid { /* stylelint-disable */
+.containerFluid {
+  /* stylelint-disable */
   position: relative;
   padding: 18px 30px;
-  .modal-content{
+  .modal-content {
     padding: 0;
   }
 }
 
-.row{
+.row {
   padding-bottom: 36px;
 }
 
@@ -15,8 +16,7 @@
   padding-right: 0 !important;
 }
 
-
-.wrapper{
+.wrapper {
   position: absolute;
   top: 100px;
   left: 30px;
@@ -29,7 +29,7 @@
   font-family: Lato;
   margin-top: -2px;
   -webkit-font-smoothing: antialiased;
-  
+
   > div {
     height: 30px;
 
@@ -49,20 +49,22 @@
 
     > div {
       min-width: 230px;
-      top: 28px !important; left: 53px !important;
+      top: 28px !important;
+      left: 53px !important;
       padding-bottom: 5px !important;
       border-top-right-radius: 0;
-      border: 1px solid #E3E9F3;
-      box-shadow: 0px 2px 4px rgba(227, 233, 243, .5);
+      border: 1px solid #e3e9f3;
+      box-shadow: 0px 2px 4px rgba(227, 233, 243, 0.5);
 
       > button {
-        &:active, :focus {
+        &:active,
+        :focus {
           background-color: #f7f7f9 !important;
           color: #333740;
-          font-weight: 500; 
+          font-weight: 500;
         }
-        
-        &:hover{
+
+        &:hover {
           cursor: pointer;
         }
 
@@ -70,7 +72,7 @@
           padding: 0;
         }
 
-        &:first-of-type{
+        &:first-of-type {
           margin-top: 2px;
         }
 
@@ -78,20 +80,20 @@
           margin-bottom: 2px;
           font-weight: 600;
           font-size: 1.3rem;
-  
+
           &:hover {
             background-color: #ffffff !important;
           }
           > div {
             > span:last-child {
-              color: #007EFF;
+              color: #007eff;
               font-weight: 400;
               cursor: pointer;
             }
           }
         }
 
-        label{
+        label {
           width: 100%;
           outline: none;
         }
@@ -103,8 +105,8 @@
 .listPageDropdownWrapperOpen {
   > div {
     > button {
-      background: #E6F0FB;
-      border: 1px solid #AED4FB !important;
+      background: #e6f0fb;
+      border: 1px solid #aed4fb !important;
       border-radius: 2px;
       border-bottom-right-radius: 0 !important;
       border-bottom-left-radius: 0 !important;
@@ -113,7 +115,7 @@
       &:before {
         content: '\f0db';
         font-family: FontAwesome;
-        color: #007EFF;
+        color: #007eff;
       }
 
       &:after {
@@ -122,19 +124,20 @@
         margin-top: -1px;
         margin-left: 10px;
         font-family: FontAwesome;
-        color: #007EFF;
+        color: #007eff;
         transform: rotateX(180deg);
-        transition: transform .3s ease-out;
+        transition: transform 0.3s ease-out;
       }
 
-      &:hover, :active, :focus {
-        background: #E6F0FB;
-        border: 1px solid #AED4FB;
+      &:hover,
+      :active,
+      :focus {
+        background: #e6f0fb;
+        border: 1px solid #aed4fb;
       }
-
     }
     > div {
-      border-top-color: #AED4FB !important;
+      border-top-color: #aed4fb !important;
       border-top-right-radius: 0;
     }
   }
@@ -144,7 +147,7 @@
   > div {
     > button {
       background: #ffffff !important;
-      border: 1px solid #E3E9F3;
+      border: 1px solid #e3e9f3;
       border-radius: 2px !important;
 
       &:before {
@@ -159,11 +162,13 @@
         margin-left: 10px;
         font-family: FontAwesome;
         color: #323740;
-        transition: transform .3s ease-out;
+        transition: transform 0.3s ease-out;
       }
-      &:hover, :focus, :active  {
+      &:hover,
+      :focus,
+      :active {
         background: #ffffff !important;
-        border: 1px solid #E3E9F3;
+        border: 1px solid #e3e9f3;
       }
     }
   }

@@ -1,16 +1,17 @@
 const path = require('path');
+const execa = require('execa');
+const waitOn = require('wait-on');
 const {
   cleanTestApp,
   generateTestApp,
   startTestApp,
 } = require('./helpers/testAppGenerator');
-const execa = require('execa');
-const waitOn = require('wait-on');
 
 const appName = 'testApp';
 
 const databases = {
-  mongo: `--dbclient=mongo --dbhost=127.0.0.1 --dbport=27017 --dbname=strapi_test --dbusername=root --dbpassword=strapi`,
+  mongo:
+    '--dbclient=mongo --dbhost=127.0.0.1 --dbport=27017 --dbname=strapi_test --dbusername=root --dbpassword=strapi',
   postgres:
     '--dbclient=postgres --dbhost=127.0.0.1 --dbport=5432 --dbname=strapi_test --dbusername=strapi --dbpassword=strapi',
   mysql:

@@ -45,11 +45,9 @@ module.exports = strapi => {
                 engine
               ));
             } catch (err) {
+              strapi.log.error(`\`${engine}\` template engine not installed.`);
               strapi.log.error(
-                '`' + engine + '` template engine not installed.'
-              );
-              strapi.log.error(
-                'Execute `$ npm install ' + engine + ' --save` to install it.'
+                `Execute \`$ npm install ${engine} --save\` to install it.`
               );
               process.exit(1);
             }

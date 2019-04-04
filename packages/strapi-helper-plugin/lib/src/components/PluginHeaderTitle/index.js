@@ -25,13 +25,15 @@ function PluginHeaderTitle({
   return (
     <div>
       <h1 className={styles.pluginHeaderTitleName} id={titleId}>
-        {contentTitle}&nbsp;
+        {contentTitle}
+        &nbsp;
       </h1>
       {withDescriptionAnim ? (
         <LoadingBar />
       ) : (
         <p className={styles.pluginHeaderTitleDescription}>
-          {contentDescription}&nbsp;
+          {contentDescription}
+          &nbsp;
         </p>
       )}
     </div>

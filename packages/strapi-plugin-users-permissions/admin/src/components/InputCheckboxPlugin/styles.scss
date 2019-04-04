@@ -1,5 +1,5 @@
 .inputCheckbox {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   padding-left: 0;
   font-size: 13px;
 
@@ -12,7 +12,7 @@
       position: absolute;
       top: 8px;
       right: 10px;
-      color: #787E8F;
+      color: #787e8f;
       cursor: pointer;
     }
   }
@@ -29,10 +29,12 @@
   &:before {
     content: '';
     position: absolute;
-    left:15px; top: 6px;
-    width: 14px; height: 14px;
-    border: 1px solid rgba(16,22,34,0.15);
-    background-color: #FDFDFD;
+    left: 15px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgba(16, 22, 34, 0.15);
+    background-color: #fdfdfd;
     border-radius: 3px;
   }
 }
@@ -41,18 +43,18 @@
   &:after {
     content: '\f00c';
     position: absolute;
-    top: 0; left: 17px;
+    top: 0;
+    left: 17px;
     font-size: 10px;
     font-family: 'FontAwesome';
     font-weight: 100;
-    color: #1C5DE7;
-    transition: all .2s;
-
+    color: #1c5de7;
+    transition: all 0.2s;
   }
 }
 
 .highlighted {
   border-radius: 3px;
-  background-color: #E9EAEB;
+  background-color: #e9eaeb;
   font-weight: 600;
 }

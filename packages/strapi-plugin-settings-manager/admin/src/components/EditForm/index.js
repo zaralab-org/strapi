@@ -47,8 +47,8 @@ class EditForm extends React.Component {
                 <Button
                   type="button"
                   label={message}
-                  buttonSize={'buttonMd'}
-                  buttonBackground={'secondary'}
+                  buttonSize="buttonMd"
+                  buttonBackground="secondary"
                   onClick={this.props.onCancel}
                   style={buttonStyle}
                 />
@@ -60,8 +60,8 @@ class EditForm extends React.Component {
                   type="submit"
                   loader={this.props.showLoader}
                   label={message}
-                  buttonSize={'buttonLg'}
-                  buttonBackground={'primary'}
+                  buttonSize="buttonLg"
+                  buttonBackground="primary"
                   onClick={this.props.onSubmit}
                 />
               )}

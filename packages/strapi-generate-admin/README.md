@@ -14,8 +14,8 @@ Go in your project: `cd myApp`.
 
 Remove the generated admin panel: `rm -rf admin`.
 
-Create a symlink in order to be able to easily develop the admin panel from your generated 
-Strapi application: `ln -s /usr/local/lib/node_modules/strapi-generate-admin/files/admin admin` 
+Create a symlink in order to be able to easily develop the admin panel from your generated
+Strapi application: `ln -s /usr/local/lib/node_modules/strapi-generate-admin/files/admin admin`
 (supposing `/usr/local/lib/node_modules` is your global node modules folder).
 
 ### Development

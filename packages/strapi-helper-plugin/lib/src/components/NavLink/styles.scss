@@ -2,7 +2,8 @@ a.navLink {
   display: block;
   width: 100%;
   text-decoration: none;
-  span, i {
+  span,
+  i {
     color: #333740;
   }
   span {
@@ -18,8 +19,9 @@ a.navLink {
     background-image: url('../../assets/icons/icon_layout.svg');
   }
   &:hover {
-    span, i {
-      color: #007EFF;
+    span,
+    i {
+      color: #007eff;
     }
     .layout {
       background-image: url('../../assets/icons/icon_layout_hover.svg');

@@ -16,18 +16,20 @@
       font-weight: 500;
       text-align: right;
       cursor: pointer;
-      transition: background .2s ease-out;
+      transition: background 0.2s ease-out;
 
-      &:hover, &:focus, &:active {
+      &:hover,
+      &:focus,
+      &:active {
         color: #333740;
-        background-color: #FAFAFB !important;
+        background-color: #fafafb !important;
       }
 
       > i {
         margin-left: 10px;
-        transition: transform .3s ease-out;
+        transition: transform 0.3s ease-out;
 
-        &[alt="true"] {
+        &[alt='true'] {
           transform: rotateX(180deg);
         }
       }
@@ -60,19 +62,19 @@
 .localeDropdownMenu {
   left: auto !important;
   right: -5px !important;
-  min-width: 90px!important;
+  min-width: 90px !important;
   max-height: 162px !important;
   overflow: auto !important;
   margin: 0 !important;
   padding: 0;
   line-height: 1.8rem;
-  border: none!important;
-  border-top-left-radius: 0!important;
-  border-top-right-radius: 0!important;
+  border: none !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
   overflow: hidden;
   box-shadow: 0 1px 4px 0px rgba(40, 42, 49, 0.05);
 
-  &:before{
+  &:before {
     content: '';
     position: absolute;
     top: -3px;
@@ -86,12 +88,14 @@
     height: 40px;
     padding: 0px 15px;
     line-height: 40px;
-    color: #F75B1D;
+    color: #f75b1d;
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.5;
-    &:hover, &:focus, &:active {
-      background-color: #FAFAFB!important;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #fafafb !important;
       border-radius: 0px;
       cursor: pointer;
     }
@@ -101,7 +105,8 @@
     // height: 44px;
     line-height: 50px;
     margin-bottom: 4px;
-    &:hover, &:active {
+    &:hover,
+    &:active {
       color: #333740;
     }
   }
@@ -110,12 +115,12 @@
     height: 36px;
     line-height: 36px;
     > i {
-      margin-left: 10px
+      margin-left: 10px;
     }
   }
 }
 
-.localeDropdownMenuNotLogged{
+.localeDropdownMenuNotLogged {
   background: transparent !important;
   box-shadow: none !important;
   border: 1px solid #e3e9f3 !important;
@@ -125,11 +130,11 @@
     padding-left: 17px;
 
     &:hover {
-      background-color: #F7F8F8 !important;
+      background-color: #f7f8f8 !important;
     }
   }
 
-  &:before{
+  &:before {
     box-shadow: none !important;
   }
 }
@@ -143,7 +148,7 @@
     color: black;
   }
   &:hover {
-    background-color: #FAFAFB !important;
+    background-color: #fafafb !important;
   }
 }
 

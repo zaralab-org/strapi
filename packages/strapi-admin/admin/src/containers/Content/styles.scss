@@ -1,7 +1,8 @@
 /* Import */
 @import '../../styles/variables/variables';
 
-.content { /* stylelint-ignore */
+.content {
+  /* stylelint-ignore */
   background: $content-background;
   min-height: calc(100vh - #{$header-height});
   width: calc(100vw - #{$left-menu-width});
@@ -9,7 +10,8 @@
   margin-left: $left-menu-width;
 }
 
-.wrapper { /* stylelint-ignore */
+.wrapper {
+  /* stylelint-ignore */
   background: $content-background;
   min-height: 100%;
   width: 100%;

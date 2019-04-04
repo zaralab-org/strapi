@@ -11,7 +11,7 @@
   height: 146px;
   width: 100%;
   padding-top: 28px;
-  border: 2px dashed #E3E9F3;
+  border: 2px dashed #e3e9f3;
   border-radius: 2px;
   text-align: center;
 
@@ -19,15 +19,15 @@
     display: none;
   }
 
-  .icon{
+  .icon {
     width: 82px;
-    path{
-      fill: #CCD0DA;
-      transition: fill .3s ease;
+    path {
+      fill: #ccd0da;
+      transition: fill 0.3s ease;
     }
   }
 
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 }
@@ -36,20 +36,20 @@
   margin-top: 10px;
   text-align: center;
   font-size: 13px;
-  color: #9EA7B8;
+  color: #9ea7b8;
 
   u {
-    color: #1C5DE7;
+    color: #1c5de7;
   }
 }
 
 .pluginInputFileHover {
-  background-color: rgba(28,93,231,0.01) !important;
-  border: 2px dashed rgba(28,93,231,0.10) !important;
+  background-color: rgba(28, 93, 231, 0.01) !important;
+  border: 2px dashed rgba(28, 93, 231, 0.1) !important;
 }
 
 .underline {
-  color: #1C5DE7;
+  color: #1c5de7;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -92,9 +92,9 @@
 }
 
 .quadrat {
-  .icon{
+  .icon {
     path {
-      fill: #729BEF;
+      fill: #729bef;
     }
   }
 

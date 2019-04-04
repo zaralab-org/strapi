@@ -5,8 +5,8 @@
 - Yarn support
 - Search in generated API
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.12.7](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.12.7)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.12.6...v3.0.0-alpha.12.7](https://github.com/strapi/strapi/compare/v3.0.0-alpha.12.6...v3.0.0-alpha.12.7)
 

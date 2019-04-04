@@ -13,9 +13,9 @@ try {
   packages
     .filter(pkg => pkg.indexOf('strapi') !== -1)
     .forEach(pkg => {
-      shell.cd('../' + pkg);
-      shell.echo(pkg + ': npm publish --tag ' + process.argv[2]);
-      shell.exec('npm publish --tag ' + process.argv[2]);
+      shell.cd(`../${pkg}`);
+      shell.echo(`${pkg}: npm publish --tag ${process.argv[2]}`);
+      shell.exec(`npm publish --tag ${process.argv[2]}`);
     });
 } catch (error) {
   console.error(error);

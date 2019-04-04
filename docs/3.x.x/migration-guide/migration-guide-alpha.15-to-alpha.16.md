@@ -5,6 +5,7 @@
 - Fix Relations on filter
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.16](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.16)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.15...v3.0.0-alpha.16](https://github.com/strapi/strapi/compare/v3.0.0-alpha.15...v3.0.0-alpha.16)
 

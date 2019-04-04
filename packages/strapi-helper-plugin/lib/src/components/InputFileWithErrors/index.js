@@ -106,8 +106,11 @@ class InputFileWithErrors extends React.PureComponent {
         />
         {this.state.label && (
           <span className={styles.labelNumber}>
-            &nbsp;({this.state.label}/{value.length})
-          </span>
+            &nbsp;(
+            {this.state.label}
+/{value.length}
+)
+</span>
         )}
         <InputFile
           multiple={multiple}

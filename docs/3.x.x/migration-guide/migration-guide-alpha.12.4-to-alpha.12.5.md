@@ -5,8 +5,8 @@
 - Email providers Mailgun and Sendgrid
 - Add Arabic language
 
-
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.12.5](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.12.5)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.12.4...v3.0.0-alpha.12.5](https://github.com/strapi/strapi/compare/v3.0.0-alpha.12.4...v3.0.0-alpha.12.5)
 

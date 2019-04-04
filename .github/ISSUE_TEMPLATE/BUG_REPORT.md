@@ -18,24 +18,18 @@ about: Create a report to help us improve 🤔.
 <!-- The latest version of Strapi. -->
 
 **Informations**
-- **Node.js version**: <!-- Please ensure you are using the Node LTS version (v10) -->
-- **NPM version**: 
-- **Strapi version**: <!-- Please make sure you are on the latest version -->
-- **Database**: 
-- **Operating system**: 
-- **(Optional) Link to your Project**: <!-- To speedup support, if you have your project on github/gitlab you can provide a link -->
 
+- **Node.js version**: <!-- Please ensure you are using the Node LTS version (v10) -->
+- **NPM version**:
+- **Strapi version**: <!-- Please make sure you are on the latest version -->
+- **Database**:
+- **Operating system**:
+- **(Optional) Link to your Project**: <!-- To speedup support, if you have your project on github/gitlab you can provide a link -->
 
 **What is the current behavior?**
 
-
-
 **Steps to reproduce the problem**
 
-
-
 **What is the expected behavior?**
-
-
 
 **Suggested solutions**

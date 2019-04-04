@@ -116,8 +116,8 @@ Next, verify npm has correctly installed:
 npm -v
 ## You should see "6.x.x"
 ```
-:::
----
+
+## :::
 
 ::: tip NEXT STEPS
 👏 Congrats, you are all set! Now that Node.js is installed you can proceed to the [Quick start](/3.x.x/getting-started/quick-start.html).

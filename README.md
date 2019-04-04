@@ -45,31 +45,34 @@
 #### 🖐 Requirements
 
 Operating system:
- * Ubuntu/Debian
- * CentOS/RHEL
- * MacOS
- * Windows - [WSL Only](https://github.com/strapi/strapi/wiki/Frequently-Asked-Questions#windows)
- * Docker - [Docker-Repo](https://github.com/strapi/strapi-docker)
+
+- Ubuntu/Debian
+- CentOS/RHEL
+- MacOS
+- Windows - [WSL Only](https://github.com/strapi/strapi/wiki/Frequently-Asked-Questions#windows)
+- Docker - [Docker-Repo](https://github.com/strapi/strapi-docker)
 
 **Please note that Strapi may work on other Operating Systems, but are not tested at this time.**
 
 Node:
- * NodeJS >= 10.x
- * NPM >= 6.x
+
+- NodeJS >= 10.x
+- NPM >= 6.x
 
 **Please note that right now Node 11 is not supported, and the current Node LTS (v10) should be used.**
 
 Database:
- * MongoDB >= 3.6
- * MySQL >= 5.6
- * MariaDB >= 10.1
- * PostgreSQL >= 10
+
+- MongoDB >= 3.6
+- MySQL >= 5.6
+- MariaDB >= 10.1
+- PostgreSQL >= 10
 
 #### ⏳ Installation
 
 ```bash
 npm install strapi@alpha -g
-````
+```
 
 **We recommend always using the latest version of Strapi to start your new project**.
 As this project is currently in Alpha, some breaking changes may occur. New releases are shipped every two weeks to fix/enhance the project.
@@ -102,7 +105,7 @@ You can also give it a try using Heroku in one click!
 Be aware that one of the content type builder won't work due to the writing files restriction on the Heroku servers. If you do want to change content types, you need to follow these steps:
 
 1. Click the button above and deploy your app
-2. Clone that repo by using `heroku git:clone -a ` followed by your repo's name
+2. Clone that repo by using `heroku git:clone -a` followed by your repo's name
 3. Go into the cloned projects' folder using `cd` followed by your repo's name
 4. Add the Heroku boilerplate as a remote by running `git remote add boilerplate https://github.com/strapi/strapi-heroku-app`
 5. Pull from this new origin by running `git pull boilerplate master`

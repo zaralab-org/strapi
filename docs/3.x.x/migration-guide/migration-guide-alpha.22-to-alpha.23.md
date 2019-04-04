@@ -6,6 +6,7 @@
 - Documentation
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.23](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.23)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.22...v3.0.0-alpha.23](https://github.com/strapi/strapi/compare/v3.0.0-alpha.22...v3.0.0-alpha.23)
 

@@ -94,9 +94,11 @@ class TableListRow extends React.Component {
         <div className={`col-md-4 ${styles.italic} ${styles.nameContainer}`}>
           <i className={`fa ${this.props.rowItem.icon}`} />
           <span style={{ width: spanStyle }}>
-            {startCase(this.props.rowItem.name)} &nbsp;{pluginSource}
+            {startCase(this.props.rowItem.name)} &nbsp;
+            {pluginSource}
           </span>
-          &nbsp;{temporary}
+          &nbsp;
+          {temporary}
         </div>
         <div className={`col-md-5 text-center ${styles.descriptionContainer}`}>
           <div>{description}</div>

@@ -8,6 +8,7 @@
 - Update the Content Manager customer view
 
 **Useful links:**
+
 - Changelog: [https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.22](https://github.com/strapi/strapi/releases/tag/v3.0.0-alpha.22)
 - GitHub diff: [https://github.com/strapi/strapi/compare/v3.0.0-alpha.21...v3.0.0-alpha.22](https://github.com/strapi/strapi/compare/v3.0.0-alpha.21...v3.0.0-alpha.22)
 

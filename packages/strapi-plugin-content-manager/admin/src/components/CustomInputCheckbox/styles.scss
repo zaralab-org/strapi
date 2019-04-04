@@ -13,10 +13,12 @@
   &:before {
     content: '';
     position: absolute;
-    left:15px; top: 5px;
-    width: 14px; height: 14px;
-    border: 1px solid rgba(16,22,34,0.15);
-    background-color: #FDFDFD;
+    left: 15px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgba(16, 22, 34, 0.15);
+    background-color: #fdfdfd;
     border-radius: 3px;
   }
 }
@@ -25,10 +27,12 @@
   &:before {
     content: '';
     position: absolute;
-    left:15px; top: 19px;
-    width: 14px; height: 14px;
-    border: 1px solid rgba(16,22,34,0.15);
-    background-color: #FDFDFD;
+    left: 15px;
+    top: 19px;
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgba(16, 22, 34, 0.15);
+    background-color: #fdfdfd;
     border-radius: 3px;
   }
 }
@@ -37,13 +41,13 @@
   &:after {
     content: '\f00c';
     position: absolute;
-    top: 5px; left: 17px;
+    top: 5px;
+    left: 17px;
     font-size: 10px;
     font-family: 'FontAwesome';
     font-weight: 100;
-    color: #1C5DE7;
-    transition: all .2s;
-
+    color: #1c5de7;
+    transition: all 0.2s;
   }
 }
 
@@ -51,13 +55,13 @@
   &:after {
     content: '\f00c';
     position: absolute;
-    top: 0px; left: 17px;
+    top: 0px;
+    left: 17px;
     font-size: 10px;
     font-family: 'FontAwesome';
     font-weight: 100;
-    color: #1C5DE7;
-    transition: all .2s;
-
+    color: #1c5de7;
+    transition: all 0.2s;
   }
 }
 
@@ -65,10 +69,11 @@
   &:after {
     content: '\f068';
     position: absolute;
-    top: 5px; left: 18px;
+    top: 5px;
+    left: 18px;
     font-size: 10px;
     font-family: 'FontAwesome';
     font-weight: 100;
-    color: #1C5DE7;
+    color: #1c5de7;
   }
 }
