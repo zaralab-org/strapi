@@ -21,66 +21,65 @@ module.exports = {
   before: require('./before'),
   after: require('./after'),
   targets: {
-
     // Call the `admin` generator.
     '.': ['admin'],
 
     // Main package.
     'package.json': {
-      jsonfile: packageJSON
+      jsonfile: packageJSON,
     },
 
     'config/environments/development/database.json': {
-      jsonfile: database
+      jsonfile: database,
     },
 
     'config/environments/production/database.json': {
-      jsonfile: database
+      jsonfile: database,
     },
 
     'config/environments/staging/database.json': {
-      jsonfile: database
+      jsonfile: database,
     },
 
     // Copy dot files.
     '.editorconfig': {
-      copy: 'editorconfig'
+      copy: 'editorconfig',
     },
     '.gitignore': {
-      copy: 'gitignore'
+      copy: 'gitignore',
     },
 
     // Copy Markdown files with some information.
     'README.md': {
-      template: 'README.md'
+      template: 'README.md',
     },
 
     // Empty API directory.
-    'api': {
-      folder: {}
+    api: {
+      folder: {},
     },
 
     // Empty plugins directory.
-    'plugins': {
-      folder: {}
+    plugins: {
+      folder: {},
     },
 
     // Empty public directory.
-    'public': {
-      folder: {}
+    public: {
+      folder: {},
     },
 
     // Empty public directory.
     'public/uploads': {
-      folder: {}
+      folder: {},
     },
     // Copy gitkeep into uploads directory.
     'public/uploads/.gitkeep': {
-      copy: 'gitkeep'
+      copy: 'gitkeep',
     },
     // Empty node_modules directory.
-    'node_modules': {
-      folder: {}
-    }
-  }
+    node_modules: {
+      folder: {},
+    },
+  },
 };

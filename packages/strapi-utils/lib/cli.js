@@ -27,5 +27,5 @@ const isStrapiApp = () => {
 };
 
 module.exports = {
-  isStrapiApp
+  isStrapiApp,
 };

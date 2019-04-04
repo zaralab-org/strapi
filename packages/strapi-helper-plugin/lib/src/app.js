@@ -60,9 +60,7 @@ const store = strapi.store;
 
 // Define the plugin root component
 function Comp(props) {
-  return (
-    <LoadableApp {...props} />
-  );
+  return <LoadableApp {...props} />;
 }
 
 // Hot reloadable translation json files

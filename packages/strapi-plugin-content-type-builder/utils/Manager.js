@@ -1,7 +1,7 @@
 // This file contains all the methods required to get the number of inputs
 // that will be displayed in the content manager edit view.
 // Since we want to keep the shape of the layout when we remove a field from
-// the content type builder form builder we duplicated this file already used in the content manager. 
+// the content type builder form builder we duplicated this file already used in the content manager.
 const { findIndex, pullAt, range } = require('lodash');
 const { List } = require('immutable');
 
@@ -18,13 +18,16 @@ class Manager {
 
   /**
    * Retrieve the bootstrap col index, name and type of a field
-   * @param {Number} index 
+   * @param {Number} index
    * @returns {Object}
    */
   getAttrInfos(index) {
     const name = this.getAttrName(index);
     const appearance = this.layout.getIn([name, 'appearance']);
-    const type = appearance !== '' && appearance !== undefined ? appearance : this.getType(name);
+    const type =
+      appearance !== '' && appearance !== undefined
+        ? appearance
+        : this.getType(name);
     const bootstrapCol = this.getBootStrapCol(type);
 
     const infos = {
@@ -45,7 +48,7 @@ class Manager {
   getColsToAdd(number) {
     let ret;
 
-    switch(number) {
+    switch (number) {
       case 12:
         ret = [];
         break;
@@ -68,7 +71,6 @@ class Manager {
     const random1 = Math.floor(Math.random() * 1000);
 
     return ret.map((v, i) => {
-
       if (i === 0) {
         return `${v}${random}`;
       }
@@ -80,11 +82,11 @@ class Manager {
   /**
    * Retrieve a field default bootstrap col
    * NOTE: will change if we add the customisation of an input's width
-   * @param {String} type 
+   * @param {String} type
    * @returns {Number}
    */
   getBootStrapCol(type) {
-    switch(type) {
+    switch (type) {
       case 'checkbox':
       case 'boolean':
       case 'date':
@@ -118,11 +120,12 @@ class Manager {
   }
 
   /**
-   * 
+   *
    * Retrieve the last element of each bootstrap line
    * @returns {Array}
    */
-  getLinesBound() { // NOTE: doesn't work for the last element if the line is not full!
+  getLinesBound() {
+    // NOTE: doesn't work for the last element if the line is not full!
     const array = [];
     let sum = 0;
 
@@ -146,10 +149,17 @@ class Manager {
       }
 
       if (i < this.list.size - 1) {
-        let { bootstrapCol: nextBootstrapCol, name: nextName, type: nextType } = this.getAttrInfos(i + 1);
-        
+        let {
+          bootstrapCol: nextBootstrapCol,
+          name: nextName,
+          type: nextType,
+        } = this.getAttrInfos(i + 1);
+
         if (!nextType && nextName.includes('__col')) {
-          nextBootstrapCol = parseInt(nextName.split('__')[1].split('-')[2], 10);
+          nextBootstrapCol = parseInt(
+            nextName.split('__')[1].split('-')[2],
+            10
+          );
         }
 
         if (sum + nextBootstrapCol > 12) {
@@ -164,14 +174,20 @@ class Manager {
   }
 
   /**
-   * 
+   *
    * Retrieve the field's type depending on its name
-   * @param {String} itemName 
+   * @param {String} itemName
    * @returns {String}
    */
   getType(itemName) {
-    return this.state
-      .getIn(['schema', 'models', ...this.keys, 'availableFields', itemName, 'type']);
+    return this.state.getIn([
+      'schema',
+      'models',
+      ...this.keys,
+      'availableFields',
+      itemName,
+      'type',
+    ]);
   }
 
   /**
@@ -179,30 +195,40 @@ class Manager {
    * @param {Number} itemIndex
    * @returns {String}
    */
-  getAttrName(itemIndex){
-    return this.state
-      .getIn(['schema', 'models', ...this.keys, 'fields', itemIndex]);
+  getAttrName(itemIndex) {
+    return this.state.getIn([
+      'schema',
+      'models',
+      ...this.keys,
+      'fields',
+      itemIndex,
+    ]);
   }
 
   /**
    * Retrieve the line bootstrap col sum
-   * @param {Number} leftBound 
-   * @param {Number} rightBound 
+   * @param {Number} leftBound
+   * @param {Number} rightBound
    * @returns {Number}
    */
 
   getLineSize(elements) {
     return elements.reduce((acc, current) => {
       const appearance = this.layout.getIn([current, 'appearance']);
-      const type = appearance !== '' && appearance !== undefined ? appearance : this.getType(current);
-      const col = current.includes('__col') ? parseInt(current.split('__')[1].split('-')[2], 10) : this.getBootStrapCol(type);
+      const type =
+        appearance !== '' && appearance !== undefined
+          ? appearance
+          : this.getType(current);
+      const col = current.includes('__col')
+        ? parseInt(current.split('__')[1].split('-')[2], 10)
+        : this.getBootStrapCol(type);
 
-      return acc += col;
+      return (acc += col);
     }, 0);
   }
 
   /**
-   * 
+   *
    * @param {Bool} dir sup or min
    * @param {Number} pivot the center
    * @returns {Object} the first sup or last sup
@@ -212,12 +238,23 @@ class Manager {
     let hasResult = false;
 
     this.arrayOfEndLineElements.forEach(item => {
-      const rightBondCond = findIndex(this.arrayOfEndLineElements, ['index', pivot]) !== -1 ? item.index < pivot : item.index <= pivot;
-      const cond = dir === true ? item.index >= pivot && !hasResult : rightBondCond;
+      const rightBondCond =
+        findIndex(this.arrayOfEndLineElements, ['index', pivot]) !== -1
+          ? item.index < pivot
+          : item.index <= pivot;
+      const cond =
+        dir === true ? item.index >= pivot && !hasResult : rightBondCond;
 
       if (cond) {
         hasResult = true;
-        result = dir === true ? item : { name: this.list.get(item.index + 1), index: item.index + 1, isFullSize: false };
+        result =
+          dir === true
+            ? item
+            : {
+                name: this.list.get(item.index + 1),
+                index: item.index + 1,
+                isFullSize: false,
+              };
       }
     });
 
@@ -229,16 +266,20 @@ class Manager {
     let sum = 0;
 
     this.arrayOfEndLineElements.forEach((item, i) => {
-      const firstLineItem = i === 0 ? 0 : this.arrayOfEndLineElements[i - 1].index +1;
+      const firstLineItem =
+        i === 0 ? 0 : this.arrayOfEndLineElements[i - 1].index + 1;
       const lastLineItem = item.index + 1;
-      const lineRange = firstLineItem === lastLineItem ? [firstLineItem] : range(firstLineItem, lastLineItem);
+      const lineRange =
+        firstLineItem === lastLineItem
+          ? [firstLineItem]
+          : range(firstLineItem, lastLineItem);
       const lineItems = this.getElementsOnALine(lineRange);
       const lineSize = this.getLineSize(lineItems);
 
       if (lineSize < 10 && i < this.arrayOfEndLineElements.length - 1) {
         const colsToAdd = this.getColsToAdd(12 - lineSize);
         newList = newList.insert(lastLineItem + sum, colsToAdd[0]);
-        
+
         if (colsToAdd.length > 1) {
           newList = newList.insert(lastLineItem + sum, colsToAdd[1]);
         }

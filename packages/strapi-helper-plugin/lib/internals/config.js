@@ -19,13 +19,7 @@ const StrapiPlugin = {
        * we need to exclude dependencies which are not intended for the browser
        * by listing them here.
        */
-      exclude: [
-        'chalk',
-        'compression',
-        'cross-env',
-        'express',
-        'minimist',
-      ],
+      exclude: ['chalk', 'compression', 'cross-env', 'express', 'minimist'],
 
       /**
        * Specify any additional dependencies here. We include core-js and lodash
@@ -38,9 +32,14 @@ const StrapiPlugin = {
     },
 
     entry(helperPkg, pluginPkg) {
-      const dependencyNames = merge(Object.keys(helperPkg.dependencies), Object.keys(pluginPkg.dependencies));
-      const exclude = pluginPkg.dllPlugin.exclude || StrapiPlugin.dllPlugin.defaults.exclude;
-      const include = pluginPkg.dllPlugin.include || StrapiPlugin.dllPlugin.defaults.include;
+      const dependencyNames = merge(
+        Object.keys(helperPkg.dependencies),
+        Object.keys(pluginPkg.dependencies)
+      );
+      const exclude =
+        pluginPkg.dllPlugin.exclude || StrapiPlugin.dllPlugin.defaults.exclude;
+      const include =
+        pluginPkg.dllPlugin.include || StrapiPlugin.dllPlugin.defaults.include;
       const includeDependencies = uniq(dependencyNames.concat(include));
 
       return {

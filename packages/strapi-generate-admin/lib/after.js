@@ -16,21 +16,26 @@ const { packageManager } = require('strapi-utils'); // eslint-disable-line impor
  * @param {Function} cb
  */
 
-module.exports =  (scope, cb) => {
+module.exports = (scope, cb) => {
   // Copy the admin files.
-  fs.copySync(path.resolve(__dirname, '..', 'templates', 'gitignore'), path.join(scope.rootPath, 'admin', '.gitignore'));
+  fs.copySync(
+    path.resolve(__dirname, '..', 'templates', 'gitignore'),
+    path.join(scope.rootPath, 'admin', '.gitignore')
+  );
 
   if (scope.developerMode) {
     return cb();
   }
 
   // Install back-end admin `node_modules`.
-  const cmd = packageManager.isStrapiInstalledWithNPM() ? 'npm install --production --ignore-scripts' : 'yarn install --production --ignore-scripts';
+  const cmd = packageManager.isStrapiInstalledWithNPM()
+    ? 'npm install --production --ignore-scripts'
+    : 'yarn install --production --ignore-scripts';
 
   try {
     shell.exec(cmd, {
       cwd: path.resolve(scope.rootPath, 'admin'),
-      silent: true 
+      silent: true,
     });
 
     cb();

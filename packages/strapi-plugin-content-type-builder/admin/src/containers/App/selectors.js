@@ -7,20 +7,23 @@ import pluginId from '../../pluginId';
 
 const selectGlobalDomain = () => state => state.get(`${pluginId}_global`);
 
-const makeSelectLoading = () => createSelector(
-  selectGlobalDomain(),
-  (globalSate) => globalSate.get('loading'),
-);
+const makeSelectLoading = () =>
+  createSelector(
+    selectGlobalDomain(),
+    globalSate => globalSate.get('loading')
+  );
 
-const makeSelectModels = () => createSelector(
-  selectGlobalDomain(),
-  (globalSate) => globalSate.get('models').toJS(),
-);
+const makeSelectModels = () =>
+  createSelector(
+    selectGlobalDomain(),
+    globalSate => globalSate.get('models').toJS()
+  );
 
-const makeSelectMenu = () => createSelector(
-  selectGlobalDomain(),
-  (globalSate) => globalSate.get('menu').toJS(),
-);
+const makeSelectMenu = () =>
+  createSelector(
+    selectGlobalDomain(),
+    globalSate => globalSate.get('menu').toJS()
+  );
 
 const selectLocationState = () => {
   let prevRoutingState;
@@ -37,7 +40,6 @@ const selectLocationState = () => {
     return prevRoutingStateJS;
   };
 };
-
 
 export {
   selectLocationState,

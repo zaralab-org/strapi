@@ -18,19 +18,21 @@ const _ = require('lodash');
 /* eslint-disable prefer-template */
 module.exports = (scope, cb) => {
   if (!scope.rootPath || !scope.id) {
-    return cb.invalid('Usage: `$ strapi generate:service serviceName --api apiName --plugin pluginName`');
+    return cb.invalid(
+      'Usage: `$ strapi generate:service serviceName --api apiName --plugin pluginName`'
+    );
   }
 
   // `scope.args` are the raw command line arguments.
   _.defaults(scope, {
     id: _.trim(_.deburr(scope.id)),
-    api: scope.args.api || scope.id
+    api: scope.args.api || scope.id,
   });
 
   // Determine default values based on the available scope.
   _.defaults(scope, {
     globalID: _.upperFirst(_.camelCase(scope.id)),
-    ext: '.js'
+    ext: '.js',
   });
 
   // Determine the destination path.
@@ -47,13 +49,13 @@ module.exports = (scope, cb) => {
   _.defaults(scope, {
     rootPath: scope.rootPath,
     filePath,
-    filename: scope.globalID + scope.ext
+    filename: scope.globalID + scope.ext,
   });
 
   // Humanize output.
   _.defaults(scope, {
     humanizeId: _.camelCase(scope.id).toLowerCase(),
-    humanizedPath: '`' + scope.filePath + '`'
+    humanizedPath: '`' + scope.filePath + '`',
   });
 
   // Trigger callback with no error to proceed.

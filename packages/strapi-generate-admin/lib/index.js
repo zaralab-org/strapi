@@ -7,5 +7,5 @@
 module.exports = {
   before: require('./before'),
   after: require('./after'),
-  targets: {}
+  targets: {},
 };

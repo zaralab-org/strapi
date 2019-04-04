@@ -2,13 +2,24 @@
 import { cloneDeep, isArray } from 'lodash';
 import { all, takeLatest, put, fork, call, select } from 'redux-saga/effects';
 import request from 'utils/request';
-import { GET_DOC_INFOS, ON_CONFIRM_DELETE_DOC, ON_UPDATE_DOC, ON_SUBMIT } from './constants';
+import {
+  GET_DOC_INFOS,
+  ON_CONFIRM_DELETE_DOC,
+  ON_UPDATE_DOC,
+  ON_SUBMIT,
+} from './constants';
 import { getDocInfosSucceeded, setFormErrors } from './actions';
-import { makeSelectVersionToDelete, makeSelectPrefix, makeSelectForm } from './selectors';
+import {
+  makeSelectVersionToDelete,
+  makeSelectPrefix,
+  makeSelectForm,
+} from './selectors';
 
 function* getData() {
   try {
-    const response = yield call(request, '/documentation/getInfos', { method: 'GET' });
+    const response = yield call(request, '/documentation/getInfos', {
+      method: 'GET',
+    });
     yield put(getDocInfosSucceeded(response));
   } catch (err) {
     strapi.notification.error('An error occurred');
@@ -50,7 +61,9 @@ function* submit() {
 
     if (body.restrictedAccess && body.password === '') {
       return yield put(
-        setFormErrors({ password: [{ id: 'components.Input.error.validation.required' }] }),
+        setFormErrors({
+          password: [{ id: 'components.Input.error.validation.required' }],
+        })
       );
     }
 
@@ -67,7 +80,10 @@ function* updateDoc(action) {
   try {
     const body = { version: action.version };
     const prefix = yield select(makeSelectPrefix());
-    const response = yield call(request, `${prefix}/regenerateDoc`, { method: 'POST', body });
+    const response = yield call(request, `${prefix}/regenerateDoc`, {
+      method: 'POST',
+      body,
+    });
 
     if (response.ok) {
       yield call(getData);

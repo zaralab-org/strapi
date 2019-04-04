@@ -8,7 +8,9 @@ import styles from './styles.scss';
 function IcoContainer({ icons }) {
   return (
     <div className={styles.icoContainer}>
-      {map(icons, (value, key) => <Ico key={key} {...value} />)}
+      {map(icons, (value, key) => (
+        <Ico key={key} {...value} />
+      ))}
     </div>
   );
 }
@@ -18,7 +20,10 @@ IcoContainer.propTypes = {
 };
 
 IcoContainer.defaultProps = {
-  icons: [{ icoType: 'pencil', onClick: () => {} }, { icoType: 'trash', onClick: () => {} }],
+  icons: [
+    { icoType: 'pencil', onClick: () => {} },
+    { icoType: 'trash', onClick: () => {} },
+  ],
 };
 
 export default IcoContainer;

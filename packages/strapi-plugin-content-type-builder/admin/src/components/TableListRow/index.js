@@ -27,7 +27,9 @@ class TableListRow extends React.Component {
 
   handleEdit = () => {
     router.push(
-      `/plugins/content-type-builder/#edit${this.props.rowItem.name}::contentType::baseSettings`,
+      `/plugins/content-type-builder/#edit${
+        this.props.rowItem.name
+      }::contentType::baseSettings`
     );
   };
 
@@ -42,20 +44,24 @@ class TableListRow extends React.Component {
     router.push(
       `/plugins/content-type-builder/models/${this.props.rowItem.name}${
         this.props.rowItem.source ? `&source=${this.props.rowItem.source}` : ''
-      }`,
+      }`
     );
   };
 
-  toggleModalWarning = () => this.setState({ showWarning: !this.state.showWarning });
+  toggleModalWarning = () =>
+    this.setState({ showWarning: !this.state.showWarning });
 
-  handleShowModalWarning = () => this.setState({ showWarning: !this.state.showWarning });
+  handleShowModalWarning = () =>
+    this.setState({ showWarning: !this.state.showWarning });
 
   render() {
     const name = get(this.props.rowItem, 'name', 'default');
     const pluginSource = this.props.rowItem.source ? (
       <FormattedMessage id="content-type-builder.from">
         {message => (
-          <span style={{ fontStyle: 'italic', color: '#787E8F', fontWeight: '500' }}>
+          <span
+            style={{ fontStyle: 'italic', color: '#787E8F', fontWeight: '500' }}
+          >
             ({message}: {this.props.rowItem.source})
           </span>
         )}
@@ -75,9 +81,13 @@ class TableListRow extends React.Component {
     const icons = this.props.rowItem.source
       ? []
       : [
-        { icoType: 'pencil', onClick: this.handleEdit },
-        { icoType: 'trash', onClick: this.handleShowModalWarning, id: `delete${name}` },
-      ];
+          { icoType: 'pencil', onClick: this.handleEdit },
+          {
+            icoType: 'trash',
+            onClick: this.handleShowModalWarning,
+            id: `delete${name}`,
+          },
+        ];
 
     return (
       <ListRow onClick={this.handleGoTo}>
@@ -98,7 +108,10 @@ class TableListRow extends React.Component {
         <PopUpWarning
           isOpen={this.state.showWarning}
           toggleModal={this.toggleModalWarning}
-          content={{ message: 'content-type-builder.popUpWarning.bodyMessage.contentType.delete' }}
+          content={{
+            message:
+              'content-type-builder.popUpWarning.bodyMessage.contentType.delete',
+          }}
           popUpWarningType={'danger'}
           onConfirm={this.handleDelete}
         />

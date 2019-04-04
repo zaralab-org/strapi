@@ -5,7 +5,7 @@ const Remove = FilterOptionsCTA.extend`
     content: '\f068';
     font-family: FontAwesome;
     font-size: 8px;
-    color: #007EFF;
+    color: #007eff;
   }
 `;
 

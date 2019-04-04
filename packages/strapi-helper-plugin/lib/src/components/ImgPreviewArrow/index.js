@@ -22,10 +22,10 @@ function ImgPreviewArrow(props) {
       className={cn(
         styles.arrowContainer,
         props.type === 'left' && styles.arrowLeft,
-        props.type !== 'left' && styles.arrowRight,
+        props.type !== 'left' && styles.arrowRight
       )}
       style={divStyle}
-      onClick={(e) => {
+      onClick={e => {
         e.preventDefault();
         e.stopPropagation();
         props.onClick(props.type);

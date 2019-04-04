@@ -5,7 +5,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const routesFilePath = path.resolve(process.cwd(), 'admin', 'src', 'routes.json');
+const routesFilePath = path.resolve(
+  process.cwd(),
+  'admin',
+  'src',
+  'routes.json'
+);
 
 const componentExists = require('../utils/componentExists');
 
@@ -24,32 +29,35 @@ const generateUpdatedFileContent = (data, existingContent) => {
 
 module.exports = {
   description: 'Add a route',
-  prompts: [{
-    type: 'input',
-    name: 'container',
-    message: 'Which container should the route show?',
-    validate: (value) => {
-      if ((/.+/).test(value)) {
-        return componentExists(value) ? true : `"${value}" doesn't exist.`;
-      }
+  prompts: [
+    {
+      type: 'input',
+      name: 'container',
+      message: 'Which container should the route show?',
+      validate: value => {
+        if (/.+/.test(value)) {
+          return componentExists(value) ? true : `"${value}" doesn't exist.`;
+        }
 
-      return 'The path is required';
+        return 'The path is required';
+      },
     },
-  }, {
-    type: 'input',
-    name: 'path',
-    message: 'Enter the path of the route.',
-    default: '/about',
-    validate: (value) => {
-      if ((/.+/).test(value)) {
-        return true;
-      }
+    {
+      type: 'input',
+      name: 'path',
+      message: 'Enter the path of the route.',
+      default: '/about',
+      validate: value => {
+        if (/.+/.test(value)) {
+          return true;
+        }
 
-      return 'path is required';
+        return 'path is required';
+      },
     },
-  }],
+  ],
 
-  actions: (data) => {
+  actions: data => {
     const replaceFile = () => {
       // Check if the file is existing or not
       let routesFilesStats;
@@ -67,19 +75,26 @@ module.exports = {
           existingContent = fs.readFileSync(routesFilePath, 'utf8');
         } catch (error) {
           existingContent = false;
-          console.log('Unable to read existing `admin/src/routes.json` file content.');
+          console.log(
+            'Unable to read existing `admin/src/routes.json` file content.'
+          );
         }
 
         try {
           existingContent = JSON.parse(existingContent);
         } catch (error) {
           existingContent = false;
-          console.log('Unable to parse existing `admin/src/routes.json` file content.');
+          console.log(
+            'Unable to parse existing `admin/src/routes.json` file content.'
+          );
         }
       }
 
       // Generate updated content
-      const updatedContent = generateUpdatedFileContent(data, existingContent || {});
+      const updatedContent = generateUpdatedFileContent(
+        data,
+        existingContent || {}
+      );
 
       // Delete the file if existing
       if (routesFilesExists) {
@@ -93,7 +108,11 @@ module.exports = {
 
       // Write the new file
       try {
-        fs.writeFileSync(routesFilePath, JSON.stringify(updatedContent, null, 2), 'utf8');
+        fs.writeFileSync(
+          routesFilePath,
+          JSON.stringify(updatedContent, null, 2),
+          'utf8'
+        );
         console.log('File `admin/src/routes.json` successfully written.');
       } catch (error) {
         console.log('Unable to write `admin/src/routes.json` file.');

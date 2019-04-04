@@ -49,7 +49,11 @@ Cypress.Commands.add('createUser', () => {
 
       if (!hasAdmin) {
         // Create one
-        cy.request({ url: `${backendUrl}/auth/local/register`, method: 'POST', body: user });
+        cy.request({
+          url: `${backendUrl}/auth/local/register`,
+          method: 'POST',
+          body: user,
+        });
       }
     });
 });

@@ -5,7 +5,7 @@ const readline = require('readline');
  *
  * @param  {string} message The message to write next to the indicator
  */
-const animateProgress = (message) => {
+const animateProgress = message => {
   const amountOfDots = 3;
   let i = 0;
   return setInterval(() => {

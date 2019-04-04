@@ -17,27 +17,26 @@ module.exports = {
   auth: {
     mailgun_default_from: {
       label: 'Mailgun Default From',
-      type: 'text'
+      type: 'text',
     },
     mailgun_default_replyto: {
       label: 'Mailgun Default Reply-To',
-      type: 'text'
+      type: 'text',
     },
     mailgun_api_key: {
       label: 'Mailgun API Key',
-      type: 'text'
+      type: 'text',
     },
     mailgun_domain: {
       label: 'Mailgun Domain',
-      type: 'text'
-    }
+      type: 'text',
+    },
   },
-  init: (config) => {
-
+  init: config => {
     const mailgun = mailgunFactory({
       apiKey: config.mailgun_api_key,
       domain: config.mailgun_domain,
-      mute: false
+      mute: false,
     });
 
     return {
@@ -56,11 +55,11 @@ module.exports = {
             subject: options.subject,
             text: options.text,
             html: options.html,
-            ...(options.attachment && { attachment: options.attachment })
+            ...(options.attachment && { attachment: options.attachment }),
           };
           msg['h:Reply-To'] = options.replyTo;
 
-          mailgun.messages().send(msg, function (err) {
+          mailgun.messages().send(msg, function(err) {
             if (err) {
               reject([{ messages: [{ id: 'Auth.form.error.email.invalid' }] }]);
             } else {
@@ -68,7 +67,7 @@ module.exports = {
             }
           });
         });
-      }
+      },
     };
-  }
+  },
 };

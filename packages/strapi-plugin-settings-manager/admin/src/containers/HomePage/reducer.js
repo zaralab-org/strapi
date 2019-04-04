@@ -61,8 +61,7 @@ function homePageReducer(state = initialState, action) {
         .set('formErrors', [])
         .set('formValidations', action.formValidations);
     case CHANGE_INPUT:
-      return state
-        .updateIn(['modifiedData', action.key], () => action.value);
+      return state.updateIn(['modifiedData', action.key], () => action.value);
     case CLOSE_MODAL:
       return state.set('error', !state.get('error'));
     case CANCEL_CHANGES:
@@ -83,11 +82,13 @@ function homePageReducer(state = initialState, action) {
         .set('formErrors', [])
         .set('modifiedData', Map(action.modifiedData));
     case LANGUAGE_DELETE:
-      return state
-        .updateIn(['configsDisplay', 'sections'], list => remove(list, (language) => language.name !== action.languageToDelete));
+      return state.updateIn(['configsDisplay', 'sections'], list =>
+        remove(list, language => language.name !== action.languageToDelete)
+      );
     case DATABASE_DELETE:
-      return state
-        .updateIn(['configsDisplay', 'sections'], list => remove(list, (database) => database.name !== action.databaseToDelete));
+      return state.updateIn(['configsDisplay', 'sections'], list =>
+        remove(list, database => database.name !== action.databaseToDelete)
+      );
     case LANGUAGES_FETCH_SUCCEEDED:
       return state
         .set('loading', false)
@@ -106,16 +107,29 @@ function homePageReducer(state = initialState, action) {
     case CHANGE_DEFAULT_LANGUAGE:
       return state
         .set('configsDisplay', OrderedMap(action.configsDisplay))
-        .updateIn(['modifiedData', 'language.defaultLocale'], () => action.newLanguage);
+        .updateIn(
+          ['modifiedData', 'language.defaultLocale'],
+          () => action.newLanguage
+        );
     case LANGUAGE_ACTION_SUCCEEDED:
-      return state.set('error', !state.get('error')).set('modifiedData', state.get('initialData'));
+      return state
+        .set('error', !state.get('error'))
+        .set('modifiedData', state.get('initialData'));
     case LANGUAGE_ACTION_ERROR:
-      return state.set('didCreatedNewLanguage', true).set('error', !state.get('error'));
+      return state
+        .set('didCreatedNewLanguage', true)
+        .set('error', !state.get('error'));
     case DATABASE_ACTION_SUCCEEDED:
-      const newDefaultDbConnection = state.getIn(['modifiedData', 'database.defaultConnection']);
+      const newDefaultDbConnection = state.getIn([
+        'modifiedData',
+        'database.defaultConnection',
+      ]);
       return state
         .set('modifiedData', Map())
-        .setIn(['modifiedData', 'database.defaultConnection'], newDefaultDbConnection)
+        .setIn(
+          ['modifiedData', 'database.defaultConnection'],
+          newDefaultDbConnection
+        )
         .set('formErrors', [])
         .set('error', !state.get('error'))
         .set('didCreatedNewDb', true);
@@ -131,20 +145,28 @@ function homePageReducer(state = initialState, action) {
         .set('formValidations', action.formValidations)
         .set('modifiedData', Map(action.data));
     case EMPTY_DB_MODIFIED_DATA:
-      const defaultDbConnection = state.getIn(['modifiedData', 'database.defaultConnection']);
+      const defaultDbConnection = state.getIn([
+        'modifiedData',
+        'database.defaultConnection',
+      ]);
       return state
         .set('modifiedData', Map())
         .set('dbNameTarget', 'database.connections.${name}.name') // eslint-disable-line no-template-curly-in-string
         .set('formErrors', [])
-        .setIn(['modifiedData', 'database.defaultConnection'], defaultDbConnection);
+        .setIn(
+          ['modifiedData', 'database.defaultConnection'],
+          defaultDbConnection
+        );
     case NEW_LANGUAGE_POST:
       const sections = state.getIn(['configsDisplay', 'sections']);
-      sections.push({ active: false, name: state.getIn(['modifiedData', 'language.defaultLocale']) });
-      const newSections = sortBy(sections, (o) => o.name);
+      sections.push({
+        active: false,
+        name: state.getIn(['modifiedData', 'language.defaultLocale']),
+      });
+      const newSections = sortBy(sections, o => o.name);
       return state.setIn(['configsDisplay', 'sections'], newSections);
     case SET_ERRORS:
-      return state
-        .set('formErrors', action.errors);
+      return state.set('formErrors', action.errors);
     case SET_LOADER:
       return state.set('showLoader', true);
     case UNSET_LOADER:

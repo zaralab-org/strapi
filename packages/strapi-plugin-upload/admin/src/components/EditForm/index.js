@@ -14,19 +14,26 @@ import Input from 'components/InputsIndex';
 
 import styles from './styles.scss';
 
-class EditForm extends React.Component  {
-  getProviderForm = () => get(this.props.settings, ['providers', this.props.selectedProviderIndex, 'auth'], {});
+class EditForm extends React.Component {
+  getProviderForm = () =>
+    get(
+      this.props.settings,
+      ['providers', this.props.selectedProviderIndex, 'auth'],
+      {}
+    );
 
-  generateSelectOptions = () => (
-    Object.keys(get(this.props.settings, 'providers', {})).reduce((acc, current) => {
-      const option = {
-        id: get(this.props.settings, ['providers', current, 'name']),
-        value: get(this.props.settings, ['providers', current, 'provider']),
-      };
-      acc.push(option);
-      return acc;
-    }, [])
-  )
+  generateSelectOptions = () =>
+    Object.keys(get(this.props.settings, 'providers', {})).reduce(
+      (acc, current) => {
+        const option = {
+          id: get(this.props.settings, ['providers', current, 'name']),
+          value: get(this.props.settings, ['providers', current, 'provider']),
+        };
+        acc.push(option);
+        return acc;
+      },
+      []
+    );
 
   render() {
     return (
@@ -34,7 +41,9 @@ class EditForm extends React.Component  {
         <div className="row">
           <Input
             customBootstrapClass="col-md-6"
-            inputDescription={{ id: 'upload.EditForm.Input.select.inputDescription' }}
+            inputDescription={{
+              id: 'upload.EditForm.Input.select.inputDescription',
+            }}
             inputClassName={styles.inputStyle}
             label={{ id: 'upload.EditForm.Input.select.label' }}
             name="provider"
@@ -50,7 +59,10 @@ class EditForm extends React.Component  {
               {map(this.getProviderForm(), (value, key) => (
                 <Input
                   didCheckErrors={this.props.didCheckErrors}
-                  errors={get(this.props.formErrors, [findIndex(this.props.formErrors, ['name', key]), 'errors'])}
+                  errors={get(this.props.formErrors, [
+                    findIndex(this.props.formErrors, ['name', key]),
+                    'errors',
+                  ])}
                   key={key}
                   label={{ id: value.label }}
                   name={key}
@@ -76,7 +88,7 @@ class EditForm extends React.Component  {
             value={get(this.props.modifiedData, 'sizeLimit', 1) / 1000}
           />
         </div>
-        <div className={styles.separator} style={{ marginTop: '-4px'}} />
+        <div className={styles.separator} style={{ marginTop: '-4px' }} />
         <div className="row">
           <Input
             label={{ id: 'upload.EditForm.Input.toggle.label' }}

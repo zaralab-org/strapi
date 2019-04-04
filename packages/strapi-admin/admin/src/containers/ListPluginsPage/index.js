@@ -116,13 +116,13 @@ function mapDispatchToProps(dispatch) {
       onDeletePluginClick,
       onDeletePluginConfirm,
     },
-    dispatch,
+    dispatch
   );
 }
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 /* Remove this line if the container doesn't have a route and
@@ -138,5 +138,5 @@ const withSaga = injectSaga({ key: 'listPluginsPage', saga });
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(ListPluginsPage);

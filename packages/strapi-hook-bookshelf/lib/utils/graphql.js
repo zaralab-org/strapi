@@ -16,7 +16,6 @@ const utils = require('./');
  */
 
 module.exports = {
-
   /**
    * Get collection identity
    *
@@ -34,9 +33,12 @@ module.exports = {
    */
 
   fetch: (collectionIdentity, collection, criteria) => {
-    return collection.forge(criteria)
-      .fetch({withRelated: helpers.getAssociationsByIdentity(collectionIdentity)})
-      .then(data => _.isEmpty(data) ? data : data.toJSON());
+    return collection
+      .forge(criteria)
+      .fetch({
+        withRelated: helpers.getAssociationsByIdentity(collectionIdentity),
+      })
+      .then(data => (_.isEmpty(data) ? data : data.toJSON()));
   },
 
   /**
@@ -47,12 +49,17 @@ module.exports = {
 
   fetchAll: (collectionIdentity, collection, criteria) => {
     const filters = _.omit(helpers.handleFilters(criteria), value => {
-      return _.isUndefined(value) || _.isNumber(value) ? _.isNull(value) : _.isEmpty(value);
+      return _.isUndefined(value) || _.isNumber(value)
+        ? _.isNull(value)
+        : _.isEmpty(value);
     });
 
-    return collection.forge()
+    return collection
+      .forge()
       .query(filters)
-      .fetchAll({withRelated: helpers.getAssociationsByIdentity(collectionIdentity)})
+      .fetchAll({
+        withRelated: helpers.getAssociationsByIdentity(collectionIdentity),
+      })
       .then(data => data.toJSON() || data);
   },
 
@@ -64,7 +71,9 @@ module.exports = {
 
   fetchLatest: (collectionIdentity, collection, criteria) => {
     const filters = _.omit(helpers.handleFilters(criteria), value => {
-      return _.isUndefined(value) || _.isNumber(value) ? _.isNull(value) : _.isEmpty(value);
+      return _.isUndefined(value) || _.isNumber(value)
+        ? _.isNull(value)
+        : _.isEmpty(value);
     });
 
     // Handle filters
@@ -73,9 +82,12 @@ module.exports = {
 
     delete filters.count;
 
-    return collection.forge(criteria)
+    return collection
+      .forge(criteria)
       .query(filters)
-      .fetchAll({withRelated: helpers.getAssociationsByIdentity(collectionIdentity)})
+      .fetchAll({
+        withRelated: helpers.getAssociationsByIdentity(collectionIdentity),
+      })
       .then(data => data.toJSON() || data);
   },
 
@@ -87,7 +99,9 @@ module.exports = {
 
   fetchFirst: (collectionIdentity, collection, criteria) => {
     const filters = _.omit(helpers.handleFilters(criteria), value => {
-      return _.isUndefined(value) || _.isNumber(value) ? _.isNull(value) : _.isEmpty(value);
+      return _.isUndefined(value) || _.isNumber(value)
+        ? _.isNull(value)
+        : _.isEmpty(value);
     });
 
     // Handle filters
@@ -96,9 +110,12 @@ module.exports = {
 
     delete filters.count;
 
-    return collection.forge(criteria)
+    return collection
+      .forge(criteria)
       .query(filters)
-      .fetchAll({withRelated: helpers.getAssociationsByIdentity(collectionIdentity)})
+      .fetchAll({
+        withRelated: helpers.getAssociationsByIdentity(collectionIdentity),
+      })
       .then(data => data.toJSON() || data);
   },
 
@@ -111,7 +128,9 @@ module.exports = {
   create: (collectionIdentity, rootValue) => {
     return strapi.services[collectionIdentity.toLowerCase()]
       .add(rootValue.context.request.body)
-      .then(data => _.isFunction(_.get(data, 'toJSON')) ? data.toJSON() : data);
+      .then(data =>
+        _.isFunction(_.get(data, 'toJSON')) ? data.toJSON() : data
+      );
   },
 
   /**
@@ -123,11 +142,17 @@ module.exports = {
   update: (collectionIdentity, rootValue, args) => {
     _.merge(args, rootValue.context.request.body);
 
-    const PK = utils.getPK(collectionIdentity.toLowerCase(), null, strapi.models);
+    const PK = utils.getPK(
+      collectionIdentity.toLowerCase(),
+      null,
+      strapi.models
+    );
 
     return strapi.services[collectionIdentity.toLowerCase()]
       .edit(_.set({}, PK, args[PK]), _.omit(args, PK))
-      .then(data => _.isFunction(_.get(data, 'toJSON')) ? data.toJSON() : data);
+      .then(data =>
+        _.isFunction(_.get(data, 'toJSON')) ? data.toJSON() : data
+      );
   },
 
   /**
@@ -141,7 +166,9 @@ module.exports = {
 
     return strapi.services[collectionIdentity.toLowerCase()]
       .remove(args)
-      .then(data => _.isFunction(_.get(data, 'toJSON')) ? data.toJSON() : data);
+      .then(data =>
+        _.isFunction(_.get(data, 'toJSON')) ? data.toJSON() : data
+      );
   },
 
   /**
@@ -150,5 +177,5 @@ module.exports = {
    * @return {Array}
    */
 
-  count: (collectionIdentity, collection) => collection.forge().count()
+  count: (collectionIdentity, collection) => collection.forge().count(),
 };

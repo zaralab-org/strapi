@@ -22,35 +22,37 @@ module.exports = {
     return this.query(buildQuery({ model, filters: { where } })).count();
   },
 
-  findOne: async function (params, populate) {
+  findOne: async function(params, populate) {
     const primaryKey = params[this.primaryKey] || params.id;
 
     if (primaryKey) {
       params = {
-        [this.primaryKey]: primaryKey
+        [this.primaryKey]: primaryKey,
       };
     }
 
-    const record = await this
-      .forge(params)
-      .fetch({
-        withRelated: populate || this.associations.map(x => x.alias)
-      });
+    const record = await this.forge(params).fetch({
+      withRelated: populate || this.associations.map(x => x.alias),
+    });
 
     return record ? record.toJSON() : record;
   },
 
-  create: async function (params) {
-    return this
-      .forge()
-      .save(Object.keys(params).reduce((acc, current) => {
-        if (_.get(this._attributes, [current, 'type']) || _.get(this._attributes, [current, 'model'])) {
-          acc[current] = params[current];
-        }
+  create: async function(params) {
+    return this.forge()
+      .save(
+        Object.keys(params).reduce((acc, current) => {
+          if (
+            _.get(this._attributes, [current, 'type']) ||
+            _.get(this._attributes, [current, 'model'])
+          ) {
+            acc[current] = params[current];
+          }
 
-        return acc;
-      }, {}))
-      .catch((err) => {
+          return acc;
+        }, {})
+      )
+      .catch(err => {
         if (err.detail) {
           const field = _.last(_.words(err.detail.split('=')[0]));
           err = { message: `This ${field} is already taken`, field };
@@ -60,7 +62,7 @@ module.exports = {
       });
   },
 
-  update: async function (search, params = {}) {
+  update: async function(search, params = {}) {
     if (_.isEmpty(params)) {
       params = search;
     }
@@ -69,21 +71,21 @@ module.exports = {
 
     if (primaryKey) {
       search = {
-        [this.primaryKey]: primaryKey
+        [this.primaryKey]: primaryKey,
       };
     } else {
       const entry = await module.exports.findOne.call(this, search);
 
       search = {
-        [this.primaryKey]: entry[this.primaryKey] || entry.id
+        [this.primaryKey]: entry[this.primaryKey] || entry.id,
       };
     }
 
     return this.forge(search)
       .save(params, {
-        patch: true
+        patch: true,
       })
-      .catch((err) => {
+      .catch(err => {
         const field = _.last(_.words(err.detail.split('=')[0]));
         const error = { message: `This ${field} is already taken`, field };
 
@@ -91,35 +93,28 @@ module.exports = {
       });
   },
 
-  delete: async function (params) {
-    return await this
-      .forge({
-        [this.primaryKey]: params[this.primaryKey] || params.id
-      })
-      .destroy();
+  delete: async function(params) {
+    return await this.forge({
+      [this.primaryKey]: params[this.primaryKey] || params.id,
+    }).destroy();
   },
 
-  search: async function (params) {
-    return this
-      .query(function(qb) {
-        qb
-          .whereRaw(`LOWER(hash) LIKE ?`, [`%${params.id}%`])
-          .orWhereRaw(`LOWER(name) LIKE ?`, [`%${params.id}%`]);
-      })
-      .fetchAll();
+  search: async function(params) {
+    return this.query(function(qb) {
+      qb.whereRaw(`LOWER(hash) LIKE ?`, [`%${params.id}%`]).orWhereRaw(
+        `LOWER(name) LIKE ?`,
+        [`%${params.id}%`]
+      );
+    }).fetchAll();
   },
 
-  addPermission: async function (params) {
-    return this
-      .forge(params)
-      .save();
+  addPermission: async function(params) {
+    return this.forge(params).save();
   },
 
-  removePermission: async function (params) {
-    return this
-      .forge({
-        [this.primaryKey]: params[this.primaryKey] || params.id
-      })
-      .destroy();
-  }
+  removePermission: async function(params) {
+    return this.forge({
+      [this.primaryKey]: params[this.primaryKey] || params.id,
+    }).destroy();
+  },
 };

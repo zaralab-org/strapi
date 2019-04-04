@@ -16,7 +16,13 @@ module.exports = function() {
         return resolve();
       }
 
-      const sourcePath = path.resolve(this.config.appPath, 'admin', 'admin', 'build', 'index.html');
+      const sourcePath = path.resolve(
+        this.config.appPath,
+        'admin',
+        'admin',
+        'build',
+        'index.html'
+      );
 
       fs.access(path.resolve(this.config.appPath, 'admin', 'admin'), err => {
         if (err && err.code !== 'ENOENT') {
@@ -42,9 +48,22 @@ module.exports = function() {
             $('script').each(function() {
               if ($(this).attr('src')) {
                 const parse = path.parse($(this).attr('src'));
-                const url = URL.parse(_.get(strapi.config.currentEnvironment.server, 'admin.build.host', _.get(strapi.config.currentEnvironment.server, 'admin.path', '/admin')));
+                const url = URL.parse(
+                  _.get(
+                    strapi.config.currentEnvironment.server,
+                    'admin.build.host',
+                    _.get(
+                      strapi.config.currentEnvironment.server,
+                      'admin.path',
+                      '/admin'
+                    )
+                  )
+                );
 
-                $(this).attr('src', `${url.pathname.replace(/\/$/, '')}/${parse.base}`);
+                $(this).attr(
+                  'src',
+                  `${url.pathname.replace(/\/$/, '')}/${parse.base}`
+                );
               }
             });
 
@@ -54,12 +73,19 @@ module.exports = function() {
               $('body').removeAttr('back');
             } else {
               // Update attribute with the current server configurations.
-              $('body').attr('front', `${_.get(strapi.config.currentEnvironment.server, 'admin.path', '/admin')}`);
+              $('body').attr(
+                'front',
+                `${_.get(
+                  strapi.config.currentEnvironment.server,
+                  'admin.path',
+                  '/admin'
+                )}`
+              );
               $('body').attr('back', `/`);
             }
 
             if (!strapi.config.currentEnvironment.server.production) {
-              fs.writeFile(sourcePath, $.html(), (err) => {
+              fs.writeFile(sourcePath, $.html(), err => {
                 if (err) {
                   return reject(err);
                 }

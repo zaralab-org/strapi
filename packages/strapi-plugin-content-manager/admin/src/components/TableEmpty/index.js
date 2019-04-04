@@ -26,7 +26,10 @@ function TableEmpty({ colspan, contentType, filters, search }) {
   return (
     <tr className={styles.tableEmpty}>
       <td colSpan={colspan + 1}>
-        <FormattedMessage id={`content-manager.components.TableEmpty.${id}`} values={values} />
+        <FormattedMessage
+          id={`content-manager.components.TableEmpty.${id}`}
+          values={values}
+        />
       </td>
     </tr>
   );

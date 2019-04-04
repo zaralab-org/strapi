@@ -22,10 +22,16 @@ function TableDelete({ colspan, number, onToggleDeleteAll }) {
         >
           {message => <span className={styles.tableDeleteSpan}>{message}</span>}
         </FormattedMessage>
-        <FormattedMessage
-          id="content-manager.components.TableDelete.delete"
-        >
-          {message => <span className={styles.deleteAll} id="deleteAllData" onClick={onToggleDeleteAll}>{message}</span>}
+        <FormattedMessage id="content-manager.components.TableDelete.delete">
+          {message => (
+            <span
+              className={styles.deleteAll}
+              id="deleteAllData"
+              onClick={onToggleDeleteAll}
+            >
+              {message}
+            </span>
+          )}
         </FormattedMessage>
       </td>
     </tr>

@@ -1,8 +1,8 @@
 /**
-*
-* PopUpWarning
-*
-*/
+ *
+ * PopUpWarning
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -19,14 +19,21 @@ import IcoWarning from '../../assets/icons/icon_warning.svg';
 import styles from './styles.scss';
 
 const icons = {
-  'danger': IcoDanger,
-  'info': IcoInfo,
-  'notFound': IcoNotFound,
-  'success': IcoSuccess,
-  'warning': IcoWarning,
+  danger: IcoDanger,
+  info: IcoInfo,
+  notFound: IcoNotFound,
+  success: IcoSuccess,
+  warning: IcoWarning,
 };
 
-function PopUpWarning({ content, isOpen, onConfirm, onlyConfirmButton, popUpWarningType, toggleModal }) {
+function PopUpWarning({
+  content,
+  isOpen,
+  onConfirm,
+  onlyConfirmButton,
+  popUpWarningType,
+  toggleModal,
+}) {
   const buttons = [
     {
       className: styles.secondary,
@@ -56,23 +63,38 @@ function PopUpWarning({ content, isOpen, onConfirm, onlyConfirmButton, popUpWarn
 
   return (
     <div className={styles.popUpWarningHelper}>
-      <Modal isOpen={isOpen} toggle={toggleModal} className={styles.modalPosition}>
+      <Modal
+        isOpen={isOpen}
+        toggle={toggleModal}
+        className={styles.modalPosition}
+      >
         <ModalHeader toggle={toggleModal} className={styles.popUpWarningHeader}>
-          <FormattedMessage id={content.title || 'components.popUpWarning.title'} />
+          <FormattedMessage
+            id={content.title || 'components.popUpWarning.title'}
+          />
         </ModalHeader>
         <ModalBody className={styles.modalBodyHelper}>
           <div className={styles.modalBodyContainerHelper}>
             <img src={icons[popUpWarningType]} alt="icon" />
-            <FormattedMessage id={content.message || 'components.popUpWarning.message'}>
-              {(message) => (
-                <p>{message}</p>
-              )}
+            <FormattedMessage
+              id={content.message || 'components.popUpWarning.message'}
+            >
+              {message => <p>{message}</p>}
             </FormattedMessage>
           </div>
           <div className={styles.popUpWarningButtonContainer}>
-            {map(footerButtons, (button) => (
+            {map(footerButtons, button => (
               <FormattedMessage id={button.message} key={button.id}>
-                {(message) => <Button onClick={button.handleClick} className={button.className} id={button.id} style={button.style}>{message}</Button>}
+                {message => (
+                  <Button
+                    onClick={button.handleClick}
+                    className={button.className}
+                    id={button.id}
+                    style={button.style}
+                  >
+                    {message}
+                  </Button>
+                )}
               </FormattedMessage>
             ))}
           </div>

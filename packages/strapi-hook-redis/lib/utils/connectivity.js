@@ -12,20 +12,22 @@ module.exports = (scope, success, error) => {
     port: scope.database.settings.port,
     host: scope.database.settings.host,
     password: scope.database.settings.password,
-    db: scope.database.settings.database
+    db: scope.database.settings.database,
   });
 
-  redis.connect((err) => {
+  redis.connect(err => {
     redis.disconnect();
 
     if (err) {
-      logger.warn('Database connection has failed! Make sure your database is running.');
+      logger.warn(
+        'Database connection has failed! Make sure your database is running.'
+      );
       return error();
     }
 
     logger.info('The app has been connected to the database successfully!');
 
-    rimraf(scope.tmpPath, (err) => {
+    rimraf(scope.tmpPath, err => {
       if (err) {
         console.log(`Error removing connection test folder: ${scope.tmpPath}`);
       }
@@ -33,6 +35,5 @@ module.exports = (scope, success, error) => {
 
       success();
     });
-
   });
 };

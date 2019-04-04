@@ -7,15 +7,28 @@ export function* deleteContentType(action) {
   try {
     if (action.sendRequest) {
       const requestUrl = `/content-type-builder/models/${action.itemToDelete}`;
-      const response = yield call(request, requestUrl, { method: 'DELETE' }, true);
+      const response = yield call(
+        request,
+        requestUrl,
+        { method: 'DELETE' },
+        true
+      );
 
       if (response.ok && action.updateLeftMenu) {
-        action.updatePlugin('content-manager', 'leftMenuSections', action.leftMenuContentTypes);
-        strapi.notification.success('content-type-builder.notification.success.contentTypeDeleted');
+        action.updatePlugin(
+          'content-manager',
+          'leftMenuSections',
+          action.leftMenuContentTypes
+        );
+        strapi.notification.success(
+          'content-type-builder.notification.success.contentTypeDeleted'
+        );
       }
     }
-  } catch(error) {
-    strapi.notification.error('content-type-builder.notification.error.message');
+  } catch (error) {
+    strapi.notification.error(
+      'content-type-builder.notification.error.message'
+    );
   }
 }
 
@@ -25,12 +38,12 @@ export function* fetchModels() {
     const data = yield call(request, requestUrl, { method: 'GET' });
 
     yield put(modelsFetchSucceeded(data));
-  } catch(error) {
-    strapi.notification.error('content-type-builder.notification.error.message');
+  } catch (error) {
+    strapi.notification.error(
+      'content-type-builder.notification.error.message'
+    );
   }
 }
-
-
 
 // Individual exports for testing
 function* defaultSaga() {

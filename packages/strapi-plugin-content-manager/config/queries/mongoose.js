@@ -42,7 +42,9 @@ module.exports = {
         case 'string':
         case 'text':
         case 'password':
-          return acc.concat({ [curr]: { $regex: params.search, $options: 'i' } });
+          return acc.concat({
+            [curr]: { $regex: params.search, $options: 'i' },
+          });
         case 'boolean':
           if (params.search === 'true' || params.search === 'false') {
             return acc.concat({ [curr]: params.search === 'true' });
@@ -78,7 +80,9 @@ module.exports = {
         case 'string':
         case 'text':
         case 'password':
-          return acc.concat({ [curr]: { $regex: params.search, $options: 'i' } });
+          return acc.concat({
+            [curr]: { $regex: params.search, $options: 'i' },
+          });
         case 'boolean':
           if (params.search === 'true' || params.search === 'false') {
             return acc.concat({ [curr]: params.search === 'true' });

@@ -62,9 +62,11 @@ class AttributeRow extends React.Component {
     this.setState({ showWarning: false });
   };
 
-  handleShowModalWarning = () => this.setState({ showWarning: !this.state.showWarning });
+  handleShowModalWarning = () =>
+    this.setState({ showWarning: !this.state.showWarning });
 
-  toggleModalWarning = () => this.setState({ showWarning: !this.state.showWarning });
+  toggleModalWarning = () =>
+    this.setState({ showWarning: !this.state.showWarning });
 
   renderAttributesBox = () => {
     const attributeType = this.props.row.params.type || 'relation';
@@ -74,7 +76,8 @@ class AttributeRow extends React.Component {
 
   render() {
     const isNotEditable =
-      has(this.props.row.params, 'configurable') && !this.props.row.params.configurable;
+      has(this.props.row.params, 'configurable') &&
+      !this.props.row.params.configurable;
     const type =
       get(this.props.row, 'params.type') === 'text' &&
       get(this.props.row, 'params.appearance.WYSIWYG') === true
@@ -102,12 +105,13 @@ class AttributeRow extends React.Component {
     const icons = isNotEditable
       ? [{ icoType: 'lock' }]
       : [
-        { icoType: 'pencil', onClick: this.handleEdit },
-        {
-          icoType: 'trash',
-          onClick: () => this.setState({ showWarning: !this.state.showWarning }),
-        },
-      ];
+          { icoType: 'pencil', onClick: this.handleEdit },
+          {
+            icoType: 'trash',
+            onClick: () =>
+              this.setState({ showWarning: !this.state.showWarning }),
+          },
+        ];
     const editableStyle = isNotEditable ? '' : styles.editable;
 
     return (
@@ -129,7 +133,10 @@ class AttributeRow extends React.Component {
         <PopUpWarning
           isOpen={this.state.showWarning}
           toggleModal={this.toggleModalWarning}
-          content={{ message: 'content-type-builder.popUpWarning.bodyMessage.attribute.delete' }}
+          content={{
+            message:
+              'content-type-builder.popUpWarning.bodyMessage.attribute.delete',
+          }}
           popUpWarningType={'danger'}
           onConfirm={this.handleDelete}
         />

@@ -20,10 +20,10 @@ const fileHelper = require('../file');
  * Then use `file` helper to write it to its destination.
  */
 
-module.exports = function (options, cb) {
+module.exports = function(options, cb) {
   cb = reportback.extend(cb, {
     noTemplate: 'error',
-    alreadyExists: 'error'
+    alreadyExists: 'error',
   });
 
   // Compute the canonical path to a template
@@ -33,7 +33,10 @@ module.exports = function (options, cb) {
     options.templatesDirectory = options.templatesDirectory(options);
   }
 
-  const absTemplatePath = path.resolve(options.templatesDirectory, options.templatePath);
+  const absTemplatePath = path.resolve(
+    options.templatesDirectory,
+    options.templatePath
+  );
 
   fs.readFile(absTemplatePath, 'utf8', (err, contents) => {
     if (err) {
@@ -49,7 +52,7 @@ module.exports = function (options, cb) {
 
     try {
       const compiled = _.template(contents, {
-        interpolate: /<%=([\s\S]+?)%>/g
+        interpolate: /<%=([\s\S]+?)%>/g,
       });
       contents = compiled(options);
 
@@ -62,8 +65,11 @@ module.exports = function (options, cb) {
       return cb(e);
     }
 
-    return fileHelper(_.merge(options, {
-      contents
-    }), cb);
+    return fileHelper(
+      _.merge(options, {
+        contents,
+      }),
+      cb
+    );
   });
 };

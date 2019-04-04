@@ -19,7 +19,10 @@ module.exports = strapi => {
         strapi.app.context.log = strapi.log;
       }
 
-      if (strapi.config.middleware.settings.logger.requests && strapi.log.levelVal <= 20) {
+      if (
+        strapi.config.middleware.settings.logger.requests &&
+        strapi.log.levelVal <= 20
+      ) {
         strapi.app.use(async (ctx, next) => {
           const start = Date.now();
 
@@ -32,6 +35,6 @@ module.exports = strapi => {
       }
 
       cb();
-    }
+    },
   };
 };

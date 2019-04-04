@@ -14,6 +14,6 @@ module.exports = strapi => {
       strapi.app.use(strapi.koaMiddlewares.compress());
 
       cb();
-    }
+    },
   };
 };

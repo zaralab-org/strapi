@@ -17,7 +17,7 @@ export default function setParallelAttribute(newAttribute) {
           parallelAttribute.params.nature = 'oneToMany';
           break;
         case 'oneToMany':
-          parallelAttribute.params.nature = 'manyToOne';          
+          parallelAttribute.params.nature = 'manyToOne';
           break;
         default:
         //

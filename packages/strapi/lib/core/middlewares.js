@@ -17,7 +17,7 @@ module.exports = function() {
       glob(
         './node_modules/*(koa-*|kcors)',
         {
-          cwd
+          cwd,
         },
         (err, files) => {
           if (err) {
@@ -34,7 +34,7 @@ module.exports = function() {
       glob(
         './node_modules/*(koa-*|kcors)',
         {
-          cwd
+          cwd,
         },
         (err, files) => {
           if (err) {
@@ -51,7 +51,7 @@ module.exports = function() {
       glob(
         './node_modules/*(strapi-middleware-*)/*/*(index|defaults).*(js|json)',
         {
-          cwd
+          cwd,
         },
         (err, files) => {
           if (err) {
@@ -68,7 +68,7 @@ module.exports = function() {
       glob(
         './*/*(index|defaults).*(js|json)',
         {
-          cwd
+          cwd,
         },
         (err, files) => {
           if (err) {
@@ -85,7 +85,7 @@ module.exports = function() {
       glob(
         './*/*(index|defaults).*(js|json)',
         {
-          cwd
+          cwd,
         },
         (err, files) => {
           if (err) {
@@ -102,7 +102,7 @@ module.exports = function() {
       glob(
         './*/middlewares/*/*(index|defaults).*(js|json)',
         {
-          cwd
+          cwd,
         },
         (err, files) => {
           if (err) {
@@ -112,11 +112,11 @@ module.exports = function() {
           mountMiddlewares.call(this, files, cwd, true)(resolve, reject);
         }
       );
-    })
+    }),
   ]);
 };
 
-const requireMiddlewares = function (files, cwd) {
+const requireMiddlewares = function(files, cwd) {
   return (resolve, reject) =>
     parallel(
       files.map(p => cb => {
@@ -137,7 +137,7 @@ const requireMiddlewares = function (files, cwd) {
           Object.defineProperty(this.koaMiddlewares, name, {
             configurable: false,
             enumerable: true,
-            get: () => require(path.resolve(cwd, p))
+            get: () => require(path.resolve(cwd, p)),
           });
         }
 
@@ -153,16 +153,17 @@ const requireMiddlewares = function (files, cwd) {
     );
 };
 
-const mountMiddlewares = function (files, cwd, isPlugin) {
+const mountMiddlewares = function(files, cwd, isPlugin) {
   return (resolve, reject) =>
     parallel(
       files.map(p => cb => {
-        const folders = p.replace(/^.\/node_modules\/strapi-middleware-/, './')
+        const folders = p
+          .replace(/^.\/node_modules\/strapi-middleware-/, './')
           .split('/');
         const name = isPlugin ? folders[folders.length - 2] : folders[1];
 
         this.middleware[name] = this.middleware[name] || {
-          loaded: false
+          loaded: false,
         };
 
         if (endsWith(p, 'index.js') && !this.middleware[name].load) {
@@ -170,7 +171,7 @@ const mountMiddlewares = function (files, cwd, isPlugin) {
           Object.defineProperty(this.middleware[name], 'load', {
             configurable: false,
             enumerable: true,
-            get: () => require(path.resolve(cwd, p))(this)
+            get: () => require(path.resolve(cwd, p))(this),
           });
         } else if (endsWith(p, 'defaults.json')) {
           this.middleware[name].defaults = require(path.resolve(cwd, p));

@@ -5,19 +5,22 @@ const shell = require('shelljs');
 
 module.exports = {
   description: 'Add a langauge',
-  prompts: [{
-    type: 'input',
-    name: 'language',
-    message: 'What is the language you want to add i18n support for (e.g. "fr", "de")?',
-    default: 'fr',
-    validate: (value) => {
-      if ((/.+/).test(value) && value.length === 2) {
-        return true;
-      }
+  prompts: [
+    {
+      type: 'input',
+      name: 'language',
+      message:
+        'What is the language you want to add i18n support for (e.g. "fr", "de")?',
+      default: 'fr',
+      validate: value => {
+        if (/.+/.test(value) && value.length === 2) {
+          return true;
+        }
 
-      return '2 character language specifier is required';
+        return '2 character language specifier is required';
+      },
     },
-  }],
+  ],
 
   actions: () => {
     const actions = [];
@@ -63,18 +66,16 @@ module.exports = {
       pattern: /(System\.import\('intl\/locale-data\/jsonp\/[a-z]+\.js'\),\n)(?!.*System\.import\('intl\/locale-data\/jsonp\/[a-z]+\.js'\),)/g,
       templateFile: './language/polyfill-intl-locale.hbs',
     });
-    actions.push(
-      () => {
-        const cmd = 'npm run extract-intl';
-        shell.exec(cmd, {silent: true}, (code, stdout, stderr) => {
-          if (code) {
-            throw stderr;
-          }
+    actions.push(() => {
+      const cmd = 'npm run extract-intl';
+      shell.exec(cmd, { silent: true }, (code, stdout, stderr) => {
+        if (code) {
+          throw stderr;
+        }
 
-          process.stdout.write(stdout);
-        });
-      }
-    );
+        process.stdout.write(stdout);
+      });
+    });
 
     return actions;
   },

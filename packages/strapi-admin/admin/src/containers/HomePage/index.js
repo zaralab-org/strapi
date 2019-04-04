@@ -126,7 +126,7 @@ export class HomePage extends React.PureComponent {
     const errors = validateInput(
       this.props.homePage.body.email,
       { required: true },
-      'email',
+      'email'
     );
     this.setState({ errors });
 
@@ -139,24 +139,24 @@ export class HomePage extends React.PureComponent {
     get(
       this.props.plugins.toJS(),
       'content-manager.leftMenuSections.0.links',
-      [],
+      []
     ).length === 0;
 
   renderButton = () => {
     const data = this.showFirstBlock()
       ? {
-        className: styles.homePageTutorialButton,
-        href:
+          className: styles.homePageTutorialButton,
+          href:
             'https://strapi.io/documentation/getting-started/quick-start.html#_3-create-a-content-type',
-        id: 'app.components.HomePage.button.quickStart',
-        primary: true,
-      }
+          id: 'app.components.HomePage.button.quickStart',
+          primary: true,
+        }
       : {
-        className: styles.homePageBlogButton,
-        id: 'app.components.HomePage.button.blog',
-        href: 'https://blog.strapi.io/',
-        primary: false,
-      };
+          className: styles.homePageBlogButton,
+          id: 'app.components.HomePage.button.blog',
+          href: 'https://blog.strapi.io/',
+          primary: false,
+        };
 
     return (
       <a href={data.href} target="_blank">
@@ -285,13 +285,13 @@ function mapDispatchToProps(dispatch) {
       onChange,
       submit,
     },
-    dispatch,
+    dispatch
   );
 }
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 const withReducer = injectReducer({ key: 'homePage', reducer });
@@ -301,5 +301,5 @@ const withSaga = injectSaga({ key: 'homePage', saga });
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(HomePage);

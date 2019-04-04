@@ -15,7 +15,7 @@ import InputDescription from '../InputDescription';
 import InputErrors from '../InputErrors';
 import InputSelect from '../InputSelect';
 
-import styles  from './styles.scss';
+import styles from './styles.scss';
 
 class InputSelectWithErrors extends React.Component {
   state = { errors: [] };
@@ -31,7 +31,9 @@ class InputSelectWithErrors extends React.Component {
       const target = {
         type: 'select',
         name: this.props.name,
-        value: get(this.props.selectOptions, ['0', 'value']) || get(this.props.selectOptions, ['0']),
+        value:
+          get(this.props.selectOptions, ['0', 'value']) ||
+          get(this.props.selectOptions, ['0']),
       };
       this.props.onChange({ target });
     }
@@ -50,7 +52,7 @@ class InputSelectWithErrors extends React.Component {
     if (!isEmpty(target.value)) {
       this.setState({ errors: [] });
     }
-  }
+  };
 
   render() {
     const {
@@ -84,7 +86,7 @@ class InputSelectWithErrors extends React.Component {
         className={cn(
           styles.containerSelect,
           customBootstrapClass,
-          !isEmpty(className) && className,
+          !isEmpty(className) && className
         )}
         style={style}
       >
@@ -184,10 +186,7 @@ InputSelectWithErrors.propTypes = {
   labelClassName: PropTypes.string,
   labelStyle: PropTypes.object,
   name: PropTypes.string.isRequired,
-  onBlur: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.func,
-  ]),
+  onBlur: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   selectOptions: PropTypes.arrayOf(
@@ -199,7 +198,7 @@ InputSelectWithErrors.propTypes = {
         value: PropTypes.string.isRequired,
       }),
       PropTypes.string,
-    ]),
+    ])
   ),
   style: PropTypes.object,
   tabIndex: PropTypes.string,

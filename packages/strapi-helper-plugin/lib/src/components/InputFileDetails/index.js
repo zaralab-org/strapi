@@ -21,7 +21,9 @@ function InputFileDetails(props) {
     return <div className={styles.inputFileDetailsEmpty} />;
   }
 
-  const url = startsWith(props.file.url, '/') ? `${strapi.backendURL}${props.file.url}` : props.file.url;
+  const url = startsWith(props.file.url, '/')
+    ? `${strapi.backendURL}${props.file.url}`
+    : props.file.url;
 
   return (
     <div className={styles.inputFileDetails}>
@@ -50,10 +52,7 @@ InputFileDetails.defaultProps = {
 };
 
 InputFileDetails.propTypes = {
-  file: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array,
-  ]),
+  file: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   multiple: PropTypes.bool,
   number: PropTypes.number,
   onFileDelete: PropTypes.func,

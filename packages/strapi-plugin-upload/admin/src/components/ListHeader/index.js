@@ -24,7 +24,7 @@ function ListHeader({ changeSort, sort }) {
     '',
   ];
 
-  const handleChangeSort = (name) => {
+  const handleChangeSort = name => {
     if (sort === name) {
       changeSort(`-${name}`);
     } else if (sort === `-${name}`) {
@@ -36,14 +36,20 @@ function ListHeader({ changeSort, sort }) {
     }
   };
 
-  const shouldDisplaySort = (title) => sort === title && styles.icon || sort === `-${title}` && styles.iconDesc || '';
+  const shouldDisplaySort = title =>
+    (sort === title && styles.icon) ||
+    (sort === `-${title}` && styles.iconDesc) ||
+    '';
 
   return (
     <li className={styles.listheaderWrapper}>
       <div className={cn(styles.listHeader)}>
         <div>
           <div />
-          <div className={shouldDisplaySort('type')} onClick={() => handleChangeSort('type')}>
+          <div
+            className={shouldDisplaySort('type')}
+            onClick={() => handleChangeSort('type')}
+          >
             <FormattedMessage id="upload.ListHeader.type" />
             <span />
           </div>
@@ -51,7 +57,11 @@ function ListHeader({ changeSort, sort }) {
         {titles.map((title, key) => {
           if (title !== '') {
             return (
-              <div key={key} className={shouldDisplaySort(title)} onClick={() => handleChangeSort(title)}>
+              <div
+                key={key}
+                className={shouldDisplaySort(title)}
+                onClick={() => handleChangeSort(title)}
+              >
                 <FormattedMessage id={`upload.ListHeader.${title}`} />
                 <span />
               </div>

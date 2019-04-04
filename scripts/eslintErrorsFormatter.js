@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const  { blue, green, magenta, red, yellow } = chalk;
+const { blue, green, magenta, red, yellow } = chalk;
 
 const eslintErrorsFormatter = data => {
   const errors = data.split('\n\n');
@@ -8,7 +8,7 @@ const eslintErrorsFormatter = data => {
     if (curr.includes('warnings)') || curr.includes('warning)')) {
       const summaryErrorArray = curr.split(' ');
       const summaryError = `${red(summaryErrorArray[0])} ${green(
-        `${summaryErrorArray[1]} ${summaryErrorArray[2]}`,
+        `${summaryErrorArray[1]} ${summaryErrorArray[2]}`
       )} ${summaryErrorArray.slice(3).join(' ')}`;
 
       acc.push(summaryError);
@@ -24,7 +24,8 @@ const eslintErrorsFormatter = data => {
                 formattedError = blue(current);
                 break;
               case 4:
-                formattedError = current === 'warning' ? green(current) : red(current);
+                formattedError =
+                  current === 'warning' ? green(current) : red(current);
                 break;
               case c.split(' ').length - 1:
                 formattedError = yellow(current);

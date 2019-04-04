@@ -10,10 +10,7 @@ import { reduce } from 'lodash';
 
 // Plugin identifier based on the package.json `name` value
 const pluginPkg = require('../../../../package.json');
-const pluginId = pluginPkg.name.replace(
-  /^strapi-plugin-/i,
-  ''
-);
+const pluginId = pluginPkg.name.replace(/^strapi-plugin-/i, '');
 
 /**
  * Add plugin identifier as translation message prefix,
@@ -22,11 +19,16 @@ const pluginId = pluginPkg.name.replace(
  *
  * @param messages
  */
-const formatMessages = messages => reduce(messages, (result, value, key) => {
-  result[`${pluginId}.${key}`] = value;
+const formatMessages = messages =>
+  reduce(
+    messages,
+    (result, value, key) => {
+      result[`${pluginId}.${key}`] = value;
 
-  return result;
-}, {});
+      return result;
+    },
+    {}
+  );
 
 /**
  * Try to require translation file.
@@ -37,7 +39,9 @@ const requireTranslations = language => {
   try {
     return require(`translations/${language}.json`); // eslint-disable-line global-require
   } catch (error) {
-    console.error(`Unable to load "${language}" translation for the plugin ${pluginId}. Please make sure "${language}.json" file exists in "pluginPath/admin/src/translations" folder.`);
+    console.error(
+      `Unable to load "${language}" translation for the plugin ${pluginId}. Please make sure "${language}.json" file exists in "pluginPath/admin/src/translations" folder.`
+    );
     return;
   }
 };
@@ -46,10 +50,14 @@ const requireTranslations = language => {
  * Dynamically generate `translationsMessages object`.
  */
 
-const translationMessages = reduce(strapi.languages, (result, language) => {
-  result[language] = formatMessages(requireTranslations(language));
+const translationMessages = reduce(
+  strapi.languages,
+  (result, language) => {
+    result[language] = formatMessages(requireTranslations(language));
 
-  return result;
-}, {});
+    return result;
+  },
+  {}
+);
 
 export { translationMessages };

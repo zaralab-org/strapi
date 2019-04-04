@@ -1,8 +1,8 @@
 /**
-*
-* EmptyAttributesBlock
-*
-*/
+ *
+ * EmptyAttributesBlock
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -15,18 +15,13 @@ function EmptyAttributesBlock({ description, label, onClick, title, id }) {
     <div className={styles.emptyAttributesBlock}>
       <div>
         <FormattedMessage id={title}>
-          {(msg) => <div className={styles.title}>{msg}</div>}
+          {msg => <div className={styles.title}>{msg}</div>}
         </FormattedMessage>
         <FormattedMessage id={description}>
-          {(msg) => <div className={styles.description}>{msg}</div>}
+          {msg => <div className={styles.description}>{msg}</div>}
         </FormattedMessage>
         <div className={styles.buttonContainer}>
-          <Button
-            onClick={onClick}
-            primaryAddShape
-            label={label}
-            id={id}
-          />
+          <Button onClick={onClick} primaryAddShape label={label} id={id} />
         </div>
       </div>
     </div>

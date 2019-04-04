@@ -1,8 +1,8 @@
 /**
-*
-* Controller
-*
-*/
+ *
+ * Controller
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -16,14 +16,17 @@ import styles from './styles.scss';
 class Controller extends React.Component {
   state = { inputSelected: '', checked: false };
 
-  setNewInputSelected = (name) => {
+  setNewInputSelected = name => {
     this.setState({ inputSelected: name, checked: false });
-  }
+  };
 
   handleChange = () => {
     this.setState({ checked: !this.state.checked });
-    this.context.selectAllActions(`${this.props.inputNamePath}.controllers.${this.props.name}`, !this.isAllActionsSelected());
-  }
+    this.context.selectAllActions(
+      `${this.props.inputNamePath}.controllers.${this.props.name}`,
+      !this.isAllActionsSelected()
+    );
+  };
 
   isAllActionsSelected = () => !some(this.props.actions, ['enabled', false]);
 
@@ -32,11 +35,18 @@ class Controller extends React.Component {
       <div className={styles.controller}>
         <div className={styles.controllerHeader}>
           <div>{this.props.name}</div>
-          <div className={styles.separator}></div>
+          <div className={styles.separator} />
           <div>
             <div className={cn(styles.inputCheckbox)}>
               <div className="form-check">
-                <label className={cn('form-check-label', styles.label, this.state.checked ? styles.checked : '')} htmlFor={this.props.name}>
+                <label
+                  className={cn(
+                    'form-check-label',
+                    styles.label,
+                    this.state.checked ? styles.checked : ''
+                  )}
+                  htmlFor={this.props.name}
+                >
                   <input
                     className="form-check-input"
                     checked={this.state.checked}
@@ -52,13 +62,15 @@ class Controller extends React.Component {
           </div>
         </div>
         <div className="row">
-          {map(Object.keys(this.props.actions).sort(), (actionKey) => (
+          {map(Object.keys(this.props.actions).sort(), actionKey => (
             <InputCheckbox
               inputSelected={this.state.inputSelected}
               isOpen={this.props.isOpen}
               key={actionKey}
               label={actionKey}
-              name={`${this.props.inputNamePath}.controllers.${this.props.name}.${actionKey}.enabled`}
+              name={`${this.props.inputNamePath}.controllers.${
+                this.props.name
+              }.${actionKey}.enabled`}
               setNewInputSelected={this.setNewInputSelected}
               value={get(this.props.actions[actionKey], 'enabled')}
             />

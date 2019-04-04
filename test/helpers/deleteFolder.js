@@ -3,13 +3,13 @@ const path = require('path');
 
 module.exports = {
   deleteApp: async function(folderName) {
-    const recursiveDeleteFiles = async (folderPath) => {
+    const recursiveDeleteFiles = async folderPath => {
       // Check if folder exists
       try {
         const arrayOfPromises = [];
         fs.accessSync(folderPath);
         const items = fs.readdirSync(folderPath);
-  
+
         items.forEach(item => {
           const itemPath = path.join(folderPath, item);
           // Check if directory
@@ -19,24 +19,24 @@ module.exports = {
             // Delete all files
             try {
               fs.unlinkSync(itemPath);
-            } catch(err) {
+            } catch (err) {
               console.log('Cannot delete file', err);
             }
           }
         });
-        
+
         await Promise.all(arrayOfPromises);
-  
+
         try {
           fs.rmdirSync(folderPath);
-        } catch(err) {
+        } catch (err) {
           // Silent
         }
-      } catch(err) {
+      } catch (err) {
         // Silent
       }
-    }
+    };
 
     return await Promise.all([recursiveDeleteFiles(folderName)]);
-  }
+  },
 };

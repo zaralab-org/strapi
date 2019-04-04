@@ -18,12 +18,16 @@ const adminDirPath = path.join(process.cwd(), 'admin');
 
 let packageManager;
 try {
-  packageManager = require(path.resolve(process.cwd(), 'package')).strapi.packageManager;
+  packageManager = require(path.resolve(process.cwd(), 'package')).strapi
+    .packageManager;
 } catch (error) {
   packageManager = 'npm';
 }
 
-const installCmd = packageManager === 'yarn' ? 'yarn install --production --ignore-scripts' : 'npm install --prod --ignore-scripts';
+const installCmd =
+  packageManager === 'yarn'
+    ? 'yarn install --production --ignore-scripts'
+    : 'npm install --prod --ignore-scripts';
 
 /* eslint-disable no-console */
 
@@ -36,7 +40,7 @@ try {
   fs.accessSync(adminDirPath, fs.constants.R_OK | fs.constants.W_OK);
 
   shell.cd(adminDirPath);
-  const install = shell.exec(installCmd, {silent: true});
+  const install = shell.exec(installCmd, { silent: true });
 
   if (install.stderr && install.code !== 0) {
     console.error(install.stderr);
@@ -71,7 +75,7 @@ try {
 
     try {
       shell.cd(pluginPath);
-      const install = shell.exec(installCmd, {silent: true});
+      const install = shell.exec(installCmd, { silent: true });
 
       if (install.stderr && install.code !== 0) {
         console.error(install.stderr);

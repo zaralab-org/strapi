@@ -29,10 +29,7 @@ function List(props) {
         <ul className={styles.ulList}>
           <ListHeader changeSort={props.changeSort} sort={props.sort} />
           {props.data.map((item, key) => (
-            <Li
-              key={item.hash || key}
-              item={item}
-            />
+            <Li key={item.hash || key} item={item} />
           ))}
           {props.data.length === 0 && <EmptyLi />}
         </ul>

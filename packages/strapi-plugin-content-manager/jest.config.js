@@ -7,6 +7,6 @@ module.exports = {
     '<rootDir>/dist/',
     '<rootDir>/node_modules/',
     '<rootDir>/out-tsc/',
-    '<rootDir>/test/'
-  ]
+    '<rootDir>/test/',
+  ],
 };

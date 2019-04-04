@@ -27,25 +27,35 @@ module.exports = (scope, success, error) => {
   connectOptions.useNewUrlParser = true;
   connectOptions.dbName = scope.database.settings.database;
 
-  Mongoose.connect(`mongodb${srv ? '+srv' : ''}://${scope.database.settings.host}${!srv ? `:${scope.database.settings.port}` : ''}/`, connectOptions, function (err) {
-    if (err) {
-      console.log('⚠️  Database connection has failed! Make sure your database is running.');
-
-      if (scope.debug) {
-        console.log('🐛 Full error log:');
-        console.log(err);
-      }
-
-      return error();
-    }
-
-    Mongoose.connection.close();
-
-    rimraf(scope.tmpPath, (err) => {
+  Mongoose.connect(
+    `mongodb${srv ? '+srv' : ''}://${scope.database.settings.host}${
+      !srv ? `:${scope.database.settings.port}` : ''
+    }/`,
+    connectOptions,
+    function(err) {
       if (err) {
-        console.log(`Error removing connection test folder: ${scope.tmpPath}`);
+        console.log(
+          '⚠️  Database connection has failed! Make sure your database is running.'
+        );
+
+        if (scope.debug) {
+          console.log('🐛 Full error log:');
+          console.log(err);
+        }
+
+        return error();
       }
-      success();
-    });
-  });
+
+      Mongoose.connection.close();
+
+      rimraf(scope.tmpPath, err => {
+        if (err) {
+          console.log(
+            `Error removing connection test folder: ${scope.tmpPath}`
+          );
+        }
+        success();
+      });
+    }
+  );
 };

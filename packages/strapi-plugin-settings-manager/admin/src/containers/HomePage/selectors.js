@@ -10,23 +10,21 @@ const selectHomePageDomain = () => state => state.get(`${pluginId}_homePage`);
  * Other specific selectors
  */
 
-
 /**
  * Default selector used by Home
  */
 
-const selectHomePage = () => createSelector(
-  selectHomePageDomain(),
-  (substate) => substate.toJS()
-);
+const selectHomePage = () =>
+  createSelector(
+    selectHomePageDomain(),
+    substate => substate.toJS()
+  );
 
-const makeSelectModifiedData = () => createSelector(
-  selectHomePageDomain(),
-  (substate) => substate.get('modifiedData').toJS(),
-);
+const makeSelectModifiedData = () =>
+  createSelector(
+    selectHomePageDomain(),
+    substate => substate.get('modifiedData').toJS()
+  );
 
 export default selectHomePage;
-export {
-  selectHomePageDomain,
-  makeSelectModifiedData,
-};
+export { selectHomePageDomain, makeSelectModifiedData };

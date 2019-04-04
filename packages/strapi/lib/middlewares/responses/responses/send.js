@@ -5,7 +5,6 @@
  */
 
 module.exports = function sendOk(data) {
-
   // Set the status.
   this.status = 200;
 

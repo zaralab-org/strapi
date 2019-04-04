@@ -108,7 +108,9 @@ export function moveVariableAttrEditView(dragIndex, hoverIndex, keys) {
 }
 
 export function onChange({ target }) {
-  const value = includes(target.name, 'pageEntries') ? parseInt(target.value, 10) : target.value;
+  const value = includes(target.name, 'pageEntries')
+    ? parseInt(target.value, 10)
+    : target.value;
 
   return {
     type: ON_CHANGE,
@@ -128,7 +130,9 @@ export function onChangeInputType({ target }) {
 }
 
 export function onChangeSettings({ target }) {
-  const value = includes(target.name, 'pageEntries') ? parseInt(target.value, 10) : target.value;
+  const value = includes(target.name, 'pageEntries')
+    ? parseInt(target.value, 10)
+    : target.value;
 
   return {
     type: ON_CHANGE_SETTINGS,

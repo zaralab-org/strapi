@@ -107,7 +107,11 @@ module.exports = {
 
   search: async function(params) {
     return this.query(function(qb) {
-      qb.where('username', 'LIKE', `%${params.id}%`).orWhere('email', 'LIKE', `%${params.id}%`);
+      qb.where('username', 'LIKE', `%${params.id}%`).orWhere(
+        'email',
+        'LIKE',
+        `%${params.id}%`
+      );
     }).fetchAll();
   },
 
@@ -118,8 +122,8 @@ module.exports = {
   removePermission: async function(params) {
     const value = params[this.primaryKey]
       ? {
-        [this.primaryKey]: params[this.primaryKey] || params.id,
-      }
+          [this.primaryKey]: params[this.primaryKey] || params.id,
+        }
       : params;
 
     return this.forge()

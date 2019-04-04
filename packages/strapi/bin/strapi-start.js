@@ -52,7 +52,7 @@ const watchFileChanges = ({ appPath, strapi }) => {
       '**/cypress',
       '**/cypress/**',
       '**/*.db*',
-      '**/generated/schema.graphql'
+      '**/generated/schema.graphql',
     ],
   });
 
@@ -81,7 +81,9 @@ const watchFileChanges = ({ appPath, strapi }) => {
 module.exports = function(appPath = '') {
   // Check that we're in a valid Strapi project.
   if (!cli.isStrapiApp()) {
-    return console.log(`⛔️ ${cyan('strapi start')} can only be used inside a Strapi project.`);
+    return console.log(
+      `⛔️ ${cyan('strapi start')} can only be used inside a Strapi project.`
+    );
   }
 
   appPath = path.join(process.cwd(), appPath);
@@ -109,7 +111,10 @@ module.exports = function(appPath = '') {
       'server.json'
     ));
 
-    if (process.env.NODE_ENV === 'development' && _.get(server, 'autoReload.enabled') === true) {
+    if (
+      process.env.NODE_ENV === 'development' &&
+      _.get(server, 'autoReload.enabled') === true
+    ) {
       if (cluster.isMaster) {
         cluster.on('message', (worker, message) => {
           switch (message) {

@@ -12,7 +12,10 @@ import NavLink from 'components/NavLink';
 function EditViewLink(props) {
   // Retrieve URL from props
   const base = `${props.getContentTypeBuilderBaseUrl()}${props.getModelName()}`;
-  const url = props.getSource() === 'users-permissions' ? `${base}&source=${props.getSource()}` : base;
+  const url =
+    props.getSource() === 'users-permissions'
+      ? `${base}&source=${props.getSource()}`
+      : base;
 
   return <NavLink {...props} url={url} />;
 }

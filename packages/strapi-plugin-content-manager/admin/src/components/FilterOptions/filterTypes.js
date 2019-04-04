@@ -1,5 +1,5 @@
-const getFilters = (type) => {
-  switch(type) {
+const getFilters = type => {
+  switch (type) {
     case 'string':
     case 'text':
     case 'password':
@@ -34,7 +34,8 @@ const getFilters = (type) => {
           value: '_contains',
         },
         {
-          id: 'content-manager.components.FilterOptions.FILTER_TYPES._containss',
+          id:
+            'content-manager.components.FilterOptions.FILTER_TYPES._containss',
           value: '_containss',
         },
         {
@@ -96,7 +97,6 @@ const getFilters = (type) => {
           value: '_ne',
         },
       ];
-    
   }
 };
 

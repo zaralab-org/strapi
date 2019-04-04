@@ -16,7 +16,7 @@ import messages from './messages.json';
 
 function LeftMenuLinkContainer({ layout, plugins }) {
   const pluginsObject = plugins.toJS();
-  
+
   // Generate the list of sections
   const pluginsSections = Object.keys(pluginsObject).reduce((acc, current) => {
     pluginsObject[current].leftMenuSections.forEach((section = {}) => {
@@ -31,7 +31,7 @@ function LeftMenuLinkContainer({ layout, plugins }) {
                 : pluginsObject[current].id;
 
               return link;
-            }),
+            })
           ),
         };
       }
@@ -39,13 +39,15 @@ function LeftMenuLinkContainer({ layout, plugins }) {
 
     return acc;
   }, {});
-  
+
   const linkSections = Object.keys(pluginsSections).map((current, j) => {
     const contentTypesToShow = get(layout, 'contentTypesToShow');
     const contentTypes = contentTypesToShow
       ? pluginsSections[current].links.filter(
-        obj => findIndex(contentTypesToShow, ['destination', obj.destination]) !== -1,
-      )
+          obj =>
+            findIndex(contentTypesToShow, ['destination', obj.destination]) !==
+            -1
+        )
       : pluginsSections[current].links;
 
     return (
@@ -72,7 +74,10 @@ function LeftMenuLinkContainer({ layout, plugins }) {
       if (plugin.id !== 'email' && plugin.id !== 'settings-manager') {
         const basePath = `/plugins/${get(plugin, 'id')}`;
         // NOTE: this should be dynamic
-        const destination = plugin.id === 'content-manager' ? `${basePath}/ctm-configurations` : basePath;
+        const destination =
+          plugin.id === 'content-manager'
+            ? `${basePath}/ctm-configurations`
+            : basePath;
 
         return (
           <LeftMenuLink
@@ -106,7 +111,11 @@ function LeftMenuLinkContainer({ layout, plugins }) {
           <FormattedMessage {...messages.general} />
         </p>
         <ul className={styles.list}>
-          <LeftMenuLink icon="list" label={messages.listPlugins.id} destination="/list-plugins" />
+          <LeftMenuLink
+            icon="list"
+            label={messages.listPlugins.id}
+            destination="/list-plugins"
+          />
           <LeftMenuLink
             icon="shopping-basket"
             label={messages.installNewPlugin.id}

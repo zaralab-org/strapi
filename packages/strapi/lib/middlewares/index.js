@@ -1,6 +1,18 @@
 'use strict';
 
-const { after, includes, indexOf, drop, dropRight, uniq, defaultsDeep, get, set, isUndefined, merge } = require('lodash');
+const {
+  after,
+  includes,
+  indexOf,
+  drop,
+  dropRight,
+  uniq,
+  defaultsDeep,
+  get,
+  set,
+  isUndefined,
+  merge,
+} = require('lodash');
 
 /* eslint-disable prefer-template */
 module.exports = async function() {
@@ -48,7 +60,7 @@ module.exports = async function() {
   await Promise.all(
     Object.keys(this.middleware).map(
       middleware =>
-        new Promise((resolve) => {
+        new Promise(resolve => {
           if (this.config.middleware.settings[middleware].enabled === false) {
             return resolve();
           }
@@ -76,18 +88,48 @@ module.exports = async function() {
           const module = this.middleware[middleware].load;
 
           // Retrieve middlewares configurations order
-          const middlewares = Object.keys(this.middleware).filter(middleware => this.config.middleware.settings[middleware].enabled !== false);
-          const middlewaresBefore = get(this.config.middleware, 'load.before', []).filter(middleware => !isUndefined(this.middleware[middleware])).filter(middleware => this.config.middleware.settings[middleware].enabled !== false);
-          const middlewaresOrder = get(this.config.middleware, 'load.order', []).filter(middleware => !isUndefined(this.middleware[middleware])).filter(middleware => this.config.middleware.settings[middleware].enabled !== false);
-          const middlewaresAfter = get(this.config.middleware, 'load.after', []).filter(middleware => !isUndefined(this.middleware[middleware])).filter(middleware => this.config.middleware.settings[middleware].enabled !== false);
+          const middlewares = Object.keys(this.middleware).filter(
+            middleware =>
+              this.config.middleware.settings[middleware].enabled !== false
+          );
+          const middlewaresBefore = get(
+            this.config.middleware,
+            'load.before',
+            []
+          )
+            .filter(middleware => !isUndefined(this.middleware[middleware]))
+            .filter(
+              middleware =>
+                this.config.middleware.settings[middleware].enabled !== false
+            );
+          const middlewaresOrder = get(this.config.middleware, 'load.order', [])
+            .filter(middleware => !isUndefined(this.middleware[middleware]))
+            .filter(
+              middleware =>
+                this.config.middleware.settings[middleware].enabled !== false
+            );
+          const middlewaresAfter = get(this.config.middleware, 'load.after', [])
+            .filter(middleware => !isUndefined(this.middleware[middleware]))
+            .filter(
+              middleware =>
+                this.config.middleware.settings[middleware].enabled !== false
+            );
 
           // Apply default configurations to middleware.
-          if (isUndefined(get(this.config.middleware, `settings.${middleware}`))) {
+          if (
+            isUndefined(get(this.config.middleware, `settings.${middleware}`))
+          ) {
             set(this.config.middleware, `settings.${middleware}`, {});
           }
 
-          if (module.defaults && this.config.middleware.settings[middleware] !== false) {
-            defaultsDeep(this.config.middleware.settings[middleware], module.defaults[middleware] || module.defaults);
+          if (
+            module.defaults &&
+            this.config.middleware.settings[middleware] !== false
+          ) {
+            defaultsDeep(
+              this.config.middleware.settings[middleware],
+              module.defaults[middleware] || module.defaults
+            );
           }
 
           // Initialize array.
@@ -98,16 +140,22 @@ module.exports = async function() {
           if (includes(middlewaresBefore, middleware)) {
             const position = indexOf(middlewaresBefore, middleware);
 
-            previousDependencies = previousDependencies.concat(dropRight(middlewaresBefore, middlewaresBefore.length - position));
+            previousDependencies = previousDependencies.concat(
+              dropRight(middlewaresBefore, middlewaresBefore.length - position)
+            );
           } else {
-            previousDependencies = previousDependencies.concat(middlewaresBefore.filter(x => x !== middleware));
+            previousDependencies = previousDependencies.concat(
+              middlewaresBefore.filter(x => x !== middleware)
+            );
 
             // Add ORDER dependencies to load and remove the current one
             // to avoid that it waits itself.
             if (includes(middlewaresOrder, middleware)) {
               const position = indexOf(middlewaresOrder, middleware);
 
-              previousDependencies = previousDependencies.concat(dropRight(middlewaresOrder, middlewaresOrder.length - position));
+              previousDependencies = previousDependencies.concat(
+                dropRight(middlewaresOrder, middlewaresOrder.length - position)
+              );
             } else {
               // Add AFTER middlewares to load and remove the current one
               // to avoid that it waits itself.
@@ -118,7 +166,9 @@ module.exports = async function() {
                 // Wait for every middlewares.
                 previousDependencies = previousDependencies.concat(middlewares);
                 // Exclude middlewares which need to be loaded after this one.
-                previousDependencies = previousDependencies.filter(x => !includes(toLoadAfter, x));
+                previousDependencies = previousDependencies.filter(
+                  x => !includes(toLoadAfter, x)
+                );
               }
             }
           }

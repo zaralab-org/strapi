@@ -18,8 +18,8 @@ module.exports = function trackSuccess(event, scope, error) {
       deviceId: machineIdSync(),
       properties: {
         error,
-        os: os.type()
-      }
+        os: os.type(),
+      },
     })
     .on('error', () => {});
 };

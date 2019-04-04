@@ -13,7 +13,12 @@ import LoadingBar from '../LoadingBar';
 
 import styles from './styles.scss';
 
-function PluginHeaderTitle({ description, title, titleId, withDescriptionAnim }) {
+function PluginHeaderTitle({
+  description,
+  title,
+  titleId,
+  withDescriptionAnim,
+}) {
   const contentTitle = formatData(title);
   const contentDescription = formatData(description);
 
@@ -25,16 +30,23 @@ function PluginHeaderTitle({ description, title, titleId, withDescriptionAnim })
       {withDescriptionAnim ? (
         <LoadingBar />
       ) : (
-        <p className={styles.pluginHeaderTitleDescription}>{contentDescription}&nbsp;</p>
+        <p className={styles.pluginHeaderTitleDescription}>
+          {contentDescription}&nbsp;
+        </p>
       )}
     </div>
   );
 }
 
 const formatData = data => {
-  
   if (isObject(data)) {
-    return isEmpty(data.id) ? null : <FormattedMessage id={data.id} defaultMessage={data.id} values={data.values} />;
+    return isEmpty(data.id) ? null : (
+      <FormattedMessage
+        id={data.id}
+        defaultMessage={data.id}
+        values={data.values}
+      />
+    );
   }
 
   if (isFunction(data)) {

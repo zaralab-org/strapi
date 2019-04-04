@@ -1,8 +1,8 @@
 /**
-*
-* BoundRoute
-*
-*/
+ *
+ * BoundRoute
+ *
+ */
 
 import React from 'react';
 import { get, includes, map, tail, toLower } from 'lodash';
@@ -13,8 +13,10 @@ import styles from './styles.scss';
 
 function BoundRoute({ route }) {
   const title = get(route, 'handler');
-  const formattedRoute = get(route, 'path') ? tail(get(route, 'path').split('/')) : [];
-  const [ controller = '', action = '' ] = title ? title.split('.') : [];
+  const formattedRoute = get(route, 'path')
+    ? tail(get(route, 'path').split('/'))
+    : [];
+  const [controller = '', action = ''] = title ? title.split('.') : [];
 
   return (
     <div className="col-md-12">

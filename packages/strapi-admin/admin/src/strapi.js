@@ -16,13 +16,14 @@ import { history, store } from './createStore';
 import { translationMessages, languages } from './i18n';
 import './public-path';
 
-const isPluginAllowedToRegister = (plugin) => plugin.id === 'users-permissions' || plugin.id === 'email';
+const isPluginAllowedToRegister = plugin =>
+  plugin.id === 'users-permissions' || plugin.id === 'email';
 /**
  * Register a plugin
  *
  * @param params
  */
-const registerPlugin = (plugin) => {
+const registerPlugin = plugin => {
   // Merge admin translation messages
   merge(translationMessages, plugin.translationMessages);
 
@@ -31,8 +32,11 @@ const registerPlugin = (plugin) => {
 
   switch (true) {
     // Execute bootstrap function and check if plugin can be rendered
-    case isFunction(plugin.bootstrap) && isFunction(plugin.pluginRequirements) && shouldAllowRegister:
-      plugin.pluginRequirements(plugin)
+    case isFunction(plugin.bootstrap) &&
+      isFunction(plugin.pluginRequirements) &&
+      shouldAllowRegister:
+      plugin
+        .pluginRequirements(plugin)
         .then(plugin => {
           return plugin.bootstrap(plugin);
         })
@@ -59,7 +63,7 @@ const registerPlugin = (plugin) => {
 const displayNotification = (message, status) => {
   store.dispatch(showNotification(message, status));
 };
-const lockApp = (data) => {
+const lockApp = data => {
   store.dispatch(freezeApp(data));
 };
 const unlockApp = () => {
@@ -70,30 +74,36 @@ window.strapi = Object.assign(window.strapi || {}, {
   node: process.env.MODE || 'host',
   registerPlugin,
   notification: {
-    success: (message) => {
+    success: message => {
       displayNotification(message, 'success');
     },
-    warning: (message) => {
+    warning: message => {
       displayNotification(message, 'warning');
     },
-    error: (message) => {
+    error: message => {
       displayNotification(message, 'error');
     },
-    info: (message) => {
+    info: message => {
       displayNotification(message, 'info');
     },
   },
-  refresh: (pluginId) => ({
-    translationMessages: (translationMessagesUpdated) => {
+  refresh: pluginId => ({
+    translationMessages: translationMessagesUpdated => {
       render(merge({}, translationMessages, translationMessagesUpdated));
     },
-    leftMenuSections: (leftMenuSectionsUpdated) => {
-      store.dispatch(updatePlugin(pluginId, 'leftMenuSections', leftMenuSectionsUpdated));
+    leftMenuSections: leftMenuSectionsUpdated => {
+      store.dispatch(
+        updatePlugin(pluginId, 'leftMenuSections', leftMenuSectionsUpdated)
+      );
     },
   }),
   router: history,
   languages,
-  currentLanguage: window.localStorage.getItem('strapi-admin-language') ||  window.navigator.language ||  window.navigator.userLanguage || 'en',
+  currentLanguage:
+    window.localStorage.getItem('strapi-admin-language') ||
+    window.navigator.language ||
+    window.navigator.userLanguage ||
+    'en',
   lockApp,
   unlockApp,
   injectReducer,

@@ -19,14 +19,16 @@ const files = glob
       !package.includes('CLI.md') &&
       !package.includes('strapi-middleware-views') &&
       !package.includes('strapi-lint') &&
-      !package.includes('strapi-plugin-settings-manager'),
+      !package.includes('strapi-plugin-settings-manager')
   );
 
-const frontEndFiles = files
-  .filter(f => f.includes('/admin/src') || f.includes('/src/components'));
+const frontEndFiles = files.filter(
+  f => f.includes('/admin/src') || f.includes('/src/components')
+);
 
-const backendFiles = files
-  .filter(f => !f.includes('/admin/src') && !f.includes('/src/components'));
+const backendFiles = files.filter(
+  f => !f.includes('/admin/src') && !f.includes('/src/components')
+);
 
 if (!frontEndFiles.length) {
   return;
@@ -38,11 +40,13 @@ if (!backendFiles.length) {
 
 const runPrettier = (files, isFront = true) => {
   const prettierConfigFolder = isFront ? 'front' : 'back';
-  const prettierConfigPath = require.resolve(`./${prettierConfigFolder}/.prettierrc`);
+  const prettierConfigPath = require.resolve(
+    `./${prettierConfigFolder}/.prettierrc`
+  );
 
   files.forEach(file => {
     const options = prettier.resolveConfig.sync(file, {
-      config: prettierConfigPath
+      config: prettierConfigPath,
     });
 
     try {
@@ -52,14 +56,13 @@ const runPrettier = (files, isFront = true) => {
       if (output !== input) {
         fs.writeFileSync(file, output, 'utf8');
       }
-
-    } catch(err) {
+    } catch (err) {
       didError = true;
       console.log('\n\n' + err.message);
       console.log(file);
     }
   });
-}
+};
 
 runPrettier(frontEndFiles);
 runPrettier(backendFiles);

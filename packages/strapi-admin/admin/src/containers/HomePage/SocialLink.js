@@ -49,7 +49,11 @@ class SocialLink extends React.PureComponent {
       <div className={cn(styles.socialLink, 'col-md-6 col-lg-6')}>
         <a href={link} target="_blank">
           <div>
-            {!imgLoaded && <div className={styles.spinner}><div /></div>}
+            {!imgLoaded && (
+              <div className={styles.spinner}>
+                <div />
+              </div>
+            )}
             <img src={getSrc(name)} onLoad={this.handleImgLoaded} />
           </div>
           <span>{name}</span>

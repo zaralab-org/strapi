@@ -7,18 +7,32 @@ const changedFiles = listChangedFiles();
 const { take, template } = require('lodash');
 
 const cmdEslint = template(
-  'node ../../node_modules/strapi-lint/node_modules/.bin/eslint --ignore-path .gitignore --ignore-pattern "${ignore}"'
-  + ' --config ../../node_modules/strapi-lint/lib/internals/eslint/${conf}/.eslintrc.json ${params}'
+  'node ../../node_modules/strapi-lint/node_modules/.bin/eslint --ignore-path .gitignore --ignore-pattern "${ignore}"' +
+    ' --config ../../node_modules/strapi-lint/lib/internals/eslint/${conf}/.eslintrc.json ${params}'
 );
 
-const cmdFront = cmdEslint({ ignore: '/admin/build/', conf: 'front', params: 'admin' });
-const cmdHelper = cmdEslint({ ignore: '/admin/build/', conf: 'front', params: 'lib/src' });
-const cmdBack = cmdEslint({ ignore: '/admin', conf: 'back', params: 'controllers config services bin lib' });
+const cmdFront = cmdEslint({
+  ignore: '/admin/build/',
+  conf: 'front',
+  params: 'admin',
+});
+const cmdHelper = cmdEslint({
+  ignore: '/admin/build/',
+  conf: 'front',
+  params: 'lib/src',
+});
+const cmdBack = cmdEslint({
+  ignore: '/admin',
+  conf: 'back',
+  params: 'controllers config services bin lib',
+});
 
 const watcher = (label, pckgName) => {
   shell.echo(label);
   shell.cd(pckgName);
-  const cmd = pckgName.includes('strapi-helper-plugin') ? cmdHelper : `${cmdFront} && ${cmdBack}`;
+  const cmd = pckgName.includes('strapi-helper-plugin')
+    ? cmdHelper
+    : `${cmdFront} && ${cmdBack}`;
 
   const data = shell.exec(cmd, { silent: true });
   shell.echo(chalk(eslintErrorsFormatter(data.stdout)));
@@ -43,7 +57,10 @@ const except = [
 ];
 
 const changedDirs = [...changedFiles]
-  .filter(file => path.extname(file) === '.js' && !except.some(path => file.includes(path)))
+  .filter(
+    file =>
+      path.extname(file) === '.js' && !except.some(path => file.includes(path))
+  )
   .map(file => {
     const directoryArray = file.split('/');
     const toTake = directoryArray.length === 2 ? 1 : 2;
@@ -51,7 +68,6 @@ const changedDirs = [...changedFiles]
     return take(directoryArray, toTake).join('/');
   });
 
-[...new Set(changedDirs)]
-  .forEach(directory => {
-    watcher(`Testing ${directory}`, directory);
-  });
+[...new Set(changedDirs)].forEach(directory => {
+  watcher(`Testing ${directory}`, directory);
+});

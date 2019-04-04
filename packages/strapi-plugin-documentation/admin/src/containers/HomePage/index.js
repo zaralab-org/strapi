@@ -210,7 +210,6 @@ HomePage.defaultProps = {
   onSubmit: () => {},
   onUpdateDoc: () => {},
   versionToDelete: '',
-
 };
 
 HomePage.propTypes = {
@@ -239,7 +238,7 @@ function mapDispatchToProps(dispatch) {
       onSubmit,
       onUpdateDoc,
     },
-    dispatch,
+    dispatch
   );
 }
 
@@ -247,13 +246,17 @@ const mapStateToProps = selectHomePage();
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
-const withReducer = strapi.injectReducer({ key: 'homePage', reducer, pluginId });
+const withReducer = strapi.injectReducer({
+  key: 'homePage',
+  reducer,
+  pluginId,
+});
 const withSaga = strapi.injectSaga({ key: 'homePage', saga, pluginId });
 
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(injectIntl(HomePage));

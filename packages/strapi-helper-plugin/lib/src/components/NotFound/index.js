@@ -8,16 +8,14 @@ import styles from './styles.scss';
 function NotFound({ history }) {
   return (
     <div className={styles.notFound}>
-      <h1 className={styles.notFoundTitle}>
-        404
-      </h1>
+      <h1 className={styles.notFoundTitle}>404</h1>
       <h2 className={styles.notFoundDescription}>
         <FormattedMessage id="app.components.NotFoundPage.description" />
       </h2>
       <Button
         label="app.components.NotFoundPage.back"
         kind="back"
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation();
 
           history.goBack();

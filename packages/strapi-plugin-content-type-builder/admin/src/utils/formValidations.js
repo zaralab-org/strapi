@@ -1,12 +1,22 @@
-import { forEach, isObject, isArray, map, mapKeys, includes, reject, isEmpty, findIndex, isUndefined } from 'lodash';
+import {
+  forEach,
+  isObject,
+  isArray,
+  map,
+  mapKeys,
+  includes,
+  reject,
+  isEmpty,
+  findIndex,
+  isUndefined,
+} from 'lodash';
 
 /* eslint-disable consistent-return */
 export function getValidationsFromForm(form, formValidations) {
   map(form, (value, key) => {
-
     // Check if the object
     if (isObject(value) && !isArray(value)) {
-      forEach(value, (subValue) => {
+      forEach(value, subValue => {
         // Check if it has nestedInputs
         if (isArray(subValue) && value.type !== 'select') {
           return getValidationsFromForm(subValue, formValidations);
@@ -14,35 +24,34 @@ export function getValidationsFromForm(form, formValidations) {
       });
     }
 
-
     if (isArray(value) && value.type !== 'select') {
       return getValidationsFromForm(form[key], formValidations);
     }
 
-
     // Push the target and the validation
     if (value.name) {
-      formValidations.push({ name: value.name, validations: value.validations });
+      formValidations.push({
+        name: value.name,
+        validations: value.validations,
+      });
     }
   });
 
   return formValidations;
 }
 
-
 export function checkFormValidity(formData, formValidations) {
   const errors = [];
   forEach(formData, (value, key) => {
-    const validationValue = formValidations[findIndex(formValidations, ['name', key])];
+    const validationValue =
+      formValidations[findIndex(formValidations, ['name', key])];
 
     if (!isUndefined(validationValue)) {
       const inputErrors = validate(value, validationValue.validations);
       if (!isEmpty(inputErrors)) {
         errors.push({ name: key, errors: inputErrors });
       }
-
     }
-
   });
 
   return errors;
@@ -51,7 +60,9 @@ export function checkFormValidity(formData, formValidations) {
 function validate(value, validations) {
   let errors = [];
   // Handle i18n
-  const requiredError = { id: 'content-type-builder.error.validation.required' };
+  const requiredError = {
+    id: 'content-type-builder.error.validation.required',
+  };
   mapKeys(validations, (validationValue, validationKey) => {
     switch (validationKey) {
       case 'max':
@@ -66,12 +77,16 @@ function validate(value, validations) {
         break;
       case 'maxLength':
         if (value.length > validationValue) {
-          errors.push({ id: 'content-type-builder.error.validation.maxLength' });
+          errors.push({
+            id: 'content-type-builder.error.validation.maxLength',
+          });
         }
         break;
       case 'minLength':
         if (value.length < validationValue) {
-          errors.push({ id: 'content-type-builder.error.validation.minLength' });
+          errors.push({
+            id: 'content-type-builder.error.validation.minLength',
+          });
         }
         break;
       case 'required':
@@ -90,7 +105,7 @@ function validate(value, validations) {
   });
 
   if (includes(errors, requiredError)) {
-    errors = reject(errors, (error) => error !== requiredError);
+    errors = reject(errors, error => error !== requiredError);
   }
   return errors;
 }

@@ -15,9 +15,8 @@ const render = require('koa-ejs'); // eslint-disable-line import/no-unresolved
  * EJS hook
  */
 
-module.exports = function (strapi) {
+module.exports = function(strapi) {
   const hook = {
-
     /**
      * Default options
      */
@@ -27,7 +26,7 @@ module.exports = function (strapi) {
       layout: 'layout',
       viewExt: 'ejs',
       cache: true,
-      debug: true
+      debug: true,
     },
 
     /**
@@ -45,7 +44,7 @@ module.exports = function (strapi) {
       strapi.app.context.render = co.wrap(strapi.app.context.render);
 
       cb();
-    }
+    },
   };
 
   return hook;

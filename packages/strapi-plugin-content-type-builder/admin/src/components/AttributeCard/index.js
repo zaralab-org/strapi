@@ -1,8 +1,8 @@
 /**
-*
-* AttributeCard
-*
-*/
+ *
+ * AttributeCard
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -25,19 +25,18 @@ import styles from './styles.scss';
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-autofocus */
 const asset = {
-  'boolean': IcoBoolean,
-  'date': IcoDate,
-  'email': IcoEmail,
-  'media': IcoImage,
-  'number': IcoNumber,
-  'json': IcoJson,
-  'password': IcoPassword,
-  'relation': IcoRelation,
-  'string': IcoString,
-  'text': IcoText,
-  'enumeration': IcoEnum,
+  boolean: IcoBoolean,
+  date: IcoDate,
+  email: IcoEmail,
+  media: IcoImage,
+  number: IcoNumber,
+  json: IcoJson,
+  password: IcoPassword,
+  relation: IcoRelation,
+  string: IcoString,
+  text: IcoText,
+  enumeration: IcoEnum,
 };
-
 
 class AttributeCard extends React.Component {
   constructor(props) {
@@ -71,7 +70,7 @@ class AttributeCard extends React.Component {
   focusNode = () => {
     const node = this.button.current;
     return node.focus();
-  }
+  };
 
   render() {
     const { attribute, autoFocus, handleClick, tabIndex } = this.props;
@@ -89,8 +88,14 @@ class AttributeCard extends React.Component {
         >
           <div className={styles.attributeCard}>
             <img src={asset[attribute.type]} alt="ico" />
-            <FormattedMessage id={`content-type-builder.popUpForm.attributes.${attribute.type}.name`}>
-              {(message) => <span className={styles.attributeType}>{message}</span>}
+            <FormattedMessage
+              id={`content-type-builder.popUpForm.attributes.${
+                attribute.type
+              }.name`}
+            >
+              {message => (
+                <span className={styles.attributeType}>{message}</span>
+              )}
             </FormattedMessage>
             <FormattedMessage id={attribute.description} />
           </div>

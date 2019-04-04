@@ -9,5 +9,8 @@ __webpack_public_path__ = (() => {
     return `${strapi.backendURL}/${publicPath}`;
   }
 
-  return `${(strapi.remoteURL).replace(window.location.origin, '')}/${publicPath}`;
+  return `${strapi.remoteURL.replace(
+    window.location.origin,
+    ''
+  )}/${publicPath}`;
 })();

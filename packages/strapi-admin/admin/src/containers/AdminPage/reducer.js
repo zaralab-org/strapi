@@ -6,9 +6,7 @@
 
 import { fromJS, Map } from 'immutable';
 
-import {
-  GET_ADMIN_DATA_SUCCEEDED,
-} from './constants';
+import { GET_ADMIN_DATA_SUCCEEDED } from './constants';
 
 const initialState = fromJS({
   uuid: false,

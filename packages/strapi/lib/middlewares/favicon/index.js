@@ -20,14 +20,17 @@ module.exports = strapi => {
     initialize: function(cb) {
       strapi.app.use(
         strapi.koaMiddlewares.favicon(
-          path.resolve(strapi.config.appPath, strapi.config.middleware.settings.favicon.path),
+          path.resolve(
+            strapi.config.appPath,
+            strapi.config.middleware.settings.favicon.path
+          ),
           {
-            maxAge: strapi.config.middleware.settings.favicon.maxAge
+            maxAge: strapi.config.middleware.settings.favicon.maxAge,
           }
         )
       );
 
       cb();
-    }
+    },
   };
 };

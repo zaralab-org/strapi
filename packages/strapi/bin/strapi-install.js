@@ -11,7 +11,7 @@ const path = require('path');
 const fs = require('fs-extra');
 
 // Public
-const {cyan} = require('chalk');
+const { cyan } = require('chalk');
 const ora = require('ora');
 const shell = require('shelljs');
 
@@ -27,7 +27,7 @@ const packageJSON = require('../package.json');
  * Install a Strapi plugin.
  */
 
-module.exports = function (plugin, cliArguments) {
+module.exports = function(plugin, cliArguments) {
   // Define variables.
   const pluginPrefix = 'strapi-plugin-';
   const pluginID = `${pluginPrefix}${plugin}`;
@@ -37,20 +37,32 @@ module.exports = function (plugin, cliArguments) {
 
   // Check that we're in a valid Strapi project.
   if (!cli.isStrapiApp()) {
-    return loader.fail('This command can only be used inside a Strapi project.');
+    return loader.fail(
+      'This command can only be used inside a Strapi project.'
+    );
   }
 
   // Check that the plugin is not installed yet.
   if (fs.existsSync(pluginPath)) {
-    loader.fail(`It looks like this plugin is already installed. Please check in \`${cyan(pluginPath)}\`.`);
+    loader.fail(
+      `It looks like this plugin is already installed. Please check in \`${cyan(
+        pluginPath
+      )}\`.`
+    );
     process.exit(1);
   }
 
   if (cliArguments.dev) {
     try {
-      fs.symlinkSync(path.resolve(__dirname, '..', '..', pluginID), path.resolve(process.cwd(), pluginPath), 'junction');
+      fs.symlinkSync(
+        path.resolve(__dirname, '..', '..', pluginID),
+        path.resolve(process.cwd(), pluginPath),
+        'junction'
+      );
 
-      loader.succeed(`The ${cyan(plugin)} plugin has been successfully installed.`);
+      loader.succeed(
+        `The ${cyan(plugin)} plugin has been successfully installed.`
+      );
       process.exit(0);
     } catch (e) {
       console.log(e);
@@ -66,13 +78,25 @@ module.exports = function (plugin, cliArguments) {
       shell.mkdir('-p', [pluginPath]);
       // Add a package.json so it installs the dependencies
       shell.touch(`${pluginPath}/package.json`);
-      fs.writeFileSync(`${pluginPath}/package.json`, JSON.stringify({}), 'utf8');
+      fs.writeFileSync(
+        `${pluginPath}/package.json`,
+        JSON.stringify({}),
+        'utf8'
+      );
     }
 
-    const cmd = isStrapiInstalledWithNPM ? `npm install ${pluginID}@${packageJSON.version} --ignore-scripts --no-save --prefix ${pluginPath}` : `yarn --cwd ${pluginPath} add ${pluginID}@${packageJSON.version} --ignore-scripts --no-save`;
-    shell.exec(cmd, {silent: true}, (code) => {
+    const cmd = isStrapiInstalledWithNPM
+      ? `npm install ${pluginID}@${
+          packageJSON.version
+        } --ignore-scripts --no-save --prefix ${pluginPath}`
+      : `yarn --cwd ${pluginPath} add ${pluginID}@${
+          packageJSON.version
+        } --ignore-scripts --no-save`;
+    shell.exec(cmd, { silent: true }, code => {
       if (code) {
-        loader.fail(`An error occurred during plugin installation. \nPlease make sure this plugin is available on npm: https://www.npmjs.com/package/${pluginID}`);
+        loader.fail(
+          `An error occurred during plugin installation. \nPlease make sure this plugin is available on npm: https://www.npmjs.com/package/${pluginID}`
+        );
         process.exit(1);
       }
 
@@ -94,15 +118,37 @@ module.exports = function (plugin, cliArguments) {
         } catch (err) {
           if (err.code === 'ENOENT') {
             if (process.mainModule.filename.indexOf('yarn') !== -1) {
-              fs.copySync(path.resolve(__dirname, '..', '..', 'strapi-generate-plugin', 'templates', 'gitignore'), path.join(pluginPath, '.gitignore'));
+              fs.copySync(
+                path.resolve(
+                  __dirname,
+                  '..',
+                  '..',
+                  'strapi-generate-plugin',
+                  'templates',
+                  'gitignore'
+                ),
+                path.join(pluginPath, '.gitignore')
+              );
             } else {
-              fs.copySync(path.resolve(__dirname, '..', 'node_modules', 'strapi-generate-plugin', 'templates', 'gitignore'), path.join(pluginPath, '.gitignore'));
+              fs.copySync(
+                path.resolve(
+                  __dirname,
+                  '..',
+                  'node_modules',
+                  'strapi-generate-plugin',
+                  'templates',
+                  'gitignore'
+                ),
+                path.join(pluginPath, '.gitignore')
+              );
             }
           }
         }
 
         // Success.
-        loader.succeed(`The ${cyan(plugin)} plugin has been successfully installed.`);
+        loader.succeed(
+          `The ${cyan(plugin)} plugin has been successfully installed.`
+        );
         process.exit(0);
       } catch (err) {
         loader.fail('An error occurred during plugin installation.');

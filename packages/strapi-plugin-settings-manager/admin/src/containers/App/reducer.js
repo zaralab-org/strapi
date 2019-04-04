@@ -19,10 +19,11 @@ const initialState = fromJS({
 function appReducer(state = initialState, action) {
   switch (action.type) {
     case ENVIRONMENTS_FETCH_SUCCEEDED:
-      return state
-        .set('environments', List(action.environments.environments));
+      return state.set('environments', List(action.environments.environments));
     case MENU_FETCH_SUCCEEDED:
-      return state.set('sections', List(action.menu.sections)).set('loading', false);
+      return state
+        .set('sections', List(action.menu.sections))
+        .set('loading', false);
     default:
       return state;
   }

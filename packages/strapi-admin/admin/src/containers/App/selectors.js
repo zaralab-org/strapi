@@ -3,51 +3,59 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the languageToggle state domain
  */
-const selectApp = () => (state) => state.get('app');
+const selectApp = () => state => state.get('app');
 
 /**
  * Select the language locale
  */
 
-const selectPlugins = () => createSelector(
-  selectApp(),
-  (appState) => appState.get('plugins')
-);
+const selectPlugins = () =>
+  createSelector(
+    selectApp(),
+    appState => appState.get('plugins')
+  );
 
-const makeSelectApp = () => createSelector(
-  selectApp(),
-  appState => appState.toJS(),
-);
+const makeSelectApp = () =>
+  createSelector(
+    selectApp(),
+    appState => appState.toJS()
+  );
 
-const selectHasUserPlugin = () => createSelector(
-  selectApp(),
-  (appState) => appState.get('hasUserPlugin'),
-);
+const selectHasUserPlugin = () =>
+  createSelector(
+    selectApp(),
+    appState => appState.get('hasUserPlugin')
+  );
 
-const makeSelectShowGlobalAppBlocker = () => createSelector(
-  selectApp(),
-  (appState) => appState.get('showGlobalAppBlocker'),
-);
+const makeSelectShowGlobalAppBlocker = () =>
+  createSelector(
+    selectApp(),
+    appState => appState.get('showGlobalAppBlocker')
+  );
 
-const makeSelectBlockApp = () => createSelector(
-  selectApp(),
-  (appState) => appState.get('blockApp'),
-);
+const makeSelectBlockApp = () =>
+  createSelector(
+    selectApp(),
+    appState => appState.get('blockApp')
+  );
 
-const makeSelectOverlayBlockerProps = () => createSelector(
-  selectApp(),
-  (appState) => appState.get('overlayBlockerData'),
-);
+const makeSelectOverlayBlockerProps = () =>
+  createSelector(
+    selectApp(),
+    appState => appState.get('overlayBlockerData')
+  );
 
-const makeSelectIsAppLoading = () => createSelector(
-  selectApp(),
-  appState => appState.get('isAppLoading'),
-);
+const makeSelectIsAppLoading = () =>
+  createSelector(
+    selectApp(),
+    appState => appState.get('isAppLoading')
+  );
 
-const makeSelectAppPlugins = () => createSelector(
-  selectApp(),
-  appState => appState.get('appPlugins').toJS(),
-);
+const makeSelectAppPlugins = () =>
+  createSelector(
+    selectApp(),
+    appState => appState.get('appPlugins').toJS()
+  );
 export default makeSelectApp;
 export {
   selectApp,

@@ -19,7 +19,11 @@ function App() {
   return (
     <div className={pluginId}>
       <Switch>
-        <Route path={`/plugins/${pluginId}/configurations/:env`} component={ConfigPage} exact />
+        <Route
+          path={`/plugins/${pluginId}/configurations/:env`}
+          component={ConfigPage}
+          exact
+        />
         <Route path={`/plugins/${pluginId}`} component={HomePage} exact />
         <Route component={NotFoundPage} />
       </Switch>

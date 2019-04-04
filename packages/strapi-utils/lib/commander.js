@@ -15,7 +15,7 @@ const program = require('commander');
 // Allow us to display `help()`, but omit the wildcard (`*`) command.
 program.Command.prototype.usageMinusWildcard = program.usageMinusWildcard = () => {
   program.commands = _.reject(program.commands, {
-    _name: '*'
+    _name: '*',
   });
   program.help();
 };

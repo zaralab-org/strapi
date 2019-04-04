@@ -33,17 +33,23 @@ echo('Building the Webpack DLL...');
 if (!exists(dllManifestPath)) {
   writeFile(
     dllManifestPath,
-    JSON.stringify(defaults({
-      name: 'strapi-plugin-dlls',
-      private: true,
-      author: pkg.author,
-      repository: pkg.repository,
-      version: pkg.version
-    }), null, 2),
+    JSON.stringify(
+      defaults({
+        name: 'strapi-plugin-dlls',
+        private: true,
+        author: pkg.author,
+        repository: pkg.repository,
+        version: pkg.version,
+      }),
+      null,
+      2
+    ),
 
     'utf8'
-  )
+  );
 }
 
 // the BUILDING_DLL env var is set to avoid confusing the development environment
-exec('./node_modules/strapi-helper-plugin/node_modules/cross-env/bin/cross-env.js BUILDING_DLL=true ./node_modules/strapi-helper-plugin/node_modules/webpack/bin/webpack.js --display-chunks --color --config ./node_modules/strapi-helper-plugin/lib/internals/webpack/webpack.dll.babel.js');
+exec(
+  './node_modules/strapi-helper-plugin/node_modules/cross-env/bin/cross-env.js BUILDING_DLL=true ./node_modules/strapi-helper-plugin/node_modules/webpack/bin/webpack.js --display-chunks --color --config ./node_modules/strapi-helper-plugin/lib/internals/webpack/webpack.dll.babel.js'
+);

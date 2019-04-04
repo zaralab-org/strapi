@@ -13,7 +13,8 @@ import NotificationsContainer from '../../components/NotificationsContainer';
 import { selectNotifications } from './selectors';
 import { hideNotification } from './actions';
 
-export class NotificationProvider extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class NotificationProvider extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <NotificationsContainer
@@ -35,11 +36,14 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onHideNotification: (id) => {
+    onHideNotification: id => {
       dispatch(hideNotification(id));
     },
     dispatch,
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotificationProvider);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NotificationProvider);

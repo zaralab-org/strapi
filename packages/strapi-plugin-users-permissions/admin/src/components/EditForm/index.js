@@ -1,8 +1,8 @@
 /**
-*
-* EditForm
-*
-*/
+ *
+ * EditForm
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,8 +14,9 @@ import Input from 'components/InputsIndex';
 
 import styles from './styles.scss';
 
-class EditForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  generateSelectOptions = () => (
+class EditForm extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
+  generateSelectOptions = () =>
     Object.keys(get(this.props.values, 'roles', [])).reduce((acc, current) => {
       const option = {
         id: get(this.props.values.roles, [current, 'name']),
@@ -23,13 +24,17 @@ class EditForm extends React.Component { // eslint-disable-line react/prefer-sta
       };
       acc.push(option);
       return acc;
-    }, [])
-  )
+    }, []);
 
   render() {
     if (this.props.showLoaders) {
       return (
-        <div className={cn(styles.editForm, this.props.showLoaders && styles.loadIndicatorContainer)}>
+        <div
+          className={cn(
+            styles.editForm,
+            this.props.showLoaders && styles.loadIndicatorContainer
+          )}
+        >
           <LoadingIndicator />
         </div>
       );
@@ -39,7 +44,9 @@ class EditForm extends React.Component { // eslint-disable-line react/prefer-sta
       <div className={styles.editForm}>
         <div className="row">
           <Input
-            inputDescription={{ id: 'users-permissions.EditForm.inputSelect.description.role' }}
+            inputDescription={{
+              id: 'users-permissions.EditForm.inputSelect.description.role',
+            }}
             inputClassName={styles.inputStyle}
             label={{ id: 'users-permissions.EditForm.inputSelect.label.role' }}
             name="advanced.settings.default_role"
@@ -53,7 +60,9 @@ class EditForm extends React.Component { // eslint-disable-line react/prefer-sta
         <div className="row">
           <Input
             label={{ id: 'users-permissions.EditForm.inputToggle.label.email' }}
-            inputDescription={{ id: 'users-permissions.EditForm.inputToggle.description.email' }}
+            inputDescription={{
+              id: 'users-permissions.EditForm.inputToggle.description.email',
+            }}
             name="advanced.settings.unique_email"
             onChange={this.props.onChange}
             type="toggle"
@@ -89,8 +98,12 @@ class EditForm extends React.Component { // eslint-disable-line react/prefer-sta
         */}
         <div className="row">
           <Input
-            label={{ id: 'users-permissions.EditForm.inputToggle.label.sign-up' }}
-            inputDescription={{ id: 'users-permissions.EditForm.inputToggle.description.sign-up' }}
+            label={{
+              id: 'users-permissions.EditForm.inputToggle.label.sign-up',
+            }}
+            inputDescription={{
+              id: 'users-permissions.EditForm.inputToggle.description.sign-up',
+            }}
             name="advanced.settings.allow_register"
             onChange={this.props.onChange}
             type="toggle"
@@ -100,8 +113,14 @@ class EditForm extends React.Component { // eslint-disable-line react/prefer-sta
         <div className={styles.separator} />
         <div className="row">
           <Input
-            label={{ id: 'users-permissions.EditForm.inputToggle.label.email-confirmation' }}
-            inputDescription={{ id: 'users-permissions.EditForm.inputToggle.description.email-confirmation' }}
+            label={{
+              id:
+                'users-permissions.EditForm.inputToggle.label.email-confirmation',
+            }}
+            inputDescription={{
+              id:
+                'users-permissions.EditForm.inputToggle.description.email-confirmation',
+            }}
             name="advanced.settings.email_confirmation"
             onChange={this.props.onChange}
             type="toggle"
@@ -110,12 +129,21 @@ class EditForm extends React.Component { // eslint-disable-line react/prefer-sta
         </div>
         <div className="row">
           <Input
-            label={{ id: 'users-permissions.EditForm.inputToggle.label.email-confirmation-redirection' }}
-            inputDescription={{ id: 'users-permissions.EditForm.inputToggle.description.email-confirmation-redirection' }}
+            label={{
+              id:
+                'users-permissions.EditForm.inputToggle.label.email-confirmation-redirection',
+            }}
+            inputDescription={{
+              id:
+                'users-permissions.EditForm.inputToggle.description.email-confirmation-redirection',
+            }}
             name="advanced.settings.email_confirmation_redirection"
             onChange={this.props.onChange}
             type="text"
-            value={get(this.props.values.settings, 'email_confirmation_redirection')}
+            value={get(
+              this.props.values.settings,
+              'email_confirmation_redirection'
+            )}
           />
         </div>
       </div>

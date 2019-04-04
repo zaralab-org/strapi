@@ -11,13 +11,18 @@ module.exports = strapi => {
      */
 
     initialize: function(cb) {
-      strapi.app.use(strapi.koaMiddlewares.body(Object.assign({
-        patchKoa: true,
-      },
-      strapi.config.middleware.settings.parser
-      )));
+      strapi.app.use(
+        strapi.koaMiddlewares.body(
+          Object.assign(
+            {
+              patchKoa: true,
+            },
+            strapi.config.middleware.settings.parser
+          )
+        )
+      );
 
       cb();
-    }
+    },
   };
 };

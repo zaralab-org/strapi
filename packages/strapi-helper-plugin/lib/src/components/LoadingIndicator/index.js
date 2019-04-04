@@ -10,7 +10,9 @@ import styles from './styles.scss';
 
 const LoadingIndicator = () => {
   return (
-    <div className={styles.loader}><div /></div>
+    <div className={styles.loader}>
+      <div />
+    </div>
   );
 };
 

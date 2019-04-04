@@ -24,7 +24,9 @@ describe('Test register page', () => {
   });
 
   it('Should redirect to /register when trying to hit /login', () => {
-    cy.visit('/admin/plugins/users-permissions/auth/login').wait(frontLoadingDelay);
+    cy.visit('/admin/plugins/users-permissions/auth/login').wait(
+      frontLoadingDelay
+    );
 
     cy.url().should('include', '/users-permissions/auth/register');
   });

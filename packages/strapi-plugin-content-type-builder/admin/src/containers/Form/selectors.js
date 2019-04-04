@@ -10,45 +10,51 @@ const selectFormDomain = () => state => state.get(`${pluginId}_form`);
  * Other specific selectors
  */
 
-
 /**
  * Default selector used by Form
  */
 
-const selectForm = () => createSelector(
-  selectFormDomain(),
-  (substate) => substate.toJS(),
-);
+const selectForm = () =>
+  createSelector(
+    selectFormDomain(),
+    substate => substate.toJS()
+  );
 
-const makeSelectModifiedData = () => createSelector(
-  selectFormDomain(),
-  (substate) => substate.get('modifiedData').toJS(),
-);
+const makeSelectModifiedData = () =>
+  createSelector(
+    selectFormDomain(),
+    substate => substate.get('modifiedData').toJS()
+  );
 
-const makeSelectModifiedDataEdit = () => createSelector(
-  selectFormDomain(),
-  (substate) => substate.get('modifiedDataEdit').toJS(),
-);
+const makeSelectModifiedDataEdit = () =>
+  createSelector(
+    selectFormDomain(),
+    substate => substate.get('modifiedDataEdit').toJS()
+  );
 
-const makeSelectInitialDataEdit = () => createSelector(
-  selectFormDomain(),
-  (substate) => substate.get('initialDataEdit').toJS()
-);
+const makeSelectInitialDataEdit = () =>
+  createSelector(
+    selectFormDomain(),
+    substate => substate.get('initialDataEdit').toJS()
+  );
 
-const makeSelectDidFetchModel = () => createSelector(
-  selectFormDomain(),
-  (substate) => substate.get('didFetchModel'),
-);
+const makeSelectDidFetchModel = () =>
+  createSelector(
+    selectFormDomain(),
+    substate => substate.get('didFetchModel')
+  );
 
-const makeSelectShouldRefetchContentType = () => createSelector(
-  selectFormDomain(),
-  (substate) => substate.get('shouldRefetchContentType'),
-);
+const makeSelectShouldRefetchContentType = () =>
+  createSelector(
+    selectFormDomain(),
+    substate => substate.get('shouldRefetchContentType')
+  );
 
-const makeSelectContentTypeUpdated = () => createSelector(
-  selectFormDomain(),
-  (substate) => substate.get('updatedContentType'),
-);
+const makeSelectContentTypeUpdated = () =>
+  createSelector(
+    selectFormDomain(),
+    substate => substate.get('updatedContentType')
+  );
 
 export default selectForm;
 export {

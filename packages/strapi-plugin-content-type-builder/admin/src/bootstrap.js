@@ -1,3 +1,3 @@
-const bootstrap = (plugin) => Promise.resolve(plugin);
+const bootstrap = plugin => Promise.resolve(plugin);
 
 export default bootstrap;

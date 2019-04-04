@@ -35,7 +35,9 @@ export class ExamplePage extends React.Component {
   }
 
   render() {
-    console.log('Don\'t forget to delete the ExampleContainer when you\'re done studying it');
+    console.log(
+      "Don't forget to delete the ExampleContainer when you're done studying it"
+    );
     // Generate the data block
     const dataBlock = this.generateDataBlock();
 
@@ -64,10 +66,7 @@ ExamplePage.contextTypes = {
 };
 
 ExamplePage.propTypes = {
-  data: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.object,
-  ]).isRequired,
+  data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   loadData: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -77,7 +76,7 @@ function mapDispatchToProps(dispatch) {
     {
       loadData,
     },
-    dispatch,
+    dispatch
   );
 }
 
@@ -86,13 +85,20 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
 });
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 
-const withReducer = strapi.injectReducer({ key: 'examplePage', reducer, pluginId });
+const withReducer = strapi.injectReducer({
+  key: 'examplePage',
+  reducer,
+  pluginId,
+});
 const withSaga = strapi.injectSaga({ key: 'examplePage', saga, pluginId });
 
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(injectIntl(ExamplePage));

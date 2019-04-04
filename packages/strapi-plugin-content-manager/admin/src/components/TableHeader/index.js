@@ -39,7 +39,7 @@ class TableHeader extends React.Component {
     }
 
     return null;
-  }
+  };
 
   render() {
     // Generate headers list
@@ -47,7 +47,10 @@ class TableHeader extends React.Component {
       // Define sort icon
       let icon;
 
-      if (this.props.sort === header.name || this.props.sort === 'id' && header.name === '_id') {
+      if (
+        this.props.sort === header.name ||
+        (this.props.sort === 'id' && header.name === '_id')
+      ) {
         icon = <i className={`fa fa-sort-asc ${styles.iconAsc}`} />;
       } else if (this.props.sort === `-${header.name}`) {
         icon = <i className={`fa fa-sort-asc ${styles.iconDesc}`} />;
@@ -66,19 +69,21 @@ class TableHeader extends React.Component {
             {header.label}
             {icon}
           </span>
-
         </th>
       );
     });
 
     // Add empty th for actions column.
-    headers.push(<th key="th_action"></th>);
+    headers.push(<th key="th_action" />);
 
     return (
-      <thead className={cn(styles.tableHeader, this.props.enableBulkActions && styles.withBulk)}>
-        <tr >
-          {[this.renderBulk()].concat(headers)}
-        </tr>
+      <thead
+        className={cn(
+          styles.tableHeader,
+          this.props.enableBulkActions && styles.withBulk
+        )}
+      >
+        <tr>{[this.renderBulk()].concat(headers)}</tr>
       </thead>
     );
   }

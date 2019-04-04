@@ -1,8 +1,8 @@
 /**
-*
-* EmptyAttributesView
-*
-*/
+ *
+ * EmptyAttributesView
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -32,14 +32,20 @@ function EmptyAttributesView({ currentModelName, history, modelEntries }) {
         <div className={styles.emptyAttributesView}>
           <div>
             <FormattedMessage id="content-manager.emptyAttributes.title">
-              {(title) => <div className={styles.title}>{title}</div>}
+              {title => <div className={styles.title}>{title}</div>}
             </FormattedMessage>
             <FormattedMessage id="content-manager.emptyAttributes.description">
-              {(description) => <div className={styles.description}>{description}</div>}
+              {description => (
+                <div className={styles.description}>{description}</div>
+              )}
             </FormattedMessage>
             <div className={styles.buttonContainer}>
               <Button
-                onClick={() => history.push(`/plugins/content-type-builder/models/${currentModelName}#choose::attributes`)}
+                onClick={() =>
+                  history.push(
+                    `/plugins/content-type-builder/models/${currentModelName}#choose::attributes`
+                  )
+                }
                 primaryAddShape
                 label="content-manager.emptyAttributes.button"
               />

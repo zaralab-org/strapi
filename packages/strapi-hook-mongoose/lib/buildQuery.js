@@ -9,8 +9,15 @@ const utils = require('./utils')();
  * @param {Object} options.populate - An array of paths to populate
  * @param {boolean} options.aggregate - Force aggregate function to use group by feature
  */
-const buildQuery = ({ model, filters = {}, populate = [], aggregate = false } = {}) => {
-  const deepFilters = (filters.where || []).filter(({ field }) => field.split('.').length > 1);
+const buildQuery = ({
+  model,
+  filters = {},
+  populate = [],
+  aggregate = false,
+} = {}) => {
+  const deepFilters = (filters.where || []).filter(
+    ({ field }) => field.split('.').length > 1
+  );
 
   if (deepFilters.length === 0 && aggregate === false) {
     return buildSimpleQuery({ model, filters, populate });
@@ -62,7 +69,11 @@ const buildDeepQuery = ({ model, filters, populate }) => {
 
   // Init the query
   let query = model
-    .aggregate(buildQueryAggregate(model, { paths: _.merge({}, populatePaths, wherePaths) }))
+    .aggregate(
+      buildQueryAggregate(model, {
+        paths: _.merge({}, populatePaths, wherePaths),
+      })
+    )
     .append(buildQueryMatches(model, filters));
 
   query = applyQueryParams({ query, filters });
@@ -100,7 +111,9 @@ const buildDeepQuery = ({ model, filters, populate }) => {
      * Maps to query.count
      */
     count() {
-      return query.count('count').then(results => _.get(results, ['0', 'count'], 0));
+      return query
+        .count('count')
+        .then(results => _.get(results, ['0', 'count'], 0));
     },
 
     /**
@@ -204,7 +217,8 @@ const computePopulatedPaths = ({ model, populate = [], where = [] }) => {
  * }
  * @param {Array<string>} paths - A list of paths to transform
  */
-const pathsToTree = paths => paths.reduce((acc, path) => _.merge(acc, _.set({}, path, {})), {});
+const pathsToTree = paths =>
+  paths.reduce((acc, path) => _.merge(acc, _.set({}, path, {})), {});
 
 /**
  * Builds the aggregations pipeling of the query
@@ -248,11 +262,11 @@ const buildLookup = ({ model, key, paths }) => {
   ].concat(
     assoc.type === 'model'
       ? {
-        $unwind: {
-          path: `$${assoc.alias}`,
-          preserveNullAndEmptyArrays: true,
-        },
-      }
+          $unwind: {
+            path: `$${assoc.alias}`,
+            preserveNullAndEmptyArrays: true,
+          },
+        }
       : []
   );
 };
@@ -316,7 +330,9 @@ const buildLookupMatch = ({ assoc }) => {
     case 'manyToManyMorph':
     case 'oneToManyMorph': {
       return [
-        { $unwind: { path: `$${assoc.via}`, preserveNullAndEmptyArrays: true } },
+        {
+          $unwind: { path: `$${assoc.via}`, preserveNullAndEmptyArrays: true },
+        },
         {
           $match: {
             $expr: {
@@ -426,7 +442,9 @@ const buildWhereClause = ({ field, operator, value }) => {
       };
 
     default:
-      throw new Error(`Unhandled whereClause : ${fullField} ${operator} ${value}`);
+      throw new Error(
+        `Unhandled whereClause : ${fullField} ${operator} ${value}`
+      );
   }
 };
 
@@ -499,7 +517,9 @@ const hydrateModel = ({ model: rootModel, populatedModels }) => async obj => {
 
     acc.push({
       path: key,
-      data: Array.isArray(val) ? Promise.all(val.map(v => subHydrate(v))) : subHydrate(val),
+      data: Array.isArray(val)
+        ? Promise.all(val.map(v => subHydrate(v)))
+        : subHydrate(val),
     });
 
     return acc;

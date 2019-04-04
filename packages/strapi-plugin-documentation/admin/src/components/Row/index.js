@@ -8,7 +8,13 @@ import PropTypes from 'prop-types';
 import ButtonContainer from './ButtonContainer';
 import styles from './styles.scss';
 
-function Row({ currentDocVersion, data, isHeader, onClickDelete, onUpdateDoc }) {
+function Row({
+  currentDocVersion,
+  data,
+  isHeader,
+  onClickDelete,
+  onUpdateDoc,
+}) {
   const { version, generatedDate } = data;
 
   return (

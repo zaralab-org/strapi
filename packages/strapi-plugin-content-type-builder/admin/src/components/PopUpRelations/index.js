@@ -52,7 +52,12 @@ class PopUpRelations extends React.Component {
     }
   }
 
-  setPlaceholders = (firstCTName, secondCTName, relationType, values = this.props.values) => {
+  setPlaceholders = (
+    firstCTName,
+    secondCTName,
+    relationType,
+    values = this.props.values
+  ) => {
     switch (relationType) {
       case 'oneToMany':
         firstCTName = pluralize(firstCTName);
@@ -65,18 +70,20 @@ class PopUpRelations extends React.Component {
         secondCTName = pluralize(secondCTName);
         break;
       default:
-        // Do nothing
+      // Do nothing
     }
 
     if (get(this.props.contentType, 'name') !== get(values, 'params.target')) {
       this.props.onChange({ target: { name: 'name', value: firstCTName } });
-      this.props.onChange({ target: { name: 'params.key', value: secondCTName } });
+      this.props.onChange({
+        target: { name: 'params.key', value: secondCTName },
+      });
       this.props.resetFormErrors();
     } else {
       this.props.onChange({ target: { name: 'name', value: '' } });
       this.props.onChange({ target: { name: 'params.key', value: '' } });
     }
-  }
+  };
 
   handleChange = e => {
     this.props.onChange(e);
@@ -86,14 +93,14 @@ class PopUpRelations extends React.Component {
       this.setPlaceholders(
         get(this.props.values, ['params', 'target']),
         get(this.props.contentType, 'name'),
-        e.target.value,
+        e.target.value
       );
     }
 
     if (shouldResetKeyParams) {
       this.props.onChange({ target: { name: 'params.key', value: '-' } });
     }
-  }
+  };
 
   handleClick = e => {
     const value = e.target.id.split('.');
@@ -120,12 +127,15 @@ class PopUpRelations extends React.Component {
           value[0],
           get(this.props.contentType, 'name'),
           get(this.props.values, ['params', 'nature']),
-          value[0],
+          value[0]
         );
       } else {
-        const keyValue = get(this.props.values, 'params.nature') === 'oneWay' ? '-' : '';
+        const keyValue =
+          get(this.props.values, 'params.nature') === 'oneWay' ? '-' : '';
         this.props.onChange({ target: { name: 'name', value: '' } });
-        this.props.onChange({ target: { name: 'params.key', value: keyValue } });
+        this.props.onChange({
+          target: { name: 'params.key', value: keyValue },
+        });
       }
     }
   };
@@ -149,10 +159,19 @@ class PopUpRelations extends React.Component {
       });
     }
 
-    if (get(props.contentType, 'name') !== get(props.dropDownItems, ['0', 'name'])) {
+    if (
+      get(props.contentType, 'name') !== get(props.dropDownItems, ['0', 'name'])
+    ) {
       [
-        { target: { name: 'name', value: get(props.dropDownItems, ['0', 'name']) } },
-        { target: { name: 'params.key', value: get(props.contentType, 'name') } },
+        {
+          target: {
+            name: 'name',
+            value: get(props.dropDownItems, ['0', 'name']),
+          },
+        },
+        {
+          target: { name: 'params.key', value: get(props.contentType, 'name') },
+        },
       ].map(target => this.props.onChange(target));
     }
   };
@@ -180,7 +199,10 @@ class PopUpRelations extends React.Component {
               key={key}
               customBootstrapClass="col-md-6 offset-md-6 mr-md-5"
               type={input.type}
-              value={get(this.props.values, ['params', input.name.split('.')[1]])}
+              value={get(this.props.values, [
+                'params',
+                input.name.split('.')[1],
+              ])}
               name={input.name}
               label={input.label}
               title={input.title}
@@ -202,7 +224,10 @@ class PopUpRelations extends React.Component {
                 <Input
                   key={index}
                   type={value.type}
-                  value={get(this.props.values, ['params', value.name.split('.')[1]])}
+                  value={get(this.props.values, [
+                    'params',
+                    value.name.split('.')[1],
+                  ])}
                   name={value.name}
                   label={value.label}
                   title={value.title}
@@ -225,22 +250,50 @@ class PopUpRelations extends React.Component {
     const pluginValue = get(this.props.values, ['params', 'pluginValue'], '');
     const header = !isEmpty(pluginValue.trim())
       ? get(this.props.dropDownItems, [
-        findIndex(this.props.dropDownItems, {
-          name: get(this.props.values, ['params', 'target']),
-          source: get(this.props.values, ['params', 'pluginValue']),
-        }),
-      ])
+          findIndex(this.props.dropDownItems, {
+            name: get(this.props.values, ['params', 'target']),
+            source: get(this.props.values, ['params', 'pluginValue']),
+          }),
+        ])
       : get(this.props.dropDownItems, [
-        findIndex(this.props.dropDownItems, [
-          'name',
-          get(this.props.values, ['params', 'target']),
-        ]),
-      ]);
+          findIndex(this.props.dropDownItems, [
+            'name',
+            get(this.props.values, ['params', 'target']),
+          ]),
+        ]);
 
-    const errs = findIndex(this.props.formErrors, ['name',get(this.props.form, ['items', '0', 'name'])]) !== -1 ? this.props.formErrors[findIndex(this.props.formErrors, ['name', get(this.props.form, ['items', '0', 'name'])])].errors: [];
-    const errors = findIndex(this.props.formErrors, ['name', get(this.props.form, ['items', '1', 'name'])]) !== -1 ? this.props.formErrors[findIndex(this.props.formErrors, ['name', get(this.props.form, ['items', '1', 'name'])])].errors : [];
-    const contentTypeTargetPlaceholder = get(this.props.values, 'params.nature', '') === 'oneWay' ? '-' : get(this.props.contentType, 'name');
-    const contentTypeTargetValue = get(this.props.values, 'params.nature') === 'oneWay' ? '-' : get(this.props.values, ['params', 'key']);
+    const errs =
+      findIndex(this.props.formErrors, [
+        'name',
+        get(this.props.form, ['items', '0', 'name']),
+      ]) !== -1
+        ? this.props.formErrors[
+            findIndex(this.props.formErrors, [
+              'name',
+              get(this.props.form, ['items', '0', 'name']),
+            ])
+          ].errors
+        : [];
+    const errors =
+      findIndex(this.props.formErrors, [
+        'name',
+        get(this.props.form, ['items', '1', 'name']),
+      ]) !== -1
+        ? this.props.formErrors[
+            findIndex(this.props.formErrors, [
+              'name',
+              get(this.props.form, ['items', '1', 'name']),
+            ])
+          ].errors
+        : [];
+    const contentTypeTargetPlaceholder =
+      get(this.props.values, 'params.nature', '') === 'oneWay'
+        ? '-'
+        : get(this.props.contentType, 'name');
+    const contentTypeTargetValue =
+      get(this.props.values, 'params.nature') === 'oneWay'
+        ? '-'
+        : get(this.props.values, ['params', 'key']);
 
     return (
       <ModalBody className={`${styles.modalBody} ${styles.flex}`}>
@@ -248,7 +301,10 @@ class PopUpRelations extends React.Component {
           autoFocus
           tabIndex="1"
           relationType={get(this.props.values, ['params', 'nature'])}
-          contentTypeTargetPlaceholder={get(this.props.values, ['params', 'target'])}
+          contentTypeTargetPlaceholder={get(this.props.values, [
+            'params',
+            'target',
+          ])}
           isFirstContentType
           header={this.props.contentType}
           input={get(this.props.form, ['items', '0'])}
@@ -295,7 +351,10 @@ class PopUpRelations extends React.Component {
           toggle={this.props.toggle}
           className={`${styles.modalPosition}`}
         >
-          <ModalHeader toggle={this.props.toggle} className={styles.popUpFormHeader} />
+          <ModalHeader
+            toggle={this.props.toggle}
+            className={styles.popUpFormHeader}
+          />
           <div className={styles.headerContainer}>
             <div className={styles.titleContainer}>
               <div>
@@ -314,8 +373,18 @@ class PopUpRelations extends React.Component {
             <Button onClick={handleToggle} className={styles.secondary}>
               <FormattedMessage id="content-type-builder.form.button.cancel" />
             </Button>
-            <Button type="submit" onClick={this.props.onSubmit} className={styles.primaryAddShape}><FormattedMessage id="content-type-builder.button.attributes.add" /></Button>
-            <Button type="button" onClick={(e) => this.props.onSubmit(e, false)} className={styles.primary}>
+            <Button
+              type="submit"
+              onClick={this.props.onSubmit}
+              className={styles.primaryAddShape}
+            >
+              <FormattedMessage id="content-type-builder.button.attributes.add" />
+            </Button>
+            <Button
+              type="button"
+              onClick={e => this.props.onSubmit(e, false)}
+              className={styles.primary}
+            >
               <FormattedMessage id="content-type-builder.form.button.continue" />
             </Button>{' '}
           </ModalFooter>
@@ -329,8 +398,12 @@ PopUpRelations.propTypes = {
   contentType: PropTypes.object,
   didCheckErrors: PropTypes.bool.isRequired,
   dropDownItems: PropTypes.array,
-  form: PropTypes.oneOfType([PropTypes.array.isRequired, PropTypes.object.isRequired]).isRequired,
-  formErrors: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+  form: PropTypes.oneOfType([
+    PropTypes.array.isRequired,
+    PropTypes.object.isRequired,
+  ]).isRequired,
+  formErrors: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+    .isRequired,
   isEditting: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,

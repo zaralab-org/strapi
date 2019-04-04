@@ -17,7 +17,9 @@ const defaults = {
 const convertRestQueryParams = (params = {}) => {
   if (typeof params !== 'object' || params === null) {
     throw new Error(
-      `convertRestQueryParams expected an object got ${object === null ? 'null' : typeof object}`
+      `convertRestQueryParams expected an object got ${
+        object === null ? 'null' : typeof object
+      }`
     );
   }
 
@@ -55,7 +57,9 @@ const convertRestQueryParams = (params = {}) => {
  */
 const convertSortQueryParams = sortQuery => {
   if (typeof sortQuery !== 'string') {
-    throw new Error(`convertSortQueryParams expected a string, got ${typeof sortQuery}`);
+    throw new Error(
+      `convertSortQueryParams expected a string, got ${typeof sortQuery}`
+    );
   }
 
   const sortKeys = [];
@@ -88,7 +92,9 @@ const convertStartQueryParams = startQuery => {
   const startAsANumber = _.toNumber(startQuery);
 
   if (!_.isInteger(startAsANumber) || startAsANumber < 0) {
-    throw new Error(`convertStartQueryParams expected a positive integer got ${startAsANumber}`);
+    throw new Error(
+      `convertStartQueryParams expected a positive integer got ${startAsANumber}`
+    );
   }
 
   return {
@@ -103,8 +109,13 @@ const convertStartQueryParams = startQuery => {
 const convertLimitQueryParams = limitQuery => {
   const limitAsANumber = _.toNumber(limitQuery);
 
-  if (!_.isInteger(limitAsANumber) || (limitAsANumber !== -1 && limitAsANumber < 0)) {
-    throw new Error(`convertLimitQueryParams expected a positive integer got ${limitAsANumber}`);
+  if (
+    !_.isInteger(limitAsANumber) ||
+    (limitAsANumber !== -1 && limitAsANumber < 0)
+  ) {
+    throw new Error(
+      `convertLimitQueryParams expected a positive integer got ${limitAsANumber}`
+    );
   }
 
   return {

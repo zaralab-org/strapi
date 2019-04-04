@@ -39,11 +39,12 @@ class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.shouldRefetchContentType !== this.props.shouldRefetchContentType) {
+    if (
+      nextProps.shouldRefetchContentType !== this.props.shouldRefetchContentType
+    ) {
       this.props.modelsFetch();
     }
   }
-
 
   componentWillUnmount() {
     // Empty the app localStorage
@@ -54,8 +55,16 @@ class App extends React.Component {
     return (
       <div className={`${pluginId} ${styles.app}`}>
         <Switch>
-          <Route exact path="/plugins/content-type-builder" component={HomePage} />
-          <Route exact path="/plugins/content-type-builder/models/:modelName" component={ModelPage} />
+          <Route
+            exact
+            path="/plugins/content-type-builder"
+            component={HomePage}
+          />
+          <Route
+            exact
+            path="/plugins/content-type-builder/models/:modelName"
+            component={ModelPage}
+          />
           <Route path="" component={NotFoundPage} />
         </Switch>
       </div>
@@ -91,11 +100,22 @@ const mapStateToProps = createStructuredSelector({
   shouldRefetchContentType: makeSelectShouldRefetchContentType(),
 });
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 const withReducer = strapi.injectReducer({ key: 'global', reducer, pluginId });
 const withSaga = strapi.injectSaga({ key: 'global', saga, pluginId });
-const withFormReducer = strapi.injectReducer({ key: 'form', reducer: formReducer, pluginId });
-const withFormSaga = strapi.injectSaga({ key: 'form', saga: formSaga, pluginId });
+const withFormReducer = strapi.injectReducer({
+  key: 'form',
+  reducer: formReducer,
+  pluginId,
+});
+const withFormSaga = strapi.injectSaga({
+  key: 'form',
+  saga: formSaga,
+  pluginId,
+});
 
 export default compose(
   withReducer,
@@ -103,5 +123,5 @@ export default compose(
   withFormSaga,
   withSaga,
   withRouter,
-  withConnect,
+  withConnect
 )(App);

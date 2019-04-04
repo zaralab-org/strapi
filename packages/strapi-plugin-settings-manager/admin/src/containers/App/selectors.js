@@ -23,20 +23,23 @@ const selectLocationState = () => {
   };
 };
 
-const makeSelectSections = () => createSelector(
-  selectGlobalDomain(),
-  (globalSate) => globalSate.get('sections').toJS(),
-);
+const makeSelectSections = () =>
+  createSelector(
+    selectGlobalDomain(),
+    globalSate => globalSate.get('sections').toJS()
+  );
 
-const makeSelectEnvironments = () => createSelector(
-  selectGlobalDomain(),
-  (globalSate) => globalSate.get('environments').toJS(),
-);
+const makeSelectEnvironments = () =>
+  createSelector(
+    selectGlobalDomain(),
+    globalSate => globalSate.get('environments').toJS()
+  );
 
-const makeSelectLoading = () => createSelector(
-  selectGlobalDomain(),
-  (globalSate) => globalSate.get('loading'),
-);
+const makeSelectLoading = () =>
+  createSelector(
+    selectGlobalDomain(),
+    globalSate => globalSate.get('loading')
+  );
 
 export {
   makeSelectEnvironments,

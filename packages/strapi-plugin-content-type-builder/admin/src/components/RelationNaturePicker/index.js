@@ -1,8 +1,8 @@
 /**
-*
-* RelationNaturePicker
-*
-*/
+ *
+ * RelationNaturePicker
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -25,7 +25,8 @@ import RelationIco from '../RelationIco';
 
 import styles from './styles.scss';
 
-class RelationNaturePicker extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class RelationNaturePicker extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.icos = [
@@ -75,26 +76,36 @@ class RelationNaturePicker extends React.Component { // eslint-disable-line reac
         contentTypeTarget = pluralize(contentTypeTarget);
         break;
       default:
-
     }
 
-    const relationText = this.props.selectedIco ? <FormattedMessage id={`content-type-builder.relation.${this.props.selectedIco}`}  /> : '';
+    const relationText = this.props.selectedIco ? (
+      <FormattedMessage
+        id={`content-type-builder.relation.${this.props.selectedIco}`}
+      />
+    ) : (
+      ''
+    );
 
     return (
       <div className={styles.relationNaturePicker}>
         {map(this.icos, (value, key) => (
-          <RelationIco key={key} ico={this.props.selectedIco === value.name ? value.icoSelected : value.ico} name={value.name} onChange={this.props.onChange} />
+          <RelationIco
+            key={key}
+            ico={
+              this.props.selectedIco === value.name
+                ? value.icoSelected
+                : value.ico
+            }
+            name={value.name}
+            onChange={this.props.onChange}
+          />
         ))}
         <div className={styles.infoContainer}>
-          <span>
-            {contentTypeName}
-          </span>
+          <span>{contentTypeName}</span>
           &nbsp;
           {relationText}
           &nbsp;
-          <span>
-            {contentTypeTarget}
-          </span>
+          <span>{contentTypeTarget}</span>
         </div>
       </div>
     );

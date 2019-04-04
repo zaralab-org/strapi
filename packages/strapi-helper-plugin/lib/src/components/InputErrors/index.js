@@ -12,8 +12,15 @@ function InputErrors(props) {
   return (
     <div>
       {map(props.errors, (error, key) => {
-        const displayError = isObject(error) && error.id ?
-          <FormattedMessage {...error} values={{ errorMessage: error.errorMessage }} /> : error;
+        const displayError =
+          isObject(error) && error.id ? (
+            <FormattedMessage
+              {...error}
+              values={{ errorMessage: error.errorMessage }}
+            />
+          ) : (
+            error
+          );
 
         return (
           <div
@@ -21,7 +28,7 @@ function InputErrors(props) {
               'form-control-feedback',
               'invalid-feedback',
               styles.errorContainer,
-              !isEmpty(props.className) && props.className,
+              !isEmpty(props.className) && props.className
             )}
             id={`errorOf${props.name}`}
             key={key}

@@ -47,14 +47,19 @@ const initialState = fromJS({
 function formReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_INPUT:
-      return state
-        .updateIn([action.objectToModify, action.key], () => action.value);
+      return state.updateIn(
+        [action.objectToModify, action.key],
+        () => action.value
+      );
     case CHANGE_INPUT_ATTRIBUTE:
       return state.updateIn(action.keys, () => action.value);
     case CONNECTIONS_FETCH_SUCCEEDED:
       return state
         .set('selectOptions', List(action.connections))
-        .set('selectOptionsFetchSucceeded', !state.get('selectOptionsFetchSucceeded'));
+        .set(
+          'selectOptionsFetchSucceeded',
+          !state.get('selectOptionsFetchSucceeded')
+        );
     case CONTENT_TYPE_ACTION_SUCCEEDED:
       return state
         .set('shouldRefetchContentType', !state.get('shouldRefetchContentType'))
@@ -76,11 +81,16 @@ function formReducer(state = initialState, action) {
         .set('modifiedDataEdit', action.data);
     case REMOVE_CONTENT_TYPE_REQUIRED_ERROR:
       return state
-        .update('formErrors', (list) => list.splice(findIndex(state.get('formErrors').toJS(), ['target', 'name']), 1))
+        .update('formErrors', list =>
+          list.splice(
+            findIndex(state.get('formErrors').toJS(), ['target', 'name']),
+            1
+          )
+        )
         .set('didCheckErrors', !state.get('didCheckErrors'));
     case RESET_FORM_ERRORS:
       return state
-        .update('didCheckErrors', v => v = !v)
+        .update('didCheckErrors', v => (v = !v))
         .set('formErrors', List());
     case RESET_IS_FORM_SET:
       return state

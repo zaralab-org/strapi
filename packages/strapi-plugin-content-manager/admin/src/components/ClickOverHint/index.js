@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * ClickOverHint
  */
 

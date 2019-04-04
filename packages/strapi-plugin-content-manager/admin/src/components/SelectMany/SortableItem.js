@@ -22,7 +22,9 @@ import styles from './styles.scss';
 const sortableItemSource = {
   beginDrag: props => {
     return {
-      id: get(props, ['item', 'value', 'id' ]) || get(props, ['item', 'value', '_id'], ''),
+      id:
+        get(props, ['item', 'value', 'id']) ||
+        get(props, ['item', 'value', '_id'], ''),
       index: props.index,
       data: props.item,
     };
@@ -78,7 +80,6 @@ const sortableItemTarget = {
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
     monitor.getItem().index = hoverIndex;
-    
   },
 };
 
@@ -107,30 +108,44 @@ class SortableItem extends React.Component {
     } = this.props;
     const opacity = isDragging ? 0.2 : 1;
 
-    return (
-      connectDragSource(
-        connectDropTarget(
-          <li
-            className={cn(styles.sortableListItem, !isDraggingSibling && styles.sortableListItemHover)}
-            style={{ opacity }}
-          >
-            <SelectManyDraggedItem index={index} item={item} onClick={onClick} onRemove={onRemove} />
-          </li>
-        ),
+    return connectDragSource(
+      connectDropTarget(
+        <li
+          className={cn(
+            styles.sortableListItem,
+            !isDraggingSibling && styles.sortableListItemHover
+          )}
+          style={{ opacity }}
+        >
+          <SelectManyDraggedItem
+            index={index}
+            item={item}
+            onClick={onClick}
+            onRemove={onRemove}
+          />
+        </li>
       )
     );
   }
 }
 
-const withDropTarget = DropTarget(ItemTypes.SORTABLEITEM, sortableItemTarget, connect => ({
-  connectDropTarget: connect.dropTarget(),
-}));
+const withDropTarget = DropTarget(
+  ItemTypes.SORTABLEITEM,
+  sortableItemTarget,
+  connect => ({
+    connectDropTarget: connect.dropTarget(),
+  })
+);
 
-const withDragSource = DragSource(ItemTypes.SORTABLEITEM, sortableItemSource, (connect, monitor) => ({
-  connectDragPreview: connect.dragPreview(),
-  connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging(),
-}));
+const withDragSource = DragSource(
+  ItemTypes.SORTABLEITEM,
+  sortableItemSource,
+  (connect, monitor) => ({
+    connectDragPreview: connect.dragPreview(),
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  })
+);
 
 SortableItem.defaultProps = {
   isDraggingSibling: false,

@@ -24,7 +24,7 @@ function InputSelect(props) {
         'form-control',
         !props.deactivateErrorHighlight && props.error && 'is-invalid',
         !isEmpty(props.className) && props.className,
-        props.disabled && styles.inputSelectDisabled,
+        props.disabled && styles.inputSelectDisabled
       )}
       disabled={props.disabled}
       id={props.name}
@@ -93,7 +93,7 @@ InputSelect.propTypes = {
         value: PropTypes.string.isRequired,
       }),
       PropTypes.string,
-    ]),
+    ])
   ).isRequired,
   style: PropTypes.object,
   tabIndex: PropTypes.string,

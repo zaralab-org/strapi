@@ -10,25 +10,27 @@ const selectModelPageDomain = () => state => state.get(`${pluginId}_modelPage`);
  * Other specific selectors
  */
 
-
 /**
  * Default selector used by ModelPage
  */
 
-const selectModelPage = () => createSelector(
-  selectModelPageDomain(),
-  (substate) => substate.toJS()
-);
+const selectModelPage = () =>
+  createSelector(
+    selectModelPageDomain(),
+    substate => substate.toJS()
+  );
 
-const makeSelectModel = () => createSelector(
-  selectModelPageDomain(),
-  (substate) => substate.get('model').toJS(),
-);
+const makeSelectModel = () =>
+  createSelector(
+    selectModelPageDomain(),
+    substate => substate.get('model').toJS()
+  );
 
-const makeSelectPostContentTypeSuccess = () => createSelector(
-  selectModelPageDomain(),
-  (substate) => substate.get('postContentTypeSuccess'),
-);
+const makeSelectPostContentTypeSuccess = () =>
+  createSelector(
+    selectModelPageDomain(),
+    substate => substate.get('postContentTypeSuccess')
+  );
 
 export default selectModelPage;
 export {

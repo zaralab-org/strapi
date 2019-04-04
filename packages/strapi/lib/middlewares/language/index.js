@@ -29,14 +29,15 @@ module.exports = strapi => {
             'locales'
           ),
           locales: Object.keys(get(strapi.config, 'locales', {})),
-          defaultLocale: strapi.config.middleware.settings.language.defaultLocale,
+          defaultLocale:
+            strapi.config.middleware.settings.language.defaultLocale,
           modes: strapi.config.middleware.settings.language.modes,
           cookieName: strapi.config.middleware.settings.language.cookieName,
-          extension: '.json'
+          extension: '.json',
         })
       );
 
       cb();
-    }
+    },
   };
 };

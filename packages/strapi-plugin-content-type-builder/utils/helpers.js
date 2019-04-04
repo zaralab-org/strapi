@@ -2,11 +2,18 @@ const { List } = require('immutable');
 const { flattenDeep, get, range } = require('lodash');
 const Manager = require('./Manager');
 
-const stateUpdater = (obj, array, keys) => obj.updateIn(['modifiedSchema', 'models', ...keys.split('.'), 'fields'], () => array);
-const createManager = (obj, array, keys, dropIndex, layout) => new Manager(stateUpdater(obj, array, keys), array, keys, dropIndex, layout);
+const stateUpdater = (obj, array, keys) =>
+  obj.updateIn(
+    ['modifiedSchema', 'models', ...keys.split('.'), 'fields'],
+    () => array
+  );
+const createManager = (obj, array, keys, dropIndex, layout) =>
+  new Manager(stateUpdater(obj, array, keys), array, keys, dropIndex, layout);
 const getElementsOnALine = (manager, line, list) => {
-  const firstElIndex = line === 0 ? 0 : manager.arrayOfEndLineElements[line - 1].index + 1;
-  const lastElIndex = get(manager.arrayOfEndLineElements[line], 'index', list.size -1) + 1;
+  const firstElIndex =
+    line === 0 ? 0 : manager.arrayOfEndLineElements[line - 1].index + 1;
+  const lastElIndex =
+    get(manager.arrayOfEndLineElements[line], 'index', list.size - 1) + 1;
   const elements = manager.getElementsOnALine(range(firstElIndex, lastElIndex));
 
   return { elements, lastElIndex };
@@ -23,10 +30,12 @@ const removeColsLine = (manager, list) => {
 
   arrayOfEndLineElements.forEach((item, i) => {
     if (i < arrayOfEndLineElements.length) {
-      const firstElementOnLine = i === 0 ? 0 : arrayOfEndLineElements[i - 1].index + 1;
+      const firstElementOnLine =
+        i === 0 ? 0 : arrayOfEndLineElements[i - 1].index + 1;
       const lastElementOnLine = arrayOfEndLineElements[i].index;
       const rangeIndex = range(firstElementOnLine, lastElementOnLine + 1);
-      const elementsOnLine = manager.getElementsOnALine(rangeIndex)
+      const elementsOnLine = manager
+        .getElementsOnALine(rangeIndex)
         .filter(name => !name.includes('__col'));
 
       if (elementsOnLine.length === 0) {
@@ -44,7 +53,7 @@ const removeColsLine = (manager, list) => {
 const reorderList = (manager, list) => {
   const array = createArrayOfLastEls(manager, list);
   const lines = [];
-  
+
   array.forEach((item, i) => {
     const { elements } = getElementsOnALine(manager, i, list);
     lines.push(elements);
@@ -52,18 +61,18 @@ const reorderList = (manager, list) => {
 
   const reordered = lines
     .reduce((acc, curr) => {
-      const line = curr.sort((a) => a.includes('__col-md'));
+      const line = curr.sort(a => a.includes('__col-md'));
 
       return acc.concat(line);
     }, [])
     .filter(a => a !== undefined);
-  
+
   return List(flattenDeep(reordered));
 };
 
 const escapeNewlines = (content, placeholder = '\n') => {
   return content.replace(/[\r\n]+/g, placeholder);
-}
+};
 
 module.exports = {
   createArrayOfLastEls,
@@ -71,5 +80,5 @@ module.exports = {
   getElementsOnALine,
   removeColsLine,
   reorderList,
-  escapeNewlines
+  escapeNewlines,
 };

@@ -23,7 +23,6 @@ export function getNextBlocksList(editorState, startKey) {
     .concat([createNewBlock()]);
 }
 
-
 export function updateSelection(selection, blocks, offset) {
   return selection.merge({
     anchorKey: blocks.get(0).getKey(),
@@ -56,19 +55,15 @@ export function onTab(editorState) {
     newContentState = Modifier.insertText(
       contentState,
       selection,
-      DEFAULT_INDENTATION,
+      DEFAULT_INDENTATION
     );
   } else {
     newContentState = Modifier.replaceText(
       contentState,
       selection,
-      DEFAULT_INDENTATION,
+      DEFAULT_INDENTATION
     );
   }
 
-  return EditorState.push(
-    editorState,
-    newContentState,
-    'insert-characters'
-  );
+  return EditorState.push(editorState, newContentState, 'insert-characters');
 }

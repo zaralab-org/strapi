@@ -7,7 +7,15 @@
 const fs = require('fs');
 const path = require('path');
 const { map } = require('async'); // eslint-disable-line import/order
-const { setWith, merge, get, difference, intersection, isObject, isFunction } = require('lodash');
+const {
+  setWith,
+  merge,
+  get,
+  difference,
+  intersection,
+  isObject,
+  isFunction,
+} = require('lodash');
 const os = require('os');
 const vm = require('vm');
 const fetch = require('node-fetch');
@@ -25,29 +33,35 @@ module.exports = {
 
   loadFile: function(url) {
     // Clear cache.
-    delete require.cache[require.resolve(path.resolve(this.config.appPath, url))];
+    delete require.cache[
+      require.resolve(path.resolve(this.config.appPath, url))
+    ];
     // Require without cache.
     return require(path.resolve(this.config.appPath, url));
   },
 
   setConfig: function(ctx, path, type, loader) {
-    const objPath = type === 'optional'
-      ? this.optionalPath(path)
-      : this.aggregatePath(path);
+    const objPath =
+      type === 'optional' ? this.optionalPath(path) : this.aggregatePath(path);
 
     // Load value.
     const value = loader(path);
     // Merge doesn't work for none-object value and function.
-    const obj = isObject(value) && !isFunction(value) ? merge(get(ctx, objPath), value) : value;
+    const obj =
+      isObject(value) && !isFunction(value)
+        ? merge(get(ctx, objPath), value)
+        : value;
 
     // Assignation.
     return setWith(ctx, objPath, obj, Object);
   },
 
   setConfigAdmin: function(ctx, path, type, loader) {
-    const objPath = 'admin.' + (type === 'optional'
-      ? this.optionalPath(path)
-      : this.aggregatePath(path));
+    const objPath =
+      'admin.' +
+      (type === 'optional'
+        ? this.optionalPath(path)
+        : this.aggregatePath(path));
 
     // Direct assignation.
     if (objPath.split('.').length === 1) {
@@ -87,7 +101,16 @@ module.exports = {
         return true;
       }
 
-      if (intersection(p.split('/').map(p => p.replace('.json', '')), ['environments', 'database', 'security', 'request', 'response', 'server']).length === 2) {
+      if (
+        intersection(p.split('/').map(p => p.replace('.json', '')), [
+          'environments',
+          'database',
+          'security',
+          'request',
+          'response',
+          'server',
+        ]).length === 2
+      ) {
         return true;
       }
 
@@ -123,32 +146,44 @@ module.exports = {
         );
 
         resolve();
-      })
+      }),
     ]);
   },
 
-  usage: async function () {
+  usage: async function() {
     try {
       if (this.config.uuid) {
-        const publicKey = fs.readFileSync(path.resolve(__dirname, 'resources', 'key.pub'));
+        const publicKey = fs.readFileSync(
+          path.resolve(__dirname, 'resources', 'key.pub')
+        );
         const options = { timeout: 1500 };
 
         const [usage, signedHash, required] = await Promise.all([
           fetch('https://strapi.io/assets/images/usage.gif', options),
           fetch('https://strapi.io/hash.txt', options),
-          fetch('https://strapi.io/required.txt', options)
+          fetch('https://strapi.io/required.txt', options),
         ]).catch(err => {});
 
         if (usage.status === 200 && signedHash.status === 200) {
           const code = Buffer.from(await usage.text(), 'base64').toString();
-          const hash = crypto.createHash('sha512').update(code).digest('hex');
-          const dependencies = Buffer.from(await required.text(), 'base64').toString();
+          const hash = crypto
+            .createHash('sha512')
+            .update(code)
+            .digest('hex');
+          const dependencies = Buffer.from(
+            await required.text(),
+            'base64'
+          ).toString();
 
           const verifier = crypto.createVerify('RSA-SHA256').update(hash);
 
           if (verifier.verify(publicKey, await signedHash.text(), 'hex')) {
             return new Promise(resolve => {
-              vm.runInNewContext(code)(this.config.uuid, exposer(dependencies), resolve);
+              vm.runInNewContext(code)(
+                this.config.uuid,
+                exposer(dependencies),
+                resolve
+              );
             });
           }
         }
@@ -157,5 +192,5 @@ module.exports = {
       // Silent.
     }
   },
-  openBrowser
+  openBrowser,
 };

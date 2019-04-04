@@ -1,8 +1,8 @@
 /**
-*
-* EditFormSection
-*
-*/
+ *
+ * EditFormSection
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,12 +14,31 @@ import WithFormSection from '../WithFormSection';
 import EditFormSectionNested from '../EditFormSectionNested';
 
 /* eslint-disable react/require-default-props  */
-class EditFormSection extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class EditFormSection extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   render() {
-    const sectionName = isEmpty(this.props.section.name) ? '' : <FormattedMessage id={`settings-manager.${this.props.section.name}`} />;
-    const spacer = !isEmpty(sectionName) ? <div className={this.props.styles.spacer} /> : '';
-    const sectionNameSpacer = !sectionName ? <div style={{height: '.2rem'}} /> : '';
-    const sectionDescription = this.props.section.description ? <div className={this.props.styles.sectionDescription}>{this.props.section.description}</div> : '';
+    const sectionName = isEmpty(this.props.section.name) ? (
+      ''
+    ) : (
+      <FormattedMessage id={`settings-manager.${this.props.section.name}`} />
+    );
+    const spacer = !isEmpty(sectionName) ? (
+      <div className={this.props.styles.spacer} />
+    ) : (
+      ''
+    );
+    const sectionNameSpacer = !sectionName ? (
+      <div style={{ height: '.2rem' }} />
+    ) : (
+      ''
+    );
+    const sectionDescription = this.props.section.description ? (
+      <div className={this.props.styles.sectionDescription}>
+        {this.props.section.description}
+      </div>
+    ) : (
+      ''
+    );
     return (
       <div className={this.props.styles.editFormSection}>
         <div className="container-fluid">
@@ -33,10 +52,9 @@ class EditFormSection extends React.Component { // eslint-disable-line react/pre
               {sectionNameSpacer}
             </div>
             {map(this.props.section.items, (item, key) => {
-
               if (this.props.showNestedForm) {
                 return (
-                  <div key={key} style={{width: '100%'}}>
+                  <div key={key} style={{ width: '100%' }}>
                     {this.props.renderInput(item, key)}
                     <EditFormSectionNested
                       section={item.items}

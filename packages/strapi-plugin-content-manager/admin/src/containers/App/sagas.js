@@ -1,17 +1,31 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { fork, put, call, takeLatest, take, cancel, select } from 'redux-saga/effects';
+import {
+  fork,
+  put,
+  call,
+  takeLatest,
+  take,
+  cancel,
+  select,
+} from 'redux-saga/effects';
 import request from 'utils/request';
-import { getModelEntriesSucceeded, loadedModels, submitSucceeded } from './actions';
+import {
+  getModelEntriesSucceeded,
+  loadedModels,
+  submitSucceeded,
+} from './actions';
 import { GET_MODEL_ENTRIES, LOAD_MODELS, ON_SUBMIT } from './constants';
 import { makeSelectModifiedSchema } from './selectors';
 
 export function* modelEntriesGet(action) {
   try {
-    const requestUrl = `/content-manager/explorer/${action.modelName}/count${action.source !== undefined ? `?source=${action.source}`: ''}`;
+    const requestUrl = `/content-manager/explorer/${action.modelName}/count${
+      action.source !== undefined ? `?source=${action.source}` : ''
+    }`;
     const response = yield call(request, requestUrl, { method: 'GET' });
 
     yield put(getModelEntriesSucceeded(response.count));
-  } catch(error) {
+  } catch (error) {
     strapi.notification.error('content-manager.error.model.fetch');
   }
 }
@@ -31,12 +45,15 @@ export function* getModels() {
 export function* submit(action) {
   try {
     const schema = yield select(makeSelectModifiedSchema());
-    yield call(request, '/content-manager/models', { method: 'PUT', body: { schema } });
-    
-    action.context.emitEvent('didSaveContentTypeLayout');  
-    
+    yield call(request, '/content-manager/models', {
+      method: 'PUT',
+      body: { schema },
+    });
+
+    action.context.emitEvent('didSaveContentTypeLayout');
+
     yield put(submitSucceeded());
-  } catch(err) {
+  } catch (err) {
     // Silent
     // NOTE: should we add another notification??
   }
@@ -45,7 +62,11 @@ export function* submit(action) {
 // Individual exports for testing
 export function* defaultSaga() {
   const loadModelsWatcher = yield fork(takeLatest, LOAD_MODELS, getModels);
-  const loadEntriesWatcher = yield fork(takeLatest, GET_MODEL_ENTRIES, modelEntriesGet);
+  const loadEntriesWatcher = yield fork(
+    takeLatest,
+    GET_MODEL_ENTRIES,
+    modelEntriesGet
+  );
   yield fork(takeLatest, ON_SUBMIT, submit);
 
   yield take(LOCATION_CHANGE);

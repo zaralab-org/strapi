@@ -23,10 +23,7 @@ import saga from './saga';
 
 export class HomePage extends React.Component {
   render() {
-    return (
-      <div className={styles.homePage}>
-      </div>
-    );
+    return <div className={styles.homePage} />;
   }
 }
 
@@ -43,7 +40,7 @@ function mapDispatchToProps(dispatch) {
     {
       // Your actions here
     },
-    dispatch,
+    dispatch
   );
 }
 
@@ -51,13 +48,20 @@ const mapStateToProps = createStructuredSelector({
   homePage: selectHomePage(),
 });
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 
-const withReducer = strapi.injectReducer({ key: 'homePage', reducer, pluginId });
+const withReducer = strapi.injectReducer({
+  key: 'homePage',
+  reducer,
+  pluginId,
+});
 const withSaga = strapi.injectSaga({ key: 'homePage', saga, pluginId });
 
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(injectIntl(HomePage));

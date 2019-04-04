@@ -13,7 +13,11 @@ function ImgPreviewRemoveIcon(props) {
   const divStyle = props.show ? {} : { display: 'none' };
 
   return (
-    <div className={styles.iconContainer} onClick={props.onClick} style={divStyle}>
+    <div
+      className={styles.iconContainer}
+      onClick={props.onClick}
+      style={divStyle}
+    >
       <i className="fa fa-times" />
     </div>
   );

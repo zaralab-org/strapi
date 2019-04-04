@@ -8,17 +8,17 @@ module.exports = {
     },
     attributes: {
       username: {
-        className: 'col-md-6'
+        className: 'col-md-6',
       },
       email: {
-        className: 'col-md-6'
+        className: 'col-md-6',
       },
       resetPasswordToken: {
-        className: 'd-none'
+        className: 'd-none',
       },
       role: {
-        className: 'd-none'
-      }
-    }
-  }
+        className: 'd-none',
+      },
+    },
+  },
 };

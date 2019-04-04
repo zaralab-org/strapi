@@ -1,7 +1,7 @@
 /**
- * 
+ *
  * AppLoader
- * 
+ *
  */
 
 import React from 'react';
@@ -14,11 +14,11 @@ class AppLoader extends React.Component {
     const { appPlugins, plugins: mountedPlugins } = this.props;
 
     return appPlugins.length !== Object.keys(mountedPlugins).length;
-  }
+  };
 
   render() {
     const { children } = this.props;
-    
+
     return children({ shouldLoad: this.shouldLoad() });
   }
 }
@@ -31,4 +31,7 @@ AppLoader.propTypes = {
 
 const mapStateToProps = makeSelectApp();
 
-export default connect(mapStateToProps, null)(AppLoader);
+export default connect(
+  mapStateToProps,
+  null
+)(AppLoader);

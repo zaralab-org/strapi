@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * SettingsRow
  */
 
@@ -11,18 +11,23 @@ import IcoContainer from 'components/IcoContainer';
 
 import styles from './styles.scss';
 
-
 function SettingsRow({ destination, name, onClick }) {
   return (
-    <div className={styles.settingsRow} id={name} onClick={() => onClick(destination)}>
+    <div
+      className={styles.settingsRow}
+      id={name}
+      onClick={() => onClick(destination)}
+    >
       <div>
         <div className={styles.frame}>
           <div className={styles.icon}>
-            <i className="fa fa-cube"></i>
+            <i className="fa fa-cube" />
           </div>
           {upperFirst(name)}
         </div>
-        <IcoContainer icons={[{ icoType: 'cog', onClick: () => onClick(destination) }]} />
+        <IcoContainer
+          icons={[{ icoType: 'cog', onClick: () => onClick(destination) }]}
+        />
       </div>
     </div>
   );

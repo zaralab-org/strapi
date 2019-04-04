@@ -26,7 +26,9 @@ module.exports = strapi => {
           await next();
         } catch (error) {
           // emit error if configured
-          if (_.get(strapi, 'config.currentEnvironment.server.emitErrors', false)) {
+          if (
+            _.get(strapi, 'config.currentEnvironment.server.emitErrors', false)
+          ) {
             strapi.app.emit('error', error, ctx);
           }
 
@@ -36,7 +38,7 @@ module.exports = strapi => {
           // Wrap error into a Boom's response.
           ctx.status = error.status || 500;
           ctx.body = _.get(ctx.body, 'isBoom')
-            ? ctx.body || error && error.message
+            ? ctx.body || (error && error.message)
             : Boom.wrap(error, ctx.status);
         }
 
@@ -84,9 +86,7 @@ module.exports = strapi => {
         this.body = data;
       };
 
-      this.delegator
-        .method('send')
-        .method('created');
-    }
+      this.delegator.method('send').method('created');
+    },
   };
 };

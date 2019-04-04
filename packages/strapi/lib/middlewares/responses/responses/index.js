@@ -6,5 +6,5 @@
 
 module.exports = {
   created: require('./created'),
-  send: require('./send')
+  send: require('./send'),
 };

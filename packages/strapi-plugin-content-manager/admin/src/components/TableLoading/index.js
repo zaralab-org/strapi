@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * TableLoading
  */
 import React from 'react';
@@ -18,7 +18,6 @@ function TableLoading({ colspan }) {
     </tr>
   );
 }
-
 
 TableLoading.propTypes = {
   colspan: PropTypes.number.isRequired,

@@ -32,7 +32,6 @@ export const storeData = {
     return parse(localStorage.getItem(contentType)) || null;
   },
 
-
   getIsModelTemporary(isModelTemporay = IS_MODEL_TEMPORARY) {
     return localStorage.getItem(isModelTemporay) || null;
   },
@@ -50,7 +49,9 @@ export const storeData = {
       return localStorage.setItem(contentType, stringify(data));
     }
 
-    return strapi.notification.info('content-type-builder.notification.info.optimized');
+    return strapi.notification.info(
+      'content-type-builder.notification.info.optimized'
+    );
   },
 
   setMenu(data, menu = MENU) {
@@ -58,7 +59,9 @@ export const storeData = {
       return localStorage.setItem(menu, stringify(data));
     }
 
-    return strapi.notification.info('content-type-builder.notification.info.optimized');
+    return strapi.notification.info(
+      'content-type-builder.notification.info.optimized'
+    );
   },
 
   setModel(data, model = MODEL) {
@@ -66,7 +69,9 @@ export const storeData = {
       return localStorage.setItem(model, stringify(data));
     }
 
-    return strapi.notification.info('content-type-builder.notification.info.optimized');
+    return strapi.notification.info(
+      'content-type-builder.notification.info.optimized'
+    );
   },
 
   setIsModelTemporary(isModelTemporay = IS_MODEL_TEMPORARY) {
@@ -74,6 +79,8 @@ export const storeData = {
       return localStorage.setItem(isModelTemporay, true);
     }
 
-    return strapi.notification.info('content-type-builder.notification.info.optimized');
+    return strapi.notification.info(
+      'content-type-builder.notification.info.optimized'
+    );
   },
 };

@@ -68,10 +68,12 @@ function listPageReducer(state = initialState, action) {
         })
         .update('didChangeDisplayedFields', v => !v);
     case ADD_FILTER:
-      return state.update('appliedFilters', list => list.push(Map(action.filter)));
+      return state.update('appliedFilters', list =>
+        list.push(Map(action.filter))
+      );
     case DELETE_DATA_SUCCESS:
       return state
-        .updateIn(['records', state.get('currentModel')], (list) => (
+        .updateIn(['records', state.get('currentModel')], list =>
           list.filter(obj => {
             if (obj._id) {
               return obj._id !== action.id;
@@ -79,8 +81,8 @@ function listPageReducer(state = initialState, action) {
 
             return obj.id !== parseInt(action.id, 10);
           })
-        ))
-        .updateIn(['count', state.get('currentModel')], v => v = v - 1);
+        )
+        .updateIn(['count', state.get('currentModel')], v => (v = v - 1));
     case DELETE_SEVERAL_DATA_SUCCESS:
       return state
         .update('showWarningDeleteAll', () => false)
@@ -117,17 +119,25 @@ function listPageReducer(state = initialState, action) {
     case GET_DATA_SUCCEEDED:
       return state
         .update('entriesToDelete', () => List([]))
-        .updateIn(['count', state.get('currentModel')], () => action.data[0].count)
+        .updateIn(
+          ['count', state.get('currentModel')],
+          () => action.data[0].count
+        )
         .update('isLoading', () => false)
-        .updateIn(['records', state.get('currentModel')], () => List(action.data[1]))
+        .updateIn(['records', state.get('currentModel')], () =>
+          List(action.data[1])
+        )
         .update('updatingParams', () => false);
     case ON_CHANGE:
-      return state.updateIn(['appliedFilters', action.index, action.key], () => action.value);
+      return state.updateIn(
+        ['appliedFilters', action.index, action.key],
+        () => action.value
+      );
     case ON_CLICK_REMOVE:
       return state
         .update('appliedFilters', list => list.splice(action.index, 1))
         .update('filters', list => list.splice(action.index, 1))
-        .update('filtersUpdated', v => v = !v);
+        .update('filtersUpdated', v => (v = !v));
     case ON_CLICK_SELECT:
       return state.update('entriesToDelete', list => {
         const index = state.get('entriesToDelete').indexOf(toString(action.id));
@@ -143,7 +153,10 @@ function listPageReducer(state = initialState, action) {
         if (state.get('entriesToDelete').size === 0) {
           return state
             .getIn(['records', state.get('currentModel')])
-            .reduce((acc, current) => acc.concat(List([toString(current.id)])), List([]));
+            .reduce(
+              (acc, current) => acc.concat(List([toString(current.id)])),
+              List([])
+            );
         }
 
         return List([]);
@@ -162,7 +175,7 @@ function listPageReducer(state = initialState, action) {
       return state
         .update('appliedFilters', () => List([]))
         .update('filters', () => List([]))
-        .update('filtersUpdated', v => v = !v);
+        .update('filtersUpdated', v => (v = !v));
     case REMOVE_ATTR:
       return state
         .update('displayedFields', list => {
@@ -170,7 +183,9 @@ function listPageReducer(state = initialState, action) {
         })
         .update('didChangeDisplayedFields', v => !v);
     case REMOVE_FILTER:
-      return state.update('appliedFilters', list => list.splice(action.index, 1));
+      return state.update('appliedFilters', list =>
+        list.splice(action.index, 1)
+      );
     case RESET_DISPLAYED_FIELDS:
       return state
         .update('displayedFields', () => fromJS(action.fields))
@@ -184,13 +199,19 @@ function listPageReducer(state = initialState, action) {
         .update('showFilter', () => false);
     case SUBMIT:
       return state
-        .update('filters', () => state.get('appliedFilters').filter(filter => filter.get('value') !== ''))
-        .update('appliedFilters', (list) => list.filter(filter => filter.get('value') !== ''))
+        .update('filters', () =>
+          state
+            .get('appliedFilters')
+            .filter(filter => filter.get('value') !== '')
+        )
+        .update('appliedFilters', list =>
+          list.filter(filter => filter.get('value') !== '')
+        )
         .update('showFilter', () => false)
-        .update('filtersUpdated', v => v = !v)
+        .update('filtersUpdated', v => (v = !v))
         .updateIn(['params', '_q'], () => '');
     case ON_TOGGLE_DELETE_ALL:
-      return state.update('showWarningDeleteAll', v => v = !v);
+      return state.update('showWarningDeleteAll', v => (v = !v));
     default:
       return state;
   }

@@ -13,7 +13,9 @@ export function* loadData() {
   });
 
   // Generate a random array
-  const data = Array(4).fill(0).map(() => Math.floor(Math.random() * 100));
+  const data = Array(4)
+    .fill(0)
+    .map(() => Math.floor(Math.random() * 100));
 
   yield put(loadedData(data));
 }

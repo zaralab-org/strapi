@@ -1,9 +1,8 @@
-
 // Public dependencies.
 const _ = require('lodash');
 /* eslint-disable prefer-template */
 module.exports = {
-  get: function (policy, plugin, policies = [], endpoint, currentApiName) {
+  get: function(policy, plugin, policies = [], endpoint, currentApiName) {
     // Define global policy prefix.
     const globalPolicyPrefix = 'global.';
     const pluginPolicyPrefix = 'plugins.';
@@ -42,12 +41,14 @@ module.exports = {
     ) {
       // Plugin's policies can be used from app APIs with a specific syntax (`plugins.pluginName.policyName`).
       return policies.push(
-        this.parsePolicy(_.get(
-          strapi.plugins,
-          policySplited[1] +
-            '.config.policies.' +
-            policySplited[2].toLowerCase()
-        ))
+        this.parsePolicy(
+          _.get(
+            strapi.plugins,
+            policySplited[1] +
+              '.config.policies.' +
+              policySplited[2].toLowerCase()
+          )
+        )
       );
     } else if (
       !_.startsWith(policy, globalPolicyPrefix, 0) &&
@@ -61,10 +62,12 @@ module.exports = {
     ) {
       // Plugin policy used in the plugin itself.
       return policies.push(
-        this.parsePolicy(_.get(
-          strapi.plugins,
-          plugin + '.config.policies.' + policy.toLowerCase()
-        ))
+        this.parsePolicy(
+          _.get(
+            strapi.plugins,
+            plugin + '.config.policies.' + policy.toLowerCase()
+          )
+        )
       );
     } else if (
       !_.startsWith(policy, globalPolicyPrefix, 0) &&
@@ -77,17 +80,21 @@ module.exports = {
     ) {
       // API policy used in the API itself.
       return policies.push(
-        this.parsePolicy(_.get(
-          strapi.api,
-          currentApiName + '.config.policies.' + policy.toLowerCase()
-        ))
+        this.parsePolicy(
+          _.get(
+            strapi.api,
+            currentApiName + '.config.policies.' + policy.toLowerCase()
+          )
+        )
       );
     }
 
-    strapi.log.error(`Ignored attempt to bind to ${endpoint} with unknown policy "${policy}"`);
+    strapi.log.error(
+      `Ignored attempt to bind to ${endpoint} with unknown policy "${policy}"`
+    );
   },
 
-  parsePolicy: (policy) => {
+  parsePolicy: policy => {
     if (_.isFunction(policy)) {
       return policy;
     }
@@ -105,10 +112,10 @@ module.exports = {
         action: value.handler.split('.')[1].toLowerCase(),
         splittedEndpoint: _.trim(route.endpoint),
         verb: route.verb && _.trim(route.verb.toLowerCase()),
-        plugin
+        plugin,
       };
 
       await next();
     };
-  }
+  },
 };

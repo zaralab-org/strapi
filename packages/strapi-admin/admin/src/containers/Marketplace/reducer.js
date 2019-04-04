@@ -20,7 +20,9 @@ function marketplaceReducer(state = initialState, action) {
       return state.update('pluginToDownload', () => action.pluginToDownload);
     case DOWNLOAD_PLUGIN_SUCCEEDED:
       return state
-        .update('installedPlugins', list => list.push(state.get('pluginToDownload')))
+        .update('installedPlugins', list =>
+          list.push(state.get('pluginToDownload'))
+        )
         .update('pluginToDownload', () => null);
     case GET_AVAILABLE_AND_INSTALLED_PLUGINS_SUCCEEDED:
       return state

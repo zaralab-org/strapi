@@ -21,7 +21,7 @@ class LeftMenuLink extends React.Component {
     // because of the two levels router.
     const isLinkActive = startsWith(
       window.location.pathname.replace('/admin', '').concat('/'),
-      this.props.destination.concat('/'),
+      this.props.destination.concat('/')
     );
 
     const plugin =
@@ -48,32 +48,32 @@ class LeftMenuLink extends React.Component {
     );
 
     // Icon.
-    const icon = <i className={`${styles.linkIcon} fa-${this.props.icon} fa`} />;
+    const icon = (
+      <i className={`${styles.linkIcon} fa-${this.props.icon} fa`} />
+    );
 
     // Create external or internal link.
-    const link = this.props.destination.includes('http')
-      ? (
-        <a
-          className={`${styles.link} ${isLinkActive ? styles.linkActive : ''}`}
-          href={this.props.destination}
-          target="_blank"
-        >
-          {icon}
-          {content}
-        </a>
-      )
-      : (
-        <Link
-          className={`${styles.link} ${isLinkActive ? styles.linkActive : ''}`}
-          to={{
-            pathname: this.props.destination,
-            search: this.props.source ? `?source=${this.props.source}` : '',
-          }}
-        >
-          {icon}
-          {content}
-        </Link>
-      );
+    const link = this.props.destination.includes('http') ? (
+      <a
+        className={`${styles.link} ${isLinkActive ? styles.linkActive : ''}`}
+        href={this.props.destination}
+        target="_blank"
+      >
+        {icon}
+        {content}
+      </a>
+    ) : (
+      <Link
+        className={`${styles.link} ${isLinkActive ? styles.linkActive : ''}`}
+        to={{
+          pathname: this.props.destination,
+          search: this.props.source ? `?source=${this.props.source}` : '',
+        }}
+      >
+        {icon}
+        {content}
+      </Link>
+    );
 
     return (
       <li className={styles.item}>

@@ -29,7 +29,7 @@ module.exports = {
     modelName = '',
     attributeName = '',
     rootType = 'query',
-    action = ''
+    action = '',
   }) {
     // Type
     if (definition.type) {
@@ -154,8 +154,7 @@ module.exports = {
     const types = graphql
       .parse(customDefs + defs)
       .definitions.filter(
-        def =>
-          def.kind === 'ObjectTypeDefinition' && def.name.value !== 'Query',
+        def => def.kind === 'ObjectTypeDefinition' && def.name.value !== 'Query'
       )
       .map(def => def.name.value);
 
@@ -212,7 +211,7 @@ module.exports = {
               modelName: globalId,
               attributeName: attribute,
               rootType: 'mutation',
-              action: 'update'
+              action: 'update',
             })}`;
           })
           .join('\n')}

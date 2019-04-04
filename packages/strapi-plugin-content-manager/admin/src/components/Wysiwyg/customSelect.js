@@ -15,8 +15,15 @@ import styles from './componentsStyles.scss';
 
 class CustomSelect extends React.Component {
   render() {
-    const { isPreviewMode, headerValue, isFullscreen, handleChangeSelect } = this.context;
-    const selectClassName = isFullscreen ? styles.selectFullscreen : styles.editorSelect;
+    const {
+      isPreviewMode,
+      headerValue,
+      isFullscreen,
+      handleChangeSelect,
+    } = this.context;
+    const selectClassName = isFullscreen
+      ? styles.selectFullscreen
+      : styles.editorSelect;
 
     return (
       <div className={selectClassName}>

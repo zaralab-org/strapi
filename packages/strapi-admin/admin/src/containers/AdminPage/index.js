@@ -102,7 +102,7 @@ export class AdminPage extends React.Component {
         ReactGA.pageview(pathname);
       }
     }
-    
+
     const hasAdminPath = ['users-permissions', 'hasAdminUser'];
 
     if (
@@ -177,7 +177,7 @@ export class AdminPage extends React.Component {
               break;
             default:
           }
-        },
+        }
       );
 
       this.setState({ hasAlreadyRegistereOtherPlugins: true });
@@ -200,7 +200,7 @@ export class AdminPage extends React.Component {
   isUrlProtected = props =>
     !includes(
       props.location.pathname,
-      get(props.plugins.toJS(), ['users-permissions', 'nonProtectedUrl']),
+      get(props.plugins.toJS(), ['users-permissions', 'nonProtectedUrl'])
     );
 
   shouldDisplayLogout = () =>
@@ -233,7 +233,7 @@ export class AdminPage extends React.Component {
     if (currentEnvironment === 'production') {
       let pluginsToDisplay = plugins;
       PLUGINS_TO_BLOCK_PRODUCTION.map(
-        plugin => (pluginsToDisplay = pluginsToDisplay.delete(plugin)),
+        plugin => (pluginsToDisplay = pluginsToDisplay.delete(plugin))
       );
 
       return pluginsToDisplay;
@@ -357,13 +357,13 @@ function mapDispatchToProps(dispatch) {
       pluginLoaded,
       updatePlugin,
     },
-    dispatch,
+    dispatch
   );
 }
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 const withReducer = injectReducer({ key: 'adminPage', reducer });
 const withSaga = injectSaga({ key: 'adminPage', saga });
@@ -371,5 +371,5 @@ const withSaga = injectSaga({ key: 'adminPage', saga });
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(AdminPage);

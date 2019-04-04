@@ -27,9 +27,9 @@ module.exports = function(strapi) {
       port: 6379,
       host: 'localhost',
       options: {
-        db: 0
+        db: 0,
       },
-      showFriendlyErrorStack: process.env.NODE_ENV !== 'production'
+      showFriendlyErrorStack: process.env.NODE_ENV !== 'production',
     },
 
     /**
@@ -37,17 +37,20 @@ module.exports = function(strapi) {
      */
 
     initialize: cb => {
-      if (_.isEmpty(strapi.models) || !_.pickBy(strapi.config.connections, {
-        connector: 'strapi-hook-redis'
-      })) {
+      if (
+        _.isEmpty(strapi.models) ||
+        !_.pickBy(strapi.config.connections, {
+          connector: 'strapi-hook-redis',
+        })
+      ) {
         return cb();
       }
 
       const connections = _.pickBy(strapi.config.connections, {
-        connector: 'strapi-hook-redis'
+        connector: 'strapi-hook-redis',
       });
 
-      if(_.size(connections) === 0) {
+      if (_.size(connections) === 0) {
         cb();
       }
 
@@ -61,13 +64,18 @@ module.exports = function(strapi) {
         _.defaults(connection.settings, strapi.config.hook.settings.redis);
 
         try {
-          const redis = new Redis(_.defaultsDeep({
-            port: _.get(connection.settings, 'port'),
-            host: _.get(connection.settings, 'host'),
-            options: {
-              db: _.get(connection.options, 'database') || 0
-            }
-          }, strapi.config.hook.settings.redis));
+          const redis = new Redis(
+            _.defaultsDeep(
+              {
+                port: _.get(connection.settings, 'port'),
+                host: _.get(connection.settings, 'host'),
+                options: {
+                  db: _.get(connection.options, 'database') || 0,
+                },
+              },
+              strapi.config.hook.settings.redis
+            )
+          );
 
           redis.on('error', err => {
             strapi.log.error(err);
@@ -113,7 +121,6 @@ module.exports = function(strapi) {
                     redis.set(serial, cache, 'ex', expired);
                     break;
                 }
-
               }
             }
 
@@ -159,7 +166,7 @@ module.exports = function(strapi) {
           return false;
         }
       });
-    }
+    },
   };
 
   return hook;

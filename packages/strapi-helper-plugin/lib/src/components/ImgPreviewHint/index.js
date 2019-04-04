@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import styles from './styles.scss';
 
 function ImgPreviewHint(props) {
-
   let pStyle;
 
   switch (true) {
@@ -27,12 +26,17 @@ function ImgPreviewHint(props) {
 
   const browse = (
     <FormattedMessage id="app.components.ImgPreview.hint.browse">
-      {(message) => <u onClick={props.onClick}>{message}</u>}
+      {message => <u onClick={props.onClick}>{message}</u>}
     </FormattedMessage>
   );
 
   return (
-    <p className={styles.imgPreviewHint} style={pStyle} onDragEnter={(e) => e.stopPropagation()} onDrop={props.onDrop}>
+    <p
+      className={styles.imgPreviewHint}
+      style={pStyle}
+      onDragEnter={e => e.stopPropagation()}
+      onDrop={props.onDrop}
+    >
       <FormattedMessage
         id="app.components.ImgPreview.hint"
         values={{ browse }}

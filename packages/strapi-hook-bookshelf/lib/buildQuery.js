@@ -16,10 +16,11 @@ const buildQuery = ({ model, filters }) => qb => {
 
     // apply filters
     filters.where.forEach(({ field, operator, value }) => {
-      const { association, model: associationModel, attributeKey } = getAssociationFromFieldKey(
-        model,
-        field
-      );
+      const {
+        association,
+        model: associationModel,
+        attributeKey,
+      } = getAssociationFromFieldKey(model, field);
 
       let fieldKey =
         association && attributeKey === field
@@ -66,7 +67,9 @@ const buildWhereClause = ({ qb, field, operator, value }) => {
   if (Array.isArray(value) && !['in', 'nin'].includes(operator)) {
     return qb.where(subQb => {
       for (let val of value) {
-        subQb.orWhere(q => buildWhereClause({ qb: q, field, operator, value: val }));
+        subQb.orWhere(q =>
+          buildWhereClause({ qb: q, field, operator, value: val })
+        );
       }
     });
   }
@@ -115,7 +118,9 @@ const extractRelationsFromWhere = where => {
     .sort()
     .reverse()
     .reduce((acc, currentValue) => {
-      const alreadyPopulated = _.some(acc, item => _.startsWith(item, currentValue));
+      const alreadyPopulated = _.some(acc, item =>
+        _.startsWith(item, currentValue)
+      );
 
       if (!alreadyPopulated) {
         acc.push(currentValue);
@@ -175,7 +180,9 @@ const buildQueryJoins = (qb, { model, whereClauses }) => {
 
     let tmpModel = model;
     for (let part of parts) {
-      const association = tmpModel.associations.find(assoc => assoc.alias === part);
+      const association = tmpModel.associations.find(
+        assoc => assoc.alias === part
+      );
 
       if (association) {
         const assocModel = findModelByAssoc(association);
@@ -202,17 +209,17 @@ const buildSingleJoin = (qb, rootModel, assocModel, association) => {
     // Join on both ends
     qb.innerJoin(
       association.tableCollectionName,
-      `${association.tableCollectionName}.${pluralize.singular(rootModel.collectionName)}_${
-        rootModel.primaryKey
-      }`,
+      `${association.tableCollectionName}.${pluralize.singular(
+        rootModel.collectionName
+      )}_${rootModel.primaryKey}`,
       `${rootModel.collectionName}.${rootModel.primaryKey}`
     );
 
     qb.innerJoin(
       relationTable,
-      `${association.tableCollectionName}.${rootModel.attributes[association.alias].attribute}_${
-        rootModel.attributes[association.alias].column
-      }`,
+      `${association.tableCollectionName}.${
+        rootModel.attributes[association.alias].attribute
+      }_${rootModel.attributes[association.alias].column}`,
       `${relationTable}.${assocModel.primaryKey}`
     );
   } else {

@@ -14,7 +14,11 @@ import PropTypes from 'prop-types';
 import { router } from 'app';
 import pluginId from '../../pluginId';
 
-import { makeSelectLoading, makeSelectMenu, makeSelectModels } from '../App/selectors';
+import {
+  makeSelectLoading,
+  makeSelectMenu,
+  makeSelectModels,
+} from '../App/selectors';
 import { deleteContentType } from '../App/actions';
 
 import Form from '../Form';
@@ -32,40 +36,55 @@ import styles from './styles.scss';
 import saga from './sagas';
 import reducer from './reducer';
 
-export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class HomePage extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
 
     this.popUpHeaderNavLinks = [
-      { name: 'baseSettings', message: 'content-type-builder.popUpForm.navContainer.base', nameToReplace: 'advancedSettings' },
-      { name: 'advancedSettings', message: 'content-type-builder.popUpForm.navContainer.advanced', nameToReplace: 'baseSettings' },
+      {
+        name: 'baseSettings',
+        message: 'content-type-builder.popUpForm.navContainer.base',
+        nameToReplace: 'advancedSettings',
+      },
+      {
+        name: 'advancedSettings',
+        message: 'content-type-builder.popUpForm.navContainer.advanced',
+        nameToReplace: 'baseSettings',
+      },
     ];
   }
 
   handleButtonClick = () => {
     if (storeData.getIsModelTemporary()) {
-      strapi.notification.info('content-type-builder.notification.info.contentType.creating.notSaved');
+      strapi.notification.info(
+        'content-type-builder.notification.info.contentType.creating.notSaved'
+      );
     } else {
       // Send event.
       this.context.emitEvent('willCreateContentType');
       // Open CT modal.
       this.toggleModal();
     }
-  }
+  };
 
-  handleDelete = (contentTypeName) => {
+  handleDelete = contentTypeName => {
     this.props.deleteContentType(contentTypeName, this.context);
-  }
+  };
 
   toggleModal = () => {
-    const locationHash = this.props.location.hash ? '' : '#create::contentType::baseSettings';
+    const locationHash = this.props.location.hash
+      ? ''
+      : '#create::contentType::baseSettings';
     router.push(`/plugins/content-type-builder/${locationHash}`);
-  }
+  };
 
   renderTableListComponent = () => {
     const availableNumber = size(this.props.models);
-    const title = availableNumber > 1 ? 'content-type-builder.table.contentType.title.plural'
-      : 'content-type-builder.table.contentType.title.singular';
+    const title =
+      availableNumber > 1
+        ? 'content-type-builder.table.contentType.title.plural'
+        : 'content-type-builder.table.contentType.title.singular';
     return (
       <TableList
         availableNumber={availableNumber}
@@ -76,25 +95,26 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
         rowItems={this.props.models}
       />
     );
-  }
+  };
 
   render() {
-    const component = size(this.props.models) === 0 ?
-      <EmptyContentTypeView handleButtonClick={this.toggleModal} />
-      : this.renderTableListComponent();
+    const component =
+      size(this.props.models) === 0 ? (
+        <EmptyContentTypeView handleButtonClick={this.toggleModal} />
+      ) : (
+        this.renderTableListComponent()
+      );
 
     return (
       <div className={styles.homePage}>
         <Helmet
           title="HomePage"
-          meta={[
-            { name: 'description', content: 'Description of HomePage' },
-          ]}
+          meta={[{ name: 'description', content: 'Description of HomePage' }]}
         />
         <ContentHeader
           name="content-type-builder.home.contentTypeBuilder.name"
           description="content-type-builder.home.contentTypeBuilder.description"
-          styles={{ margin: '-1px 0 3rem 0'}}
+          styles={{ margin: '-1px 0 3rem 0' }}
         />
         {component}
         <Form
@@ -116,15 +136,12 @@ HomePage.contextTypes = {
   updatePlugin: PropTypes.func,
 };
 
-HomePage.propTypes =  {
+HomePage.propTypes = {
   deleteContentType: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   menu: PropTypes.array.isRequired,
-  models: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array,
-  ]).isRequired,
+  models: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -139,16 +156,23 @@ function mapDispatchToProps(dispatch) {
     {
       deleteContentType,
     },
-    dispatch,
+    dispatch
   );
 }
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
-const withReducer = strapi.injectReducer({ key: 'homePage', reducer, pluginId });
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+const withReducer = strapi.injectReducer({
+  key: 'homePage',
+  reducer,
+  pluginId,
+});
 const withSaga = strapi.injectSaga({ key: 'homePage', saga, pluginId });
 
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(HomePage);

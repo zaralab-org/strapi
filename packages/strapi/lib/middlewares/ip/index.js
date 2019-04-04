@@ -18,11 +18,11 @@ module.exports = strapi => {
       strapi.app.use(
         strapi.koaMiddlewares.ip({
           whiteList: strapi.config.middleware.settings.ip.whiteList,
-          blackList: strapi.config.middleware.settings.ip.blackList
+          blackList: strapi.config.middleware.settings.ip.blackList,
         })
       );
 
       cb();
-    }
+    },
   };
 };

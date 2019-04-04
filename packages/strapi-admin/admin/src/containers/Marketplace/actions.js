@@ -25,7 +25,10 @@ export function getAvailableAndInstalledPlugins() {
   };
 }
 
-export function getAvailableAndInstalledPluginsSucceeded(availablePlugins, installedPlugins) {
+export function getAvailableAndInstalledPluginsSucceeded(
+  availablePlugins,
+  installedPlugins
+) {
   return {
     type: GET_AVAILABLE_AND_INSTALLED_PLUGINS_SUCCEEDED,
     availablePlugins,

@@ -1,8 +1,8 @@
 /**
-*
-* InputCheckboxWithNestedInputs
-*
-*/
+ *
+ * InputCheckboxWithNestedInputs
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -11,7 +11,8 @@ import { FormattedMessage } from 'react-intl';
 import Input from 'components/InputsIndex';
 import styles from './styles.scss';
 
-class InputCheckboxWithNestedInputs extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class InputCheckboxWithNestedInputs extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   handleChange = () => {
     const target = {
       type: 'checkbox',
@@ -31,15 +32,22 @@ class InputCheckboxWithNestedInputs extends React.Component { // eslint-disable-
       };
       this.props.onChange(valueToRemove);
     }
-  }
+  };
 
   renderNestedInput = () => {
     if (this.props.value[this.props.data.name.split('.')[1]]) {
       return (
-        <div className={styles.nestedInputContainer} style={{ marginBottom: '-19px' }}>
+        <div
+          className={styles.nestedInputContainer}
+          style={{ marginBottom: '-19px' }}
+        >
           {map(this.props.data.items, (item, key) => {
-            const errorIndex = findIndex(this.props.errors, ['name', item.name]);
-            const errors = errorIndex !== -1 ? this.props.errors[errorIndex].errors : [];
+            const errorIndex = findIndex(this.props.errors, [
+              'name',
+              item.name,
+            ]);
+            const errors =
+              errorIndex !== -1 ? this.props.errors[errorIndex].errors : [];
             return (
               <Input
                 key={key}
@@ -59,22 +67,38 @@ class InputCheckboxWithNestedInputs extends React.Component { // eslint-disable-
       );
     }
     return <div />;
-  }
+  };
 
   render() {
-    const spacer = !this.props.data.inputDescription ? <div /> : <div style={{ marginBottom: '.5rem'}}></div>;
-    const title = !isEmpty(this.props.data.title) ? <div className={styles.inputTitle}><FormattedMessage id={this.props.data.title} /></div> : '';
+    const spacer = !this.props.data.inputDescription ? (
+      <div />
+    ) : (
+      <div style={{ marginBottom: '.5rem' }} />
+    );
+    const title = !isEmpty(this.props.data.title) ? (
+      <div className={styles.inputTitle}>
+        <FormattedMessage id={this.props.data.title} />
+      </div>
+    ) : (
+      ''
+    );
 
     return (
       <div className={`${styles.inputCheckboxWithNestedInputs} col-md-12`}>
         <div className="form-check" style={{ zIndex: '9999' }}>
           {title}
           <FormattedMessage id={this.props.data.label.id}>
-            {(message) => (
-              <label className={`${styles.checkboxLabel} form-check-label`} htmlFor={this.props.data.name} style={{ cursor: 'pointer' }}>
+            {message => (
+              <label
+                className={`${styles.checkboxLabel} form-check-label`}
+                htmlFor={this.props.data.name}
+                style={{ cursor: 'pointer' }}
+              >
                 <input
                   className="form-check-input"
-                  defaultChecked={this.props.value[this.props.data.name.split('.')[1]]}
+                  defaultChecked={
+                    this.props.value[this.props.data.name.split('.')[1]]
+                  }
                   id={this.props.data.name}
                   name={this.props.data.name}
                   onChange={this.handleChange}

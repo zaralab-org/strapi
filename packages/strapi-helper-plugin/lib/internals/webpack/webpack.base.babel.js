@@ -15,7 +15,9 @@ const isAdmin = process.env.IS_ADMIN === 'true';
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isSetup = process.env.IS_MONOREPO || false;
-const appPath = process.env.APP_PATH || path.resolve(process.env.PWD || process.cwd(), '..', ( isAdmin ?  '' : '..' ));
+const appPath =
+  process.env.APP_PATH ||
+  path.resolve(process.env.PWD || process.cwd(), '..', isAdmin ? '' : '..');
 
 const adminPath = (() => {
   if (isAdmin && isSetup) {
@@ -40,18 +42,23 @@ if (isAdmin && !isSetup) {
     'config',
     'environments',
     _.lowerCase(process.env.NODE_ENV),
-    'server.json',
+    'server.json'
   );
 
   try {
-    const { templateConfiguration } = require(path.join(adminPath, 'node_modules', 'strapi-utils'));
+    const { templateConfiguration } = require(path.join(
+      adminPath,
+      'node_modules',
+      'strapi-utils'
+    ));
 
     let server = require(serverConfig);
     server = templateConfiguration(server);
 
     if ((process.env.PWD || process.cwd()).indexOf('/admin') !== -1) {
       if (_.get(server, 'admin.build.host')) {
-        URLs.host = _.get(server, 'admin.build.host', '/admin').replace(/\/$/, '') || '/';
+        URLs.host =
+          _.get(server, 'admin.build.host', '/admin').replace(/\/$/, '') || '/';
       } else {
         URLs.host = _.get(server, 'admin.path', '/admin');
       }
@@ -64,7 +71,11 @@ if (isAdmin && !isSetup) {
       }
 
       if (process.env.npm_lifecycle_event === 'start') {
-        URLs.backend = `http://${_.get(server, 'host', 'localhost')}:${_.get(server, 'port', 1337)}`;
+        URLs.backend = `http://${_.get(server, 'host', 'localhost')}:${_.get(
+          server,
+          'port',
+          1337
+        )}`;
       }
     }
   } catch (e) {
@@ -96,7 +107,17 @@ if (process.env.npm_lifecycle_event === 'start') {
           let hasAdminFolder;
 
           try {
-            fs.accessSync(path.resolve(appPath, 'plugins', x, 'admin', 'src', 'containers', 'App'));
+            fs.accessSync(
+              path.resolve(
+                appPath,
+                'plugins',
+                x,
+                'admin',
+                'src',
+                'containers',
+                'App'
+              )
+            );
             hasAdminFolder = true;
           } catch (err) {
             hasAdminFolder = false;
@@ -114,7 +135,7 @@ if (process.env.npm_lifecycle_event === 'start') {
       'node_modules',
       'strapi-helper-plugin',
       'lib',
-      'src',
+      'src'
     );
 
     return acc;
@@ -125,12 +146,17 @@ if (process.env.npm_lifecycle_event === 'start') {
 const foldersToInclude = [path.join(adminPath, 'admin', 'src')]
   .concat(
     plugins.src.reduce((acc, current) => {
-      acc.push(path.resolve(appPath, 'plugins', current, 'admin', 'src'), plugins.folders[current]);
+      acc.push(
+        path.resolve(appPath, 'plugins', current, 'admin', 'src'),
+        plugins.folders[current]
+      );
 
       return acc;
-    }, []),
+    }, [])
   )
-  .concat([path.join(adminPath, 'node_modules', 'strapi-helper-plugin', 'lib', 'src')]);
+  .concat([
+    path.join(adminPath, 'node_modules', 'strapi-helper-plugin', 'lib', 'src'),
+  ]);
 
 module.exports = options => {
   // The disable option is only for production
@@ -147,7 +173,7 @@ module.exports = options => {
         // Compile into js/build.js
         path: path.join(adminPath, 'admin', 'build'),
       },
-      options.output,
+      options.output
     ), // Merge with env dependent settings
     module: {
       rules: [
@@ -167,13 +193,28 @@ module.exports = options => {
                   production: {
                     only: ['src'],
                     plugins: [
-                      require.resolve('babel-plugin-transform-react-remove-prop-types'),
-                      require.resolve('babel-plugin-transform-react-constant-elements'),
-                      require.resolve('babel-plugin-transform-react-inline-elements'),
-                      require.resolve('babel-plugin-transform-es2015-destructuring'),
-                      require.resolve('babel-plugin-transform-es2015-parameters'),
-                      require.resolve('babel-plugin-transform-object-rest-spread'),
-                      [require.resolve('babel-plugin-styled-components'), { ssr: true, preprocess: true }],
+                      require.resolve(
+                        'babel-plugin-transform-react-remove-prop-types'
+                      ),
+                      require.resolve(
+                        'babel-plugin-transform-react-constant-elements'
+                      ),
+                      require.resolve(
+                        'babel-plugin-transform-react-inline-elements'
+                      ),
+                      require.resolve(
+                        'babel-plugin-transform-es2015-destructuring'
+                      ),
+                      require.resolve(
+                        'babel-plugin-transform-es2015-parameters'
+                      ),
+                      require.resolve(
+                        'babel-plugin-transform-object-rest-spread'
+                      ),
+                      [
+                        require.resolve('babel-plugin-styled-components'),
+                        { ssr: true, preprocess: true },
+                      ],
                     ],
                   },
                   test: {
@@ -211,7 +252,12 @@ module.exports = options => {
                     loader: require.resolve('postcss-loader'),
                     options: {
                       config: {
-                        path: path.resolve(__dirname, '..', 'postcss', 'postcss.config.js'),
+                        path: path.resolve(
+                          __dirname,
+                          '..',
+                          'postcss',
+                          'postcss.config.js'
+                        ),
                       },
                     },
                   },
@@ -237,7 +283,12 @@ module.exports = options => {
                     loader: require.resolve('postcss-loader'),
                     options: {
                       config: {
-                        path: path.resolve(__dirname, '..', 'postcss', 'postcss.config.js'),
+                        path: path.resolve(
+                          __dirname,
+                          '..',
+                          'postcss',
+                          'postcss.config.js'
+                        ),
                       },
                     },
                   },

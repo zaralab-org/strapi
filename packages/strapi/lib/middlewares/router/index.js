@@ -25,7 +25,9 @@ module.exports = strapi => {
         composeEndpoint(value, null, strapi.router)(cb);
       });
 
-      strapi.router.prefix(_.get(strapi.config, 'currentEnvironment.request.router.prefix', ''));
+      strapi.router.prefix(
+        _.get(strapi.config, 'currentEnvironment.request.router.prefix', '')
+      );
 
       if (!_.isEmpty(_.get(strapi.admin, 'config.routes', false))) {
         // Create router for admin.
@@ -52,11 +54,17 @@ module.exports = strapi => {
           const router = strapi.koaMiddlewares.routerJoi();
 
           // Exclude routes with prefix.
-          const excludedRoutes = _.omitBy(plugin.config.routes, o => !o.config.hasOwnProperty('prefix'));
+          const excludedRoutes = _.omitBy(
+            plugin.config.routes,
+            o => !o.config.hasOwnProperty('prefix')
+          );
 
-          _.forEach(_.omit(plugin.config.routes, _.keys(excludedRoutes)), value => {
-            composeEndpoint(value, name, router)(cb);
-          });
+          _.forEach(
+            _.omit(plugin.config.routes, _.keys(excludedRoutes)),
+            value => {
+              composeEndpoint(value, name, router)(cb);
+            }
+          );
 
           router.prefix(`/${name}`);
 
@@ -79,6 +87,6 @@ module.exports = strapi => {
       strapi.app.use(strapi.router.middleware());
 
       cb();
-    }
+    },
   };
 };

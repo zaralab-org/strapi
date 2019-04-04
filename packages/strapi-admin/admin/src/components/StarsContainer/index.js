@@ -1,9 +1,9 @@
 /*
-*
-* StarsContainer
-*
-*
-*/
+ *
+ * StarsContainer
+ *
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -18,10 +18,14 @@ function StarsContainer({ ratings }) {
   return (
     <div className={styles.starsContainer}>
       <div>
-        {map(coloredStars, star => <i key={star} className="fa fa-star" />)}
+        {map(coloredStars, star => (
+          <i key={star} className="fa fa-star" />
+        ))}
       </div>
       <div>
-        {map(emptyStars, s => <i key={s} className="fa fa-star" />)}
+        {map(emptyStars, s => (
+          <i key={s} className="fa fa-star" />
+        ))}
       </div>
     </div>
   );

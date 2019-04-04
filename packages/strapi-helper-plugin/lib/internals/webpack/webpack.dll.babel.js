@@ -10,7 +10,9 @@ const webpack = require('webpack');
 const isAdmin = process.env.IS_ADMIN === 'true';
 
 const isSetup = process.env.IS_MONOREPO || false;
-const appPath = process.env.APP_PATH || path.resolve(process.env.PWD || process.cwd(), '..', isAdmin ? '' : '..');
+const appPath =
+  process.env.APP_PATH ||
+  path.resolve(process.env.PWD || process.cwd(), '..', isAdmin ? '' : '..');
 
 const rootAdminpath = (() => {
   if (isSetup) {
@@ -46,7 +48,7 @@ module.exports = {
       'lib',
       'internals',
       'webpack',
-      'dist',
+      'dist'
     ),
 
     // The name of the global variable which the library's
@@ -56,7 +58,13 @@ module.exports = {
   plugins: [
     new webpack.DllPlugin({
       name: '[name]_lib',
-      path: path.resolve(rootAdminpath, 'admin', 'src', 'config', 'manifest.json'),
+      path: path.resolve(
+        rootAdminpath,
+        'admin',
+        'src',
+        'config',
+        'manifest.json'
+      ),
     }),
   ],
   resolve: {
@@ -73,84 +81,84 @@ module.exports = {
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'babel-polyfill',
+        'babel-polyfill'
       ),
       lodash: path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'lodash',
+        'lodash'
       ),
       immutable: path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'immutable',
+        'immutable'
       ),
       'react-intl': path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'react-intl',
+        'react-intl'
       ),
       react: path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'react',
+        'react'
       ),
       'react-dom': path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'react-dom',
+        'react-dom'
       ),
       'react-transition-group': path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'react-transition-group',
+        'react-transition-group'
       ),
       reactstrap: path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'reactstrap',
+        'reactstrap'
       ),
       'react-dnd': path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'react-dnd',
+        'react-dnd'
       ),
       'react-dnd-hmtl5-backend': path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'react-dnd-html5-backend',
+        'react-dnd-html5-backend'
       ),
       'styled-components': path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'styled-components',
+        'styled-components'
       ),
       'react-copy-to-clipboard': path.resolve(
         rootAdminpath,
         'node_modules',
         'strapi-helper-plugin',
         'node_modules',
-        'react-copy-to-clipboard',
+        'react-copy-to-clipboard'
       ),
     },
     symlinks: false,

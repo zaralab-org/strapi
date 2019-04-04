@@ -14,64 +14,87 @@ module.exports = function() {
       const cwd = this.config.appPath;
 
       // Load configurations.
-      glob('./node_modules/*(strapi-hook-*)/*/*(index|defaults).*(js|json)', {
-        cwd
-      }, (err, files) => {
-        if (err) {
-          return reject(err);
-        }
+      glob(
+        './node_modules/*(strapi-hook-*)/*/*(index|defaults).*(js|json)',
+        {
+          cwd,
+        },
+        (err, files) => {
+          if (err) {
+            return reject(err);
+          }
 
-        mountHooks.call(this, files, cwd, 'node_modules')(resolve, reject);
-      });
+          mountHooks.call(this, files, cwd, 'node_modules')(resolve, reject);
+        }
+      );
     }),
     new Promise((resolve, reject) => {
       const cwd = path.resolve(this.config.appPath, 'hooks');
 
       // Load configurations.
-      glob('./*/*(index|defaults).*(js|json)', {
-        cwd
-      }, (err, files) => {
-        if (err) {
-          return reject(err);
-        }
+      glob(
+        './*/*(index|defaults).*(js|json)',
+        {
+          cwd,
+        },
+        (err, files) => {
+          if (err) {
+            return reject(err);
+          }
 
-        mountHooks.call(this, files, cwd)(resolve, reject);
-      });
+          mountHooks.call(this, files, cwd)(resolve, reject);
+        }
+      );
     }),
     new Promise((resolve, reject) => {
       const cwd = path.resolve(this.config.appPath, 'plugins');
 
       // Load configurations.
-      glob('./*/hooks/*/*(index|defaults).*(js|json)', {
-        cwd
-      }, (err, files) => {
-        if (err) {
-          return reject(err);
-        }
+      glob(
+        './*/hooks/*/*(index|defaults).*(js|json)',
+        {
+          cwd,
+        },
+        (err, files) => {
+          if (err) {
+            return reject(err);
+          }
 
-        mountHooks.call(this, files, cwd, 'plugins')(resolve, reject);
-      });
-    })
+          mountHooks.call(this, files, cwd, 'plugins')(resolve, reject);
+        }
+      );
+    }),
   ]);
 };
 
-const mountHooks = function (files, cwd, source) {
+const mountHooks = function(files, cwd, source) {
   return (resolve, reject) =>
     parallel(
       files.map(p => cb => {
-        const folders = p.replace(/^.\/node_modules\/strapi-hook-/, './')
+        const folders = p
+          .replace(/^.\/node_modules\/strapi-hook-/, './')
           .split('/');
-        const name = source === 'plugins' ? folders[folders.length - 2] : folders[1];
+        const name =
+          source === 'plugins' ? folders[folders.length - 2] : folders[1];
 
         this.hook[name] = this.hook[name] || {
-          loaded: false
+          loaded: false,
         };
 
         let dependencies = [];
         if (source === 'node_modules') {
           try {
-            dependencies = get(require(path.resolve(this.config.appPath, 'node_modules', `strapi-hook-${name}`, 'package.json')), 'strapi.dependencies', []);
-          } catch(err) {
+            dependencies = get(
+              require(path.resolve(
+                this.config.appPath,
+                'node_modules',
+                `strapi-hook-${name}`,
+                'package.json'
+              )),
+              'strapi.dependencies',
+              []
+            );
+          } catch (err) {
             // Silent
           }
         }
@@ -82,7 +105,7 @@ const mountHooks = function (files, cwd, source) {
             configurable: false,
             enumerable: true,
             get: () => require(path.resolve(cwd, p)),
-            dependencies
+            dependencies,
           });
 
           this.hook[name].dependencies = dependencies;
@@ -92,7 +115,7 @@ const mountHooks = function (files, cwd, source) {
 
         cb();
       }),
-      (err) => {
+      err => {
         if (err) {
           return reject(err);
         }

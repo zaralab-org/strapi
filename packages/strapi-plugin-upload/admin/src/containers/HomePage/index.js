@@ -51,11 +51,9 @@ import reducer from './reducer';
 import saga from './saga';
 
 export class HomePage extends React.Component {
-  getChildContext = () => (
-    {
-      deleteData: this.props.deleteData,
-    }
-  );
+  getChildContext = () => ({
+    deleteData: this.props.deleteData,
+  });
 
   componentWillMount() {
     if (!isEmpty(this.props.location.search)) {
@@ -79,10 +77,12 @@ export class HomePage extends React.Component {
     }
   }
 
-  getURLParams = (type) => getQueryParameters(this.props.location.search, type);
+  getURLParams = type => getQueryParameters(this.props.location.search, type);
 
-  changeSort = (name) => {
-    const { params: { _limit, _page } } = this.props;
+  changeSort = name => {
+    const {
+      params: { _limit, _page },
+    } = this.props;
     const target = {
       name: 'params._sort',
       value: name,
@@ -94,20 +94,23 @@ export class HomePage extends React.Component {
       pathname: this.props.history.pathname,
       search,
     });
-  }
+  };
 
-  handleChangeParams = (e) => {
+  handleChangeParams = e => {
     const { history, params } = this.props;
-    const search = e.target.name === 'params._limit' ?
-      `_page=${params._page}&_limit=${e.target.value}&_sort=${params._sort}`
-      : `_page=${e.target.value}&_limit=${params._limit}&_sort=${params._sort}`;
+    const search =
+      e.target.name === 'params._limit'
+        ? `_page=${params._page}&_limit=${e.target.value}&_sort=${params._sort}`
+        : `_page=${e.target.value}&_limit=${params._limit}&_sort=${
+            params._sort
+          }`;
     this.props.history.push({
       pathname: history.pathname,
       search,
     });
 
     this.props.changeParams(e);
-  }
+  };
 
   renderInputSearch = () => (
     <InputSearch
@@ -118,7 +121,7 @@ export class HomePage extends React.Component {
       style={{ marginTop: '-10px' }}
       value={this.props.search}
     />
-  )
+  );
 
   render() {
     return (
@@ -213,19 +216,26 @@ function mapDispatchToProps(dispatch) {
       onSearch,
       setParams,
     },
-    dispatch,
+    dispatch
   );
 }
 
 const mapStateToProps = selectHomePage();
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 
-const withReducer = strapi.injectReducer({ key: 'homePage', reducer, pluginId });
+const withReducer = strapi.injectReducer({
+  key: 'homePage',
+  reducer,
+  pluginId,
+});
 const withSaga = strapi.injectSaga({ key: 'homePage', saga, pluginId });
 
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(injectIntl(HomePage));

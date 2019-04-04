@@ -15,8 +15,12 @@ const postcssReporter = require('postcss-reporter');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const isAdmin = process.env.IS_ADMIN === 'true';
-const isSetup = path.resolve(process.env.PWD || process.cwd(), '..', '..') === path.resolve(process.env.INIT_CWD);
-const appPath = process.env.APP_PATH || path.resolve(process.env.PWD || process.cwd(), '..', isAdmin ? '' : '..');
+const isSetup =
+  path.resolve(process.env.PWD || process.cwd(), '..', '..') ===
+  path.resolve(process.env.INIT_CWD);
+const appPath =
+  process.env.APP_PATH ||
+  path.resolve(process.env.PWD || process.cwd(), '..', isAdmin ? '' : '..');
 
 const rootAdminpath = (() => {
   if (isSetup) {
@@ -45,18 +49,28 @@ if (process.env.npm_lifecycle_event === 'start') {
   plugins.src =
     process.env.IS_ADMIN === 'true' && !plugins.exist
       ? fs.readdirSync(path.resolve(appPath, 'plugins')).filter(x => {
-        let hasAdminFolder;
+          let hasAdminFolder;
 
-        // Don't inject the plugins that don't have an admin into the app
-        try {
-          fs.accessSync(path.resolve(appPath, 'plugins', x, 'admin', 'src', 'containers', 'App'));
-          hasAdminFolder = true;
-        } catch (err) {
-          hasAdminFolder = false;
-        }
+          // Don't inject the plugins that don't have an admin into the app
+          try {
+            fs.accessSync(
+              path.resolve(
+                appPath,
+                'plugins',
+                x,
+                'admin',
+                'src',
+                'containers',
+                'App'
+              )
+            );
+            hasAdminFolder = true;
+          } catch (err) {
+            hasAdminFolder = false;
+          }
 
-        return x[0] !== '.' && hasAdminFolder;
-      })
+          return x[0] !== '.' && hasAdminFolder;
+        })
       : [];
 
   plugins.folders = plugins.src.reduce((acc, current) => {
@@ -67,7 +81,7 @@ if (process.env.npm_lifecycle_event === 'start') {
       'node_modules',
       'strapi-helper-plugin',
       'lib',
-      'src',
+      'src'
     );
 
     return acc;
@@ -89,7 +103,7 @@ module.exports = require('./webpack.base.babel')({
       acc[current] = path.resolve(plugins.folders[current], 'app.js');
 
       return acc;
-    }, {}),
+    }, {})
   ),
 
   // Don't use hashes in dev mode for better performance
@@ -151,84 +165,84 @@ module.exports = require('./webpack.base.babel')({
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'babel-polyfill',
+      'babel-polyfill'
     ),
     lodash: path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'lodash',
+      'lodash'
     ),
     immutable: path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'immutable',
+      'immutable'
     ),
     'react-intl': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-intl',
+      'react-intl'
     ),
     react: path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react',
+      'react'
     ),
     'react-dom': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-dom',
+      'react-dom'
     ),
     'react-transition-group': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-transition-group',
+      'react-transition-group'
     ),
     reactstrap: path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'reactstrap',
+      'reactstrap'
     ),
     'styled-components': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'styled-components',
+      'styled-components'
     ),
     'react-dnd': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-dnd',
+      'react-dnd'
     ),
     'react-copy-to-clipboard': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-copy-to-clipboard',
+      'react-copy-to-clipboard'
     ),
     'react-dnd-html5-backend': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-dnd-html5-backend',
+      'react-dnd-html5-backend'
     ),
   },
 

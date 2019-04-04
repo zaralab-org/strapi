@@ -15,7 +15,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 
 import { selectPlugins } from '../App/selectors';
 
-export class PluginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class PluginPage extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   render() {
     let pluginName;
 
@@ -23,14 +24,18 @@ export class PluginPage extends React.Component { // eslint-disable-line react/p
     const pluginId = this.props.match.params.pluginId;
     const plugins = this.props.plugins.toJS();
 
-    const containers = Object.keys(plugins).map((name) => {
+    const containers = Object.keys(plugins).map(name => {
       const plugin = plugins[name];
 
       if (plugin.id === pluginId) {
         pluginName = plugin.name;
 
-        const blockerComponentProps = plugin.preventComponentRendering ? plugin.blockerComponentProps : {};
-        let Elem = plugin.preventComponentRendering ? BlockerComponent : plugin.mainComponent;
+        const blockerComponentProps = plugin.preventComponentRendering
+          ? plugin.blockerComponentProps
+          : {};
+        let Elem = plugin.preventComponentRendering
+          ? BlockerComponent
+          : plugin.mainComponent;
 
         if (plugin.preventComponentRendering && plugin.blockerComponent) {
           Elem = plugin.blockerComponent;
@@ -46,9 +51,7 @@ export class PluginPage extends React.Component { // eslint-disable-line react/p
 
     return (
       <div>
-        <Helmet
-          title={`Strapi - ${pluginName}`}
-        />
+        <Helmet title={`Strapi - ${pluginName}`} />
         {containers}
       </div>
     );
@@ -62,7 +65,7 @@ PluginPage.propTypes = {
 
 const mapStateToProps = createSelector(
   selectPlugins(),
-  (plugins) => ({ plugins })
+  plugins => ({ plugins })
 );
 
 function mapDispatchToProps(dispatch) {
@@ -71,4 +74,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PluginPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PluginPage);

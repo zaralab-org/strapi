@@ -1,8 +1,8 @@
 /*
-*
-* HomePage actions
-*
-*/
+ *
+ * HomePage actions
+ *
+ */
 
 import { includes, forEach, has, remove, get, split } from 'lodash';
 import { getInputsValidationsFromConfigs } from '../../utils/inputValidations';
@@ -104,7 +104,7 @@ export function languagesFetchSucceeded(appLanguages, listLanguages) {
     options: [],
   };
 
-  forEach(selectOptionsObject.items, (item) => {
+  forEach(selectOptionsObject.items, item => {
     selectOptions.options.push({
       value: item.value,
       label: translations[item.name],
@@ -112,7 +112,9 @@ export function languagesFetchSucceeded(appLanguages, listLanguages) {
   });
 
   // Init the react-select
-  const selectedLanguage = { 'language.defaultLocale': selectOptionsObject.items[0].value };
+  const selectedLanguage = {
+    'language.defaultLocale': selectOptionsObject.items[0].value,
+  };
 
   return {
     type: LANGUAGES_FETCH_SUCCEEDED,
@@ -123,13 +125,12 @@ export function languagesFetchSucceeded(appLanguages, listLanguages) {
   };
 }
 
-
 export function editSettings(newSettings, endPoint, context) {
   return {
     type: EDIT_SETTINGS,
     newSettings,
     endPoint,
-    context
+    context,
   };
 }
 
@@ -142,21 +143,27 @@ export function editSettingsSucceeded() {
 function getDataFromConfigs(configs) {
   const data = {};
 
-  forEach(configs.sections, (section) => {
-    forEach(section.items, (item) => {
+  forEach(configs.sections, section => {
+    forEach(section.items, item => {
       data[item.target] = item.value;
 
       if (has(item, 'items')) {
-        forEach(item.items, (itemValue) => {
+        forEach(item.items, itemValue => {
           data[itemValue.target] = itemValue.value;
         });
       }
     });
   });
 
-  if (configs.name === 'form.security.name' && includes(split(get(data, 'security.xframe.value'), ' '), 'ALLOW-FROM')) {
+  if (
+    configs.name === 'form.security.name' &&
+    includes(split(get(data, 'security.xframe.value'), ' '), 'ALLOW-FROM')
+  ) {
     const allowFromValue = split(get(data, 'security.xframe.value'), ' ')[0];
-    const allowFromValueNested = split(get(data, 'security.xframe.value'), ' ')[1];
+    const allowFromValueNested = split(
+      get(data, 'security.xframe.value'),
+      ' '
+    )[1];
     data['security.xframe.value'] = allowFromValue;
     data['security.xframe.value.nested'] = allowFromValueNested;
   }
@@ -176,7 +183,6 @@ export function newLanguagePost() {
     type: NEW_LANGUAGE_POST,
   };
 }
-
 
 export function languageActionSucceeded() {
   return {
@@ -207,7 +213,10 @@ export function databasesFetch(environment) {
 export function databasesFetchSucceeded(listDatabases, availableDatabases) {
   // form.database.item.connector
   const appDatabases = availableDatabases;
-  remove(appDatabases.sections[0].items, (item) => item.name === 'form.database.item.connector');
+  remove(
+    appDatabases.sections[0].items,
+    item => item.name === 'form.database.item.connector'
+  );
   const configsDisplay = {
     name: 'form.databases.name',
     description: 'form.databases.description',
@@ -236,7 +245,7 @@ export function newDatabasePost(endPoint, data, context) {
     type: NEW_DATABASE_POST,
     endPoint,
     data,
-    context
+    context,
   };
 }
 
@@ -274,7 +283,10 @@ export function specificDatabaseFetchSucceeded(db) {
   const database = db;
   const data = getDataFromConfigs(database);
   const name = database.sections[0].items[0].value;
-  remove(database.sections[0].items, (item) => item.target === `database.connections.${name}.connector`);
+  remove(
+    database.sections[0].items,
+    item => item.target === `database.connections.${name}.connector`
+  );
   const dbNameTarget = database.sections[0].items[0].target;
   const formValidations = getInputsValidationsFromConfigs(database);
   return {
@@ -291,7 +303,7 @@ export function databaseEdit(data, apiUrl, context) {
     type: DATABASE_EDIT,
     data,
     apiUrl,
-    context
+    context,
   };
 }
 

@@ -16,20 +16,14 @@ function PluginHeaderActions({ actions, overrideRendering }) {
   let content = '';
 
   if (isArray(actions)) {
-    content = actions.map(action => (
-      <Button {...action} key={action.label} />
-    ));
+    content = actions.map(action => <Button {...action} key={action.label} />);
   }
 
   if (isFunction(overrideRendering)) {
     content = overrideRendering();
   }
 
-  return (
-    <div className={styles.pluginHeaderActions}>
-      {content}
-    </div>
-  );
+  return <div className={styles.pluginHeaderActions}>{content}</div>;
 }
 
 PluginHeaderActions.defaultProps = {
@@ -38,14 +32,8 @@ PluginHeaderActions.defaultProps = {
 };
 
 PluginHeaderActions.propTypes = {
-  actions: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.bool,
-  ]),
-  overrideRendering: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.func,
-  ]),
+  actions: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  overrideRendering: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 };
 
 export default PluginHeaderActions;

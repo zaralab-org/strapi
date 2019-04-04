@@ -6,7 +6,7 @@ const {
   getApisUploadRelations,
   getEditDisplayAvailableFieldsPath,
   getEditDisplayDisplayedField,
-  getEditDisplayFieldsPath
+  getEditDisplayFieldsPath,
 } = require('./utils/getters');
 const splitted = str => str.split('.');
 const pickData = model =>
@@ -192,12 +192,12 @@ module.exports = async cb => {
         const label = _.upperFirst(current.alias);
         const displayedAttribute = current.plugin // Value to modified to custom what's displayed in the react-select
           ? _.get(pluginsModel, [
-            current.plugin,
-            'models',
-            current.model || current.collection,
-            'info',
-            'mainField',
-          ]) ||
+              current.plugin,
+              'models',
+              current.model || current.collection,
+              'info',
+              'mainField',
+            ]) ||
             _.findKey(
               _.get(pluginsModel, [
                 current.plugin,
@@ -209,10 +209,10 @@ module.exports = async cb => {
             ) ||
             'id'
           : _.get(models, [
-            current.model || current.collection,
-            'info',
-            'mainField',
-          ]) ||
+              current.model || current.collection,
+              'info',
+              'mainField',
+            ]) ||
             _.findKey(
               _.get(models, [
                 current.model || current.collection,
@@ -397,7 +397,11 @@ module.exports = async cb => {
       const defaultSort = _.get(prevSchema.models, defaultSortPath);
       const displayedFieldPath = getEditDisplayDisplayedField(attrPath);
       const displayedField = _.get(prevSchema.models, displayedFieldPath, null);
-      const primaryKey = _.get(prevSchema.models, [...apiPath, 'primaryKey'], null);
+      const primaryKey = _.get(
+        prevSchema.models,
+        [...apiPath, 'primaryKey'],
+        null
+      );
 
       // If the user has deleted the default sort attribute in the content type builder
       // Replace it by new generated one from the current schema
@@ -414,7 +418,7 @@ module.exports = async cb => {
       if (_.includes(currentAttr, displayedField)) {
         _.set(prevSchema.models, displayedFieldPath, primaryKey);
       }
-      
+
       // Update the displayed fields
       const updatedListDisplay = prevListDisplay.filter(
         obj => obj.name !== currentAttr.join()

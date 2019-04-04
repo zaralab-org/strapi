@@ -42,7 +42,9 @@ import { makeSelectModel } from './selectors';
 
 export function* fetchModel(action) {
   try {
-    const requestUrl = `/content-type-builder/models/${action.modelName.split('&source=')[0]}`;
+    const requestUrl = `/content-type-builder/models/${
+      action.modelName.split('&source=')[0]
+    }`;
     const params = {};
     const source = action.modelName.split('&source=')[1];
 
@@ -55,8 +57,7 @@ export function* fetchModel(action) {
     yield put(modelFetchSucceeded(data));
 
     yield put(unsetButtonLoader());
-
-  } catch(error) {
+  } catch (error) {
     strapi.notification.error('notification.error');
   }
 }
@@ -76,7 +77,10 @@ export function* submitChanges(action) {
       }
 
       forEach(attribute.params, (value, key) => {
-        if (key === 'dominant' && get(attribute.params, 'nature') !== 'manyToMany') {
+        if (
+          key === 'dominant' &&
+          get(attribute.params, 'nature') !== 'manyToMany'
+        ) {
           delete body.attributes[index].params.dominant;
         }
 
@@ -87,7 +91,7 @@ export function* submitChanges(action) {
         }
 
         if (key === 'pluginValue') {
-          if (value && value !== ' ')  {
+          if (value && value !== ' ') {
             set(body.attributes[index].params, 'plugin', true);
           } else {
             unset(body.attributes[index].params, 'plugin');
@@ -96,7 +100,9 @@ export function* submitChanges(action) {
         }
 
         if (!value && key !== 'multiple' && key !== 'default') {
-          const paramsKey = includes(key, 'Value') ? replace(key,'Value', '') : key;
+          const paramsKey = includes(key, 'Value')
+            ? replace(key, 'Value', '')
+            : key;
           unset(body.attributes[index].params, paramsKey);
         }
       });
@@ -126,19 +132,35 @@ export function* submitChanges(action) {
         yield put(temporaryContentTypePosted(size(get(body, 'attributes'))));
         yield put(postContentTypeSucceeded());
 
-        const leftMenuContentTypes = get(action.context.plugins.toJS(), ['content-manager', 'leftMenuSections']);
+        const leftMenuContentTypes = get(action.context.plugins.toJS(), [
+          'content-manager',
+          'leftMenuSections',
+        ]);
         const newContentType = body.name.toLowerCase();
 
         if (leftMenuContentTypes) {
-          leftMenuContentTypes[0].links.push({ destination: newContentType, label: capitalize(pluralize(newContentType)) });
-          leftMenuContentTypes[0].links = sortBy(leftMenuContentTypes[0].links, 'label');
-          action.context.updatePlugin('content-manager', 'leftMenuSections', leftMenuContentTypes);
+          leftMenuContentTypes[0].links.push({
+            destination: newContentType,
+            label: capitalize(pluralize(newContentType)),
+          });
+          leftMenuContentTypes[0].links = sortBy(
+            leftMenuContentTypes[0].links,
+            'label'
+          );
+          action.context.updatePlugin(
+            'content-manager',
+            'leftMenuSections',
+            leftMenuContentTypes
+          );
         }
 
-        strapi.notification.success('content-type-builder.notification.success.message.contentType.create');
-
+        strapi.notification.success(
+          'content-type-builder.notification.success.message.contentType.create'
+        );
       } else {
-        strapi.notification.success('content-type-builder.notification.success.message.contentType.edit');
+        strapi.notification.success(
+          'content-type-builder.notification.success.message.contentType.edit'
+        );
       }
 
       yield put(submitActionSucceeded());
@@ -146,9 +168,14 @@ export function* submitChanges(action) {
       // Remove loader
       yield put(unsetButtonLoader());
     }
-
-  } catch(error) {
-    strapi.notification.error(get(error, ['response', 'payload', 'message', '0', 'messages', '0', 'id'], 'notification.error'));
+  } catch (error) {
+    strapi.notification.error(
+      get(
+        error,
+        ['response', 'payload', 'message', '0', 'messages', '0', 'id'],
+        'notification.error'
+      )
+    );
     yield put(unsetButtonLoader());
   }
 }
@@ -158,7 +185,7 @@ function* defaultSaga() {
   yield fork(takeLatest, SUBMIT, submitChanges);
 
   // TODO fix Router (Other PR);
-  
+
   // const loadModelWatcher = yield fork(takeLatest, MODEL_FETCH, fetchModel);
   // const loadSubmitChanges = yield fork(takeLatest, SUBMIT, submitChanges);
 

@@ -11,9 +11,12 @@ cypress
   .run(config)
   .then(results => {
     if (results.totalFailed > 0) {
-      return process.stdout.write('Cypress tests finished with errors\n', () => {
-        process.exit(1);
-      });
+      return process.stdout.write(
+        'Cypress tests finished with errors\n',
+        () => {
+          process.exit(1);
+        }
+      );
     }
     process.exit(0);
   })

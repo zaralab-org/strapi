@@ -20,7 +20,7 @@ const exec = (command, args) => {
   };
 
   try {
-    return shell.exec(cmd, {silent: true});
+    return shell.exec(cmd, { silent: true });
   } catch (err) {
     return '';
   }

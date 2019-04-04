@@ -1,15 +1,16 @@
 /**
-*
-* RelationIco
-*
-*/
+ *
+ * RelationIco
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-class RelationIco extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class RelationIco extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   handleClick = () => {
     const target = {
       name: 'params.nature',
@@ -18,11 +19,16 @@ class RelationIco extends React.Component { // eslint-disable-line react/prefer-
     };
 
     this.props.onChange({ target });
-  }
+  };
 
   render() {
     return (
-      <img src={this.props.ico} alt="ico" onClick={this.handleClick} className={styles.relationIco} />
+      <img
+        src={this.props.ico}
+        alt="ico"
+        onClick={this.handleClick}
+        className={styles.relationIco}
+      />
     );
   }
 }

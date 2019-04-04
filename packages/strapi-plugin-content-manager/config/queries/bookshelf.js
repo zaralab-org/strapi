@@ -25,18 +25,33 @@ module.exports = {
   search: async function(params, populate, raw = false) {
     const associations = this.associations.map(x => x.alias);
     const searchText = Object.keys(this._attributes)
-      .filter(attribute => attribute !== this.primaryKey && !associations.includes(attribute))
-      .filter(attribute => ['string', 'text'].includes(this._attributes[attribute].type));
+      .filter(
+        attribute =>
+          attribute !== this.primaryKey && !associations.includes(attribute)
+      )
+      .filter(attribute =>
+        ['string', 'text'].includes(this._attributes[attribute].type)
+      );
 
     const searchInt = Object.keys(this._attributes)
-      .filter(attribute => attribute !== this.primaryKey && !associations.includes(attribute))
+      .filter(
+        attribute =>
+          attribute !== this.primaryKey && !associations.includes(attribute)
+      )
       .filter(attribute =>
-        ['integer', 'biginteger', 'decimal', 'float'].includes(this._attributes[attribute].type)
+        ['integer', 'biginteger', 'decimal', 'float'].includes(
+          this._attributes[attribute].type
+        )
       );
 
     const searchBool = Object.keys(this._attributes)
-      .filter(attribute => attribute !== this.primaryKey && !associations.includes(attribute))
-      .filter(attribute => ['boolean'].includes(this._attributes[attribute].type));
+      .filter(
+        attribute =>
+          attribute !== this.primaryKey && !associations.includes(attribute)
+      )
+      .filter(attribute =>
+        ['boolean'].includes(this._attributes[attribute].type)
+      );
 
     const query = (params.search || '').replace(/[^a-zA-Z0-9.-\s]+/g, '');
 
@@ -56,7 +71,10 @@ module.exports = {
       // Search in columns with text using index.
       switch (this.client) {
         case 'mysql':
-          qb.orWhereRaw(`MATCH(${searchText.join(',')}) AGAINST(? IN BOOLEAN MODE)`, `*${query}*`);
+          qb.orWhereRaw(
+            `MATCH(${searchText.join(',')}) AGAINST(? IN BOOLEAN MODE)`,
+            `*${query}*`
+          );
           break;
         case 'pg': {
           const searchQuery = searchText.map(attribute =>
@@ -95,18 +113,33 @@ module.exports = {
   countSearch: async function(params = {}) {
     const associations = this.associations.map(x => x.alias);
     const searchText = Object.keys(this._attributes)
-      .filter(attribute => attribute !== this.primaryKey && !associations.includes(attribute))
-      .filter(attribute => ['string', 'text'].includes(this._attributes[attribute].type));
+      .filter(
+        attribute =>
+          attribute !== this.primaryKey && !associations.includes(attribute)
+      )
+      .filter(attribute =>
+        ['string', 'text'].includes(this._attributes[attribute].type)
+      );
 
     const searchInt = Object.keys(this._attributes)
-      .filter(attribute => attribute !== this.primaryKey && !associations.includes(attribute))
+      .filter(
+        attribute =>
+          attribute !== this.primaryKey && !associations.includes(attribute)
+      )
       .filter(attribute =>
-        ['integer', 'biginteger', 'decimal', 'float'].includes(this._attributes[attribute].type)
+        ['integer', 'biginteger', 'decimal', 'float'].includes(
+          this._attributes[attribute].type
+        )
       );
 
     const searchBool = Object.keys(this._attributes)
-      .filter(attribute => attribute !== this.primaryKey && !associations.includes(attribute))
-      .filter(attribute => ['boolean'].includes(this._attributes[attribute].type));
+      .filter(
+        attribute =>
+          attribute !== this.primaryKey && !associations.includes(attribute)
+      )
+      .filter(attribute =>
+        ['boolean'].includes(this._attributes[attribute].type)
+      );
 
     const query = (params.search || '').replace(/[^a-zA-Z0-9.-\s]+/g, '');
 
@@ -136,7 +169,10 @@ module.exports = {
           break;
         }
         case 'mysql':
-          qb.orWhereRaw(`MATCH(${searchText.join(',')}) AGAINST(? IN BOOLEAN MODE)`, `*${query}*`);
+          qb.orWhereRaw(
+            `MATCH(${searchText.join(',')}) AGAINST(? IN BOOLEAN MODE)`,
+            `*${query}*`
+          );
           break;
       }
     }).count();
@@ -154,7 +190,9 @@ module.exports = {
     // Retrieve data manually.
     if (_.isEmpty(populate)) {
       const arrayOfPromises = this.associations
-        .filter(association => ['manyMorphToOne', 'manyMorphToMany'].includes(association.nature))
+        .filter(association =>
+          ['manyMorphToOne', 'manyMorphToMany'].includes(association.nature)
+        )
         .map(() => {
           return this.morph
             .forge()

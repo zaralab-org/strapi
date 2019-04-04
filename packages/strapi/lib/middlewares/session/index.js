@@ -30,7 +30,9 @@ module.exports = strapi => {
         _.isString(strapi.config.middleware.settings.session.client) &&
         strapi.config.middleware.settings.session.client !== 'cookie'
       ) {
-        const store = hook.defineStore(strapi.config.middleware.settings.session);
+        const store = hook.defineStore(
+          strapi.config.middleware.settings.session
+        );
 
         if (!_.isEmpty(store)) {
           try {
@@ -38,15 +40,13 @@ module.exports = strapi => {
             // and also the function which are located to `./config/functions/session.js`
             const options = _.assign(
               {
-                store
+                store,
               },
               strapi.config.hook.session,
               strapi.config.middleware.settings.session
             );
 
-            strapi.app.use(
-              strapi.koaMiddlewares.session(options, strapi.app)
-            );
+            strapi.app.use(strapi.koaMiddlewares.session(options, strapi.app));
             strapi.app.use((ctx, next) => {
               ctx.state = ctx.state || {};
               ctx.state.session = ctx.session || {};
@@ -68,9 +68,7 @@ module.exports = strapi => {
             strapi.config.middleware.settings.session
           );
 
-          strapi.app.use(
-            strapi.koaMiddlewares.session(options, strapi.app)
-          );
+          strapi.app.use(strapi.koaMiddlewares.session(options, strapi.app));
           strapi.app.use((ctx, next) => {
             ctx.state = ctx.state || {};
             ctx.state.session = ctx.session || {};
@@ -87,14 +85,28 @@ module.exports = strapi => {
 
     defineStore: session => {
       if (_.isEmpty(_.get(session, 'client'))) {
-        return strapi.log.error('(middleware:session) please provide a valid client to store session');
+        return strapi.log.error(
+          '(middleware:session) please provide a valid client to store session'
+        );
       } else if (_.isEmpty(_.get(session, 'connection'))) {
-        return strapi.log.error('(middleware:session) please provide connection for the session store');
-      } else if (!_.get(strapi, `config.currentEnvironment.database.connections.${session.connection}`)) {
-        return strapi.log.error('(middleware:session) please provide a valid connection for the session store');
+        return strapi.log.error(
+          '(middleware:session) please provide connection for the session store'
+        );
+      } else if (
+        !_.get(
+          strapi,
+          `config.currentEnvironment.database.connections.${session.connection}`
+        )
+      ) {
+        return strapi.log.error(
+          '(middleware:session) please provide a valid connection for the session store'
+        );
       }
 
-      session.settings = _.get(strapi, `config.currentEnvironment.database.connections.${session.connection}`);
+      session.settings = _.get(
+        strapi,
+        `config.currentEnvironment.database.connections.${session.connection}`
+      );
 
       // Define correct store name to avoid require to failed.
       switch (session.client.toLowerCase()) {
@@ -129,7 +141,7 @@ module.exports = strapi => {
           session.settings.tableName = session.settings.table;
 
           const sessionStore = new Store({
-            connection: session.settings
+            connection: session.settings,
           });
 
           // Create the DB, tables and indexes to store sessions.
@@ -168,7 +180,7 @@ module.exports = strapi => {
       } catch (err) {
         throw err;
       }
-    }
+    },
   };
 
   return hook;

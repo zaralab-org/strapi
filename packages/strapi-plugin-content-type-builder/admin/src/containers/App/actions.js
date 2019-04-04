@@ -22,8 +22,13 @@ import {
 
 export function deleteContentType(itemToDelete, context) {
   const oldMenu = storeData.getMenu();
-  const leftMenuContentTypes = get(context.plugins.toJS(), ['content-manager', 'leftMenuSections']);
-  const leftMenuContentTypesIndex = !isEmpty(leftMenuContentTypes) ? findIndex(leftMenuContentTypes[0].links, ['destination', itemToDelete]) : -1;
+  const leftMenuContentTypes = get(context.plugins.toJS(), [
+    'content-manager',
+    'leftMenuSections',
+  ]);
+  const leftMenuContentTypesIndex = !isEmpty(leftMenuContentTypes)
+    ? findIndex(leftMenuContentTypes[0].links, ['destination', itemToDelete])
+    : -1;
 
   let updateLeftMenu = false;
   let sendRequest = true;
@@ -33,7 +38,7 @@ export function deleteContentType(itemToDelete, context) {
     if (oldMenu[index].isTemporary) {
       sendRequest = false;
       storeData.clearAppStorage();
-    }else {
+    } else {
       oldMenu.splice(index, 1);
       const newMenu = oldMenu;
       storeData.setMenu(newMenu);
@@ -65,9 +70,15 @@ export function modelsFetch() {
 export function modelsFetchSucceeded(models) {
   const modelNumber = size(models.models) > 1 ? 'plural' : 'singular';
 
-  const sections = storeData.getMenu() || map(models.models, (model) => ({icon: 'fa-caret-square-o-right', name: model.name, source: model.source }));
+  const sections =
+    storeData.getMenu() ||
+    map(models.models, model => ({
+      icon: 'fa-caret-square-o-right',
+      name: model.name,
+      source: model.source,
+    }));
 
-  if (!storeData.getMenu()){
+  if (!storeData.getMenu()) {
     sections.push({ icon: 'fa-plus', name: 'button.contentType.add' });
   }
 
@@ -80,7 +91,9 @@ export function modelsFetchSucceeded(models) {
     ],
   };
 
-  const data = storeData.getModel() ? { models: concat(models.models, storeData.getModel()) } : models;
+  const data = storeData.getModel()
+    ? { models: concat(models.models, storeData.getModel()) }
+    : models;
   return {
     type: MODELS_FETCH_SUCCEEDED,
     data,
@@ -89,9 +102,12 @@ export function modelsFetchSucceeded(models) {
 }
 
 export function storeTemporaryMenu(newMenu, position, nbElementToRemove) {
-
   const newModel = newMenu[size(newMenu) - 2];
-  const newLink = { icon: 'fa-caret-square-o-right', name: newModel.name, isTemporary: true };
+  const newLink = {
+    icon: 'fa-caret-square-o-right',
+    name: newModel.name,
+    isTemporary: true,
+  };
 
   storeData.setMenu(newMenu);
   storeData.setModel(newModel);

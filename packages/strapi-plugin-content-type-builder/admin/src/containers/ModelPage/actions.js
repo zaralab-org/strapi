@@ -46,7 +46,11 @@ export function cancelChanges() {
   };
 }
 
-export function editContentTypeAttribute(modifiedAttribute, attributePosition, shouldAddParralAttribute) {
+export function editContentTypeAttribute(
+  modifiedAttribute,
+  attributePosition,
+  shouldAddParralAttribute
+) {
   return {
     type: EDIT_CONTENT_TYPE_ATTRIBUTE,
     modifiedAttribute,
@@ -56,7 +60,12 @@ export function editContentTypeAttribute(modifiedAttribute, attributePosition, s
   };
 }
 
-export function editContentTypeAttributeRelation(modifiedAttribute, attributePosition, parallelAttributePosition, shouldRemoveParallelAttribute) {
+export function editContentTypeAttributeRelation(
+  modifiedAttribute,
+  attributePosition,
+  parallelAttributePosition,
+  shouldRemoveParallelAttribute
+) {
   return {
     type: EDIT_CONTENT_TYPE_ATTRIBUTE_RELATION,
     modifiedAttribute,
@@ -67,7 +76,11 @@ export function editContentTypeAttributeRelation(modifiedAttribute, attributePos
   };
 }
 
-export function deleteAttribute(position, modelName, shouldRemoveParallelAttribute) {
+export function deleteAttribute(
+  position,
+  modelName,
+  shouldRemoveParallelAttribute
+) {
   const temporaryContentType = storeData.getContentType();
 
   if (get(temporaryContentType, 'name') === modelName) {
@@ -75,7 +88,10 @@ export function deleteAttribute(position, modelName, shouldRemoveParallelAttribu
     temporaryContentType.attributes.splice(position, 1);
 
     if (shouldRemoveParallelAttribute) {
-      temporaryContentType.attributes.splice(findIndex(temporaryContentType.attributes, ['name', attributeKey]), 1);
+      temporaryContentType.attributes.splice(
+        findIndex(temporaryContentType.attributes, ['name', attributeKey]),
+        1
+      );
     }
 
     const updatedContentType = temporaryContentType;
@@ -105,7 +121,19 @@ export function modelFetch(modelName) {
 
 export function modelFetchSucceeded(data) {
   const model = data;
-  const defaultKeys = ['required', 'unique', 'type', 'key', 'target', 'nature', 'targetColumnName', 'columnName', 'multiple', 'default', 'appearance'];
+  const defaultKeys = [
+    'required',
+    'unique',
+    'type',
+    'key',
+    'target',
+    'nature',
+    'targetColumnName',
+    'columnName',
+    'multiple',
+    'default',
+    'appearance',
+  ];
 
   forEach(model.model.attributes, (attribute, index) => {
     map(attribute.params, (value, key) => {
@@ -167,8 +195,6 @@ export function updateContentType(data) {
   };
 }
 
-
-
 function setParallelAttribute(data) {
   const parallelAttribute = cloneDeep(data);
 
@@ -177,7 +203,7 @@ function setParallelAttribute(data) {
   parallelAttribute.params.columnName = data.params.targetColumnName;
   parallelAttribute.params.targetColumnName = data.params.columnName;
   parallelAttribute.params.dominant = false;
-  
+
   switch (data.params.nature) {
     case 'manyToOne':
       parallelAttribute.params.nature = 'oneToMany';
@@ -188,7 +214,6 @@ function setParallelAttribute(data) {
     default:
     //
   }
-
 
   return parallelAttribute;
 }

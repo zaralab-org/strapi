@@ -6,7 +6,7 @@ const Add = FilterOptionsCTA.extend`
     font-family: FontAwesome;
     font-size: 8px;
     font-weight: 400;
-    color: #007EFF;
+    color: #007eff;
   }
 `;
 

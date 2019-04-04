@@ -2,9 +2,7 @@ import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects';
 import auth from 'utils/auth';
 import request from 'utils/request';
 import { makeSelectAppPlugins } from '../App/selectors';
-import {
-  getAdminDataSucceeded,
-} from './actions';
+import { getAdminDataSucceeded } from './actions';
 import { makeSelectUuid } from './selectors';
 import { EMIT_EVENT, GET_ADMIN_DATA } from './constants';
 
@@ -24,10 +22,10 @@ function* emitter(action) {
           headers: {
             'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
-  } catch(err) {
+  } catch (err) {
     console.log(err); // eslint-disable-line no-console
   }
 }
@@ -41,15 +39,21 @@ function* getData() {
       yield call(request, `${strapi.backendURL}/users/me`, { method: 'GET' });
     }
 
-    const [{ uuid }, { strapiVersion }, { currentEnvironment }, { layout }] = yield all([
+    const [
+      { uuid },
+      { strapiVersion },
+      { currentEnvironment },
+      { layout },
+    ] = yield all([
       call(request, '/admin/gaConfig', { method: 'GET' }),
       call(request, '/admin/strapiVersion', { method: 'GET' }),
       call(request, '/admin/currentEnvironment', { method: 'GET' }),
       call(request, '/admin/layout', { method: 'GET' }),
     ]);
-    yield put(getAdminDataSucceeded({ uuid, strapiVersion, currentEnvironment, layout }));
-
-  } catch(err) {
+    yield put(
+      getAdminDataSucceeded({ uuid, strapiVersion, currentEnvironment, layout })
+    );
+  } catch (err) {
     console.log(err); // eslint-disable-line no-console
   }
 }

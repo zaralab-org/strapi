@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * DragBox
  */
 
@@ -9,9 +9,7 @@ import PropTypes from 'prop-types';
 import GrabIcon from '../../assets/images/icon_grab_blue.svg';
 import DraggedRemovedIcon from '../DraggedRemovedIcon';
 
-
 import styles from './styles.scss';
-
 
 function DragBox({ name }) {
   return (

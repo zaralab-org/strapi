@@ -5,7 +5,6 @@
  */
 
 module.exports = function created(data) {
-
   // Set the status.
   this.status = 201;
 

@@ -98,7 +98,10 @@ module.exports = async function() {
             set(this.config.hook, `settings.${hook}`, {});
           }
 
-          if (module(this).defaults && this.config.hook.settings[hook] !== false) {
+          if (
+            module(this).defaults &&
+            this.config.hook.settings[hook] !== false
+          ) {
             defaultsDeep(
               this.config.hook.settings[hook],
               module(this).defaults[hook] || module(this).defaults
@@ -117,7 +120,9 @@ module.exports = async function() {
               dropRight(hooksBefore, hooksBefore.length - position)
             );
           } else {
-            previousDependencies = previousDependencies.concat(hooksBefore.filter(x => x !== hook));
+            previousDependencies = previousDependencies.concat(
+              hooksBefore.filter(x => x !== hook)
+            );
 
             // Add ORDER dependencies to load and remove the current one
             // to avoid that it waits itself.
@@ -137,7 +142,9 @@ module.exports = async function() {
                 // Wait for every hooks.
                 previousDependencies = previousDependencies.concat(hooks);
                 // Exclude hooks which need to be loaded after this one.
-                previousDependencies = previousDependencies.filter(x => !includes(toLoadAfter, x));
+                previousDependencies = previousDependencies.filter(
+                  x => !includes(toLoadAfter, x)
+                );
               }
             }
           }

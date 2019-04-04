@@ -9,13 +9,25 @@ export default function sendUpdatedParams(isCreatingNewFields) {
       body[key] = value;
     }
 
-    if (isCreatingNewFields && value && key !== 'security.xframe.value.nested') {
+    if (
+      isCreatingNewFields &&
+      value &&
+      key !== 'security.xframe.value.nested'
+    ) {
       body[key] = value;
-    }
-
-    else if (key === 'security.xframe.value.nested' && prevSettings['security.xframe.value.nested'] !== this.props.home.modifiedData['security.xframe.value.nested'] && this.props.home.modifiedData['security.xframe.value'] === 'ALLOW-FROM') {
-
-      const xFrameValue = `ALLOW-FROM.ALLOW-FROM ${trimStart(replace(this.props.home.modifiedData['security.xframe.value.nested'], 'ALLOW-FROM', ''))}`;
+    } else if (
+      key === 'security.xframe.value.nested' &&
+      prevSettings['security.xframe.value.nested'] !==
+        this.props.home.modifiedData['security.xframe.value.nested'] &&
+      this.props.home.modifiedData['security.xframe.value'] === 'ALLOW-FROM'
+    ) {
+      const xFrameValue = `ALLOW-FROM.ALLOW-FROM ${trimStart(
+        replace(
+          this.props.home.modifiedData['security.xframe.value.nested'],
+          'ALLOW-FROM',
+          ''
+        )
+      )}`;
       body['security.xframe.value'] = xFrameValue;
     }
   });
@@ -24,11 +36,12 @@ export default function sendUpdatedParams(isCreatingNewFields) {
 
   // Check all sections that depends on a toggle
   forEach(body, (bodyValue, target) => {
-    if (includes(target, 'enabled') && !bodyValue) disabledSections.push(split(target, '.')[1]);
+    if (includes(target, 'enabled') && !bodyValue)
+      disabledSections.push(split(target, '.')[1]);
   });
 
   // Remove disabled values
-  forEach(disabledSections, (sectionName) => {
+  forEach(disabledSections, sectionName => {
     forEach(body, (v, bodyKey) => {
       if (!includes(bodyKey, 'enabled') && includes(bodyKey, sectionName)) {
         unset(body, bodyKey);

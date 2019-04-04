@@ -33,15 +33,16 @@ program.version(packageJSON.version, '-v, --version');
 
 // Make `-v` option case-insensitive.
 process.argv = _.map(process.argv, arg => {
-  return (arg === '-V') ? '-v' : arg;
+  return arg === '-V' ? '-v' : arg;
 });
 
 // `$ strapi version` (--version synonym)
 program
   .command('version')
   .description('output your version of Strapi')
-  .action(() => { console.log(packageJSON.version); });
-
+  .action(() => {
+    console.log(packageJSON.version);
+  });
 
 // `$ strapi console`
 program
@@ -73,7 +74,7 @@ program
 program
   .command('start [appPath]')
   .description('start your Strapi application')
-  .action((appPath) => {
+  .action(appPath => {
     require('./strapi-start')(appPath);
   });
 
@@ -159,9 +160,7 @@ program
 
 // `$ strapi <unrecognized_cmd>`
 // Mask the '*' in `help`.
-program
-  .command('*')
-  .action(program.usageMinusWildcard);
+program.command('*').action(program.usageMinusWildcard);
 
 // Don't balk at unknown options.
 

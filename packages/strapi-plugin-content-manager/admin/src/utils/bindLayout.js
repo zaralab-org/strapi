@@ -1,6 +1,6 @@
 import { isPlainObject, isFunction } from 'lodash';
 
-export const bindLayout = function (object) {
+export const bindLayout = function(object) {
   return Object.keys(object).reduce((acc, current) => {
     if (isPlainObject(object[current])) {
       acc[current] = bindLayout.call(this, object[current]);

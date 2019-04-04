@@ -16,5 +16,5 @@ module.exports = {
   hooks,
   plugins,
   admin,
-  store
+  store,
 };

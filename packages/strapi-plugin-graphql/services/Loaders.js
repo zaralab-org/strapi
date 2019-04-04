@@ -20,15 +20,22 @@ module.exports = {
       .filter(model => model !== 'core_store')
       .forEach(model => {
         (strapi.models[model].associations || []).forEach(association =>
-          this.createLoader(association.collection || association.model, association.plugin)
+          this.createLoader(
+            association.collection || association.model,
+            association.plugin
+          )
         );
       });
 
     // Reproduce the same pattern for each plugin.
     Object.keys(strapi.plugins).forEach(plugin => {
       Object.keys(strapi.plugins[plugin].models).forEach(model => {
-        (strapi.plugins[plugin].models[model].associations || []).forEach(association =>
-          this.createLoader(association.collection || association.model, association.plugin)
+        (strapi.plugins[plugin].models[model].associations || []).forEach(
+          association =>
+            this.createLoader(
+              association.collection || association.model,
+              association.plugin
+            )
         );
       });
     });
@@ -55,9 +62,14 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
           try {
             // Extract queries from keys and merge similar queries.
-            const { queries, map } = this.extractQueries(model, _.cloneDeep(keys));
+            const { queries, map } = this.extractQueries(
+              model,
+              _.cloneDeep(keys)
+            );
             // Run queries in parallel.
-            const results = await Promise.all(queries.map(query => this.makeQuery(model, query)));
+            const results = await Promise.all(
+              queries.map(query => this.makeQuery(model, query))
+            );
 
             // Use to match initial queries order.
             const data = this.mapData(model, keys, map, results);
@@ -80,7 +92,9 @@ module.exports = {
     // Use map to re-dispatch data correctly based on initial keys.
     return originalMap.map((query, index) => {
       // Find the index of where we should extract the results.
-      const indexResults = map.findIndex(queryMap => queryMap.indexOf(index) !== -1);
+      const indexResults = map.findIndex(
+        queryMap => queryMap.indexOf(index) !== -1
+      );
       const data = results[indexResults];
 
       // Retrieving referring model.
@@ -90,7 +104,8 @@ module.exports = {
         // Return object instead of array for one-to-many relationship.
         return data.find(
           entry =>
-            entry[ref.primaryKey].toString() === (query.params[ref.primaryKey] || '').toString()
+            entry[ref.primaryKey].toString() ===
+            (query.params[ref.primaryKey] || '').toString()
         );
       }
 
@@ -128,7 +143,11 @@ module.exports = {
 
       return data
         .filter(entry => entry !== undefined)
-        .filter(entry => ids.map(id => id.toString()).includes(entry[ref.primaryKey].toString()))
+        .filter(entry =>
+          ids
+            .map(id => id.toString())
+            .includes(entry[ref.primaryKey].toString())
+        )
         .slice(skip, skip + limit);
     });
   },
@@ -170,10 +189,9 @@ module.exports = {
       .value();
 
     // Run query and remove duplicated ID.
-    const request = await strapi.plugins['content-manager'].services['contentmanager'].fetchAll(
-      { model },
-      params
-    );
+    const request = await strapi.plugins['content-manager'].services[
+      'contentmanager'
+    ].fetchAll({ model }, params);
 
     return request && request.toJSON ? request.toJSON() : request;
   },
@@ -197,7 +215,9 @@ module.exports = {
       const ref = this.retrieveModel(model, options.source);
 
       // Find similar query.
-      const indexQueries = queries.findIndex(query => _.isEqual(query.options, options));
+      const indexQueries = queries.findIndex(query =>
+        _.isEqual(query.options, options)
+      );
 
       // Generate array of IDs to fetch.
       const ids = [];

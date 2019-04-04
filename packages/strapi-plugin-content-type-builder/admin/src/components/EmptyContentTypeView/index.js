@@ -1,8 +1,8 @@
 /**
-*
-* EmptyContentTypeView
-*
-*/
+ *
+ * EmptyContentTypeView
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -11,17 +11,20 @@ import Button from 'components/Button';
 import Brush from '../../assets/images/paint_brush.svg';
 import styles from './styles.scss';
 
-class EmptyContentTypeView extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class EmptyContentTypeView extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div className={styles.emptyContentTypeView}>
         <img src={Brush} alt="" />
         <div>
           <FormattedMessage id="content-type-builder.home.emptyContentType.title">
-            {(title) => <div className={styles.title}>{title}</div>}
+            {title => <div className={styles.title}>{title}</div>}
           </FormattedMessage>
           <FormattedMessage id="content-type-builder.home.emptyContentType.description">
-            {(description) => <div className={styles.description}>{description}</div>}
+            {description => (
+              <div className={styles.description}>{description}</div>
+            )}
           </FormattedMessage>
           <div className={styles.buttonContainer}>
             <Button
@@ -31,7 +34,6 @@ class EmptyContentTypeView extends React.Component { // eslint-disable-line reac
             />
           </div>
         </div>
-
       </div>
     );
   }

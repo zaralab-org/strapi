@@ -18,10 +18,16 @@ module.exports = strapi => {
     const endpoint = `${value.method} ${value.path}`;
 
     try {
-      const { policies, action, validate } = routerChecker(value, endpoint, plugin);
+      const { policies, action, validate } = routerChecker(
+        value,
+        endpoint,
+        plugin
+      );
 
       if (_.isUndefined(action) || !_.isFunction(action)) {
-        return strapi.log.warn(`Ignored attempt to bind route '${endpoint}' to unknown controller/action.`);
+        return strapi.log.warn(
+          `Ignored attempt to bind route '${endpoint}' to unknown controller/action.`
+        );
       }
 
       router.route(
@@ -33,7 +39,7 @@ module.exports = strapi => {
               [strapi.koaMiddlewares.compose(policies), action],
               o => _.isFunction(o)
             ),
-            validate
+            validate,
           },
           _.isEmpty
         )

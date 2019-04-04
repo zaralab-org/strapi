@@ -1,4 +1,14 @@
-import { forEach, upperFirst, mapValues, pickBy, slice, findKey, keys, get, set } from 'lodash';
+import {
+  forEach,
+  upperFirst,
+  mapValues,
+  pickBy,
+  slice,
+  findKey,
+  keys,
+  get,
+  set,
+} from 'lodash';
 import pluralize from 'pluralize';
 
 /**
@@ -7,7 +17,7 @@ import pluralize from 'pluralize';
  *
  * @param models
  */
-const generateSchema = (responses) => {
+const generateSchema = responses => {
   // Init `schema` object
   const schema = {
     plugins: {},
@@ -22,13 +32,17 @@ const generateSchema = (responses) => {
     };
 
     // Fields (non relation)
-    schemaModel.fields = mapValues(pickBy(model.attributes, attribute =>
-      !attribute.model && !attribute.collection
-    ), (value, attribute) => ({
-      label: upperFirst(attribute),
-      description: '',
-      type: value.type || 'string',
-    }));
+    schemaModel.fields = mapValues(
+      pickBy(
+        model.attributes,
+        attribute => !attribute.model && !attribute.collection
+      ),
+      (value, attribute) => ({
+        label: upperFirst(attribute),
+        description: '',
+        type: value.type || 'string',
+      })
+    );
 
     // Select fields displayed in list view
     schemaModel.list = slice(keys(schemaModel.fields), 0, 4);
@@ -36,13 +50,37 @@ const generateSchema = (responses) => {
     if (model.associations) {
       // Model relations
       schemaModel.relations = model.associations.reduce((acc, current) => {
-        const displayedAttribute = current.plugin ?
-          get(responses.plugins, [current.plugin, 'models', current.model || current.collection, 'info', 'mainField']) ||
-          findKey(get(responses.plugins, [current.plugin, 'models', current.model || current.collection, 'attributes']), { type : 'string'}) ||
-          'id' :
-          get(responses.models, [current.model || current.collection, 'info', 'mainField']) ||
-          findKey(get(responses.models, [current.model || current.collection, 'attributes']), { type : 'string'}) ||
-          'id';
+        const displayedAttribute = current.plugin
+          ? get(responses.plugins, [
+              current.plugin,
+              'models',
+              current.model || current.collection,
+              'info',
+              'mainField',
+            ]) ||
+            findKey(
+              get(responses.plugins, [
+                current.plugin,
+                'models',
+                current.model || current.collection,
+                'attributes',
+              ]),
+              { type: 'string' }
+            ) ||
+            'id'
+          : get(responses.models, [
+              current.model || current.collection,
+              'info',
+              'mainField',
+            ]) ||
+            findKey(
+              get(responses.models, [
+                current.model || current.collection,
+                'attributes',
+              ]),
+              { type: 'string' }
+            ) ||
+            'id';
 
         acc[current.alias] = {
           ...current,
@@ -77,6 +115,4 @@ const generateSchema = (responses) => {
   return schema;
 };
 
-export {
-  generateSchema,
-};
+export { generateSchema };

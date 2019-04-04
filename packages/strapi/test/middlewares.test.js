@@ -84,7 +84,9 @@ describe('middleware', () => {
   });
 
   it('`strapi.middleware.responseTime` should be a function', () => {
-    assert(typeof strapi.middleware.responseTime.load.initialize === 'function');
+    assert(
+      typeof strapi.middleware.responseTime.load.initialize === 'function'
+    );
   });
 
   it('`strapi.middleware.router` should be a function', () => {

@@ -136,11 +136,18 @@ const schemaBuilder = {
 
     // build defaults schemas if shadowCRUD is enabled
     if (strapi.plugins.graphql.config.shadowCRUD !== false) {
-      const models = Object.keys(strapi.models).filter(model => model !== 'core_store');
+      const models = Object.keys(strapi.models).filter(
+        model => model !== 'core_store'
+      );
 
       const modelCruds = Resolvers.buildShadowCRUD(models);
       shadowCRUD = Object.keys(strapi.plugins).reduce((acc, plugin) => {
-        const { definition, query, mutation, resolver } = Resolvers.buildShadowCRUD(
+        const {
+          definition,
+          query,
+          mutation,
+          resolver,
+        } = Resolvers.buildShadowCRUD(
           Object.keys(strapi.plugins[plugin].models),
           plugin
         );
@@ -165,14 +172,17 @@ const schemaBuilder = {
     } = strapi.plugins.graphql.config._schema.graphql;
 
     // Polymorphic.
-    const { polymorphicDef, polymorphicResolver } = Types.addPolymorphicUnionType(
-      definition,
-      shadowCRUD.definition
-    );
+    const {
+      polymorphicDef,
+      polymorphicResolver,
+    } = Types.addPolymorphicUnionType(definition, shadowCRUD.definition);
 
     // Build resolvers.
     const resolvers =
-      _.omitBy(_.merge(shadowCRUD.resolver, resolver, polymorphicResolver), _.isEmpty) || {};
+      _.omitBy(
+        _.merge(shadowCRUD.resolver, resolver, polymorphicResolver),
+        _.isEmpty
+      ) || {};
 
     // Transform object to only contain function.
     Object.keys(resolvers).reduce((acc, type) => {
@@ -188,8 +198,13 @@ const schemaBuilder = {
           acc[type][resolver] = acc[type][resolver].resolver;
         }
 
-        if (_.isString(acc[type][resolver]) || _.isPlainObject(acc[type][resolver])) {
-          const { plugin = '' } = _.isPlainObject(acc[type][resolver]) ? acc[type][resolver] : {};
+        if (
+          _.isString(acc[type][resolver]) ||
+          _.isPlainObject(acc[type][resolver])
+        ) {
+          const { plugin = '' } = _.isPlainObject(acc[type][resolver])
+            ? acc[type][resolver]
+            : {};
 
           switch (type) {
             case 'Mutation':
@@ -226,9 +241,19 @@ const schemaBuilder = {
       ${definition}
       ${shadowCRUD.definition}
       type Query {${shadowCRUD.query &&
-        this.formatGQL(shadowCRUD.query, resolver.Query, null, 'query')}${query}}
+        this.formatGQL(
+          shadowCRUD.query,
+          resolver.Query,
+          null,
+          'query'
+        )}${query}}
       type Mutation {${shadowCRUD.mutation &&
-        this.formatGQL(shadowCRUD.mutation, resolver.Mutation, null, 'mutation')}${mutation}}
+        this.formatGQL(
+          shadowCRUD.mutation,
+          resolver.Mutation,
+          null,
+          'mutation'
+        )}${mutation}}
       ${Types.addCustomScalar(resolvers)}
       ${Types.addInput()}
       ${polymorphicDef}

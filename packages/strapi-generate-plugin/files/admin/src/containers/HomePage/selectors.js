@@ -12,7 +12,7 @@ const selectHomePageDomain = () => state => state.get(`${pluginId}_homePage`);
 const selectHomePage = () =>
   createSelector(
     selectHomePageDomain(),
-    substate => substate.toJS(),
+    substate => substate.toJS()
   );
 
 export default selectHomePage;

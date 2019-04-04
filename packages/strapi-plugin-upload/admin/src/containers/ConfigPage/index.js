@@ -22,13 +22,7 @@ import pluginId from '../../pluginId';
 // Plugin's components
 import EditForm from '../../components/EditForm';
 
-import {
-  getSettings,
-  onCancel,
-  onChange,
-  setErrors,
-  submit,
-} from './actions';
+import { getSettings, onCancel, onChange, setErrors, submit } from './actions';
 
 import reducer from './reducer';
 import saga from './saga';
@@ -51,31 +45,49 @@ class ConfigPage extends React.Component {
     }
   }
 
-  getSelectedProviderIndex = () => findIndex(this.props.settings.providers, ['provider', get(this.props.modifiedData, 'provider')]);
+  getSelectedProviderIndex = () =>
+    findIndex(this.props.settings.providers, [
+      'provider',
+      get(this.props.modifiedData, 'provider'),
+    ]);
 
   /**
    * Get Settings depending on the props
    * @param  {Object} props
    * @return {Func}       calls the saga that gets the current settings
    */
-  getSettings = (props) => {
-    const { match: { params: { env} } } = props;
+  getSettings = props => {
+    const {
+      match: {
+        params: { env },
+      },
+    } = props;
     this.props.getSettings(env);
-  }
+  };
 
   generateLinks = () => {
-    const headerNavLinks = this.props.appEnvironments.reduce((acc, current) => {
-      const link = Object.assign(current, { to: `/plugins/upload/configurations/${current.name}` });
-      acc.push(link);
-      return acc;
-    }, []).sort(link => link.name === 'production');
+    const headerNavLinks = this.props.appEnvironments
+      .reduce((acc, current) => {
+        const link = Object.assign(current, {
+          to: `/plugins/upload/configurations/${current.name}`,
+        });
+        acc.push(link);
+        return acc;
+      }, [])
+      .sort(link => link.name === 'production');
 
     return headerNavLinks;
-  }
+  };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
-    const formErrors = Object.keys(get(this.props.settings, ['providers', this.getSelectedProviderIndex(), 'auth'], {})).reduce((acc, current) => {
+    const formErrors = Object.keys(
+      get(
+        this.props.settings,
+        ['providers', this.getSelectedProviderIndex(), 'auth'],
+        {}
+      )
+    ).reduce((acc, current) => {
       if (isEmpty(get(this.props.modifiedData, current, ''))) {
         acc.push({
           name: current,
@@ -90,7 +102,7 @@ class ConfigPage extends React.Component {
     }
 
     return this.props.submit();
-  }
+  };
 
   pluginHeaderActions = [
     {
@@ -115,7 +127,7 @@ class ConfigPage extends React.Component {
             <PluginHeader
               actions={this.pluginHeaderActions}
               description={{ id: 'upload.ConfigPage.description' }}
-              title={{ id: 'upload.ConfigPage.title'}}
+              title={{ id: 'upload.ConfigPage.title' }}
             />
             <HeaderNav links={this.generateLinks()} />
             <EditForm
@@ -168,19 +180,26 @@ function mapDispatchToProps(dispatch) {
       setErrors,
       submit,
     },
-    dispatch,
+    dispatch
   );
 }
 
 const mapStateToProps = selectConfigPage();
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 
-const withReducer = strapi.injectReducer({ key: 'configPage', reducer, pluginId });
+const withReducer = strapi.injectReducer({
+  key: 'configPage',
+  reducer,
+  pluginId,
+});
 const withSaga = strapi.injectSaga({ key: 'configPage', saga, pluginId });
 
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(ConfigPage);

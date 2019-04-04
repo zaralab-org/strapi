@@ -2,7 +2,7 @@
  *
  * AddFilterCTA
  *
- */ 
+ */
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -23,14 +23,24 @@ class AddFilterCTA extends React.Component {
     const { id, onClick, showHideText } = this.props;
     const { imgLoaded } = this.state;
     const textId = showHideText ? 'hide' : 'add';
-    
+
     return (
       <Button type="button" onClick={onClick} marginTop id={id}>
         <div className={styles.ctaWrapper}>
-          {!imgLoaded && <div className={styles.spinner}><div /></div>}
-          <img src={Logo} onLoad={this.handleImgLoaded} alt="filter_logo" className={styles.imgCta} />
-          <FormattedMessage id={`content-manager.components.AddFilterCTA.${textId}`} /> 
-
+          {!imgLoaded && (
+            <div className={styles.spinner}>
+              <div />
+            </div>
+          )}
+          <img
+            src={Logo}
+            onLoad={this.handleImgLoaded}
+            alt="filter_logo"
+            className={styles.imgCta}
+          />
+          <FormattedMessage
+            id={`content-manager.components.AddFilterCTA.${textId}`}
+          />
         </div>
       </Button>
     );

@@ -16,10 +16,14 @@ const base = require('./webpack.base.babel');
 const isAdmin = process.env.IS_ADMIN === 'true';
 // const isSetup = path.resolve(process.env.PWD, '..', '..') === path.resolve(process.env.INIT_CWD);
 const isSetup = process.env.IS_MONOREPO || false;
-const appPath = process.env.APP_PATH || path.resolve(process.env.PWD || process.cwd(), '..', isAdmin ? '' : '..');
+const appPath =
+  process.env.APP_PATH ||
+  path.resolve(process.env.PWD || process.cwd(), '..', isAdmin ? '' : '..');
 const adminPath = (() => {
   if (isSetup) {
-    return isAdmin ? path.resolve(appPath, 'strapi-admin') : path.resolve(process.env.PWD || process.cwd(), '..');
+    return isAdmin
+      ? path.resolve(appPath, 'strapi-admin')
+      : path.resolve(process.env.PWD || process.cwd(), '..');
   }
 
   return path.resolve(appPath, 'admin');
@@ -36,7 +40,13 @@ const rootAdminpath = (() => {
 
 const plugins = [
   new webpack.DllReferencePlugin({
-    manifest: require(path.resolve(rootAdminpath, 'admin', 'src', 'config', 'manifest.json')),
+    manifest: require(path.resolve(
+      rootAdminpath,
+      'admin',
+      'src',
+      'config',
+      'manifest.json'
+    )),
   }),
   // Minify and optimize the JavaScript
   new webpack.optimize.UglifyJsPlugin({
@@ -65,7 +75,7 @@ if (isAdmin && !isSetup) {
     'config',
     'environments',
     _.lowerCase(process.env.NODE_ENV),
-    'server.json',
+    'server.json'
   );
 
   try {
@@ -73,7 +83,8 @@ if (isAdmin && !isSetup) {
 
     if ((process.env.PWD || process.cwd()).indexOf('/admin') !== -1) {
       if (_.get(server, 'admin.build.host')) {
-        publicPath = _.get(server, 'admin.build.host', '/admin').replace(/\/$/, '') || '/';
+        publicPath =
+          _.get(server, 'admin.build.host', '/admin').replace(/\/$/, '') || '/';
       } else {
         publicPath = _.get(server, 'admin.path', '/admin');
       }
@@ -103,12 +114,12 @@ if (isAdmin) {
       chunksSortMode: 'manual',
       chunks: ['main'],
       inject: true,
-    }),
+    })
   );
   plugins.push(
     new AddAssetHtmlPlugin({
       filepath: path.resolve(__dirname, 'dist/*.dll.js'),
-    }),
+    })
   );
   plugins.push(
     new CopyWebpackPlugin([
@@ -117,7 +128,7 @@ if (isAdmin) {
         context: path.resolve(adminPath, 'admin', 'src'),
         to: 'config/plugins.json',
       },
-    ]),
+    ])
   );
 }
 
@@ -128,7 +139,14 @@ const main = (() => {
     return path.join(appPath, 'admin', 'admin', 'src', 'app.js');
   }
 
-  return path.join(process.env.PWD || process.cwd(), 'node_modules', 'strapi-helper-plugin', 'lib', 'src', 'app.js');
+  return path.join(
+    process.env.PWD || process.cwd(),
+    'node_modules',
+    'strapi-helper-plugin',
+    'lib',
+    'src',
+    'app.js'
+  );
 })();
 
 module.exports = base({
@@ -144,7 +162,7 @@ module.exports = base({
       chunkFilename: '[name].[chunkhash].chunk.js',
       publicPath,
     },
-    _.isUndefined,
+    _.isUndefined
   ),
 
   // In production, we minify our CSS with cssnano
@@ -182,70 +200,70 @@ module.exports = base({
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'babel-polyfill',
+      'babel-polyfill'
     ),
     lodash: path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'lodash',
+      'lodash'
     ),
     immutable: path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'immutable',
+      'immutable'
     ),
     'react-intl': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-intl',
+      'react-intl'
     ),
     react: path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react',
+      'react'
     ),
     'react-dom': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-dom',
+      'react-dom'
     ),
     'react-transition-group': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-transition-group',
+      'react-transition-group'
     ),
     'react-copy-to-clipboard': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'react-copy-to-clipboard',
+      'react-copy-to-clipboard'
     ),
     reactstrap: path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'reactstrap',
+      'reactstrap'
     ),
     'styled-components': path.resolve(
       rootAdminpath,
       'node_modules',
       'strapi-helper-plugin',
       'node_modules',
-      'styled-components',
+      'styled-components'
     ),
   },
 

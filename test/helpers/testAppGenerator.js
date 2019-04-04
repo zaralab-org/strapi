@@ -2,7 +2,10 @@ const path = require('path');
 const rimraf = require('rimraf');
 const execa = require('execa');
 
-const STRAPI_BIN = path.resolve(__dirname, '../../packages/strapi/bin/strapi.js');
+const STRAPI_BIN = path.resolve(
+  __dirname,
+  '../../packages/strapi/bin/strapi.js'
+);
 
 /**
  * Delete the testApp folder

@@ -18,21 +18,20 @@ const { cli, logger } = require('strapi-utils');
 // Local Strapi dependencies.
 const packageJSON = require('../package.json');
 
-
 /**
  * `$ strapi generate`
  *
  * Scaffolding for the application in our working directory.
  */
 
-module.exports = function (id, cliArguments) {
+module.exports = function(id, cliArguments) {
   // Build initial scope.
   const scope = {
     rootPath: process.cwd(),
     strapiRoot: path.resolve(__dirname, '..'),
     id: id,
     args: cliArguments,
-    strapiPackageJSON: packageJSON
+    strapiPackageJSON: packageJSON,
   };
 
   // Register the generator type.
@@ -40,9 +39,15 @@ module.exports = function (id, cliArguments) {
   scope.generatorType = process.argv[2].split(':')[1];
 
   // Check that we're in a valid Strapi project.
-  if (scope.generatorType !== 'new' || scope.generatorType !== 'generator' || scope.generatorType !== 'hook') {
+  if (
+    scope.generatorType !== 'new' ||
+    scope.generatorType !== 'generator' ||
+    scope.generatorType !== 'hook'
+  ) {
     if (!cli.isStrapiApp()) {
-      return logger.error('This command can only be used inside a Strapi project.');
+      return logger.error(
+        'This command can only be used inside a Strapi project.'
+      );
     }
   }
 
@@ -53,7 +58,6 @@ module.exports = function (id, cliArguments) {
 
   // Return the scope and the response (`error` or `success`).
   return generate(scope, {
-
     // Log and exit the REPL in case there is an error
     // while we were trying to generate the requested generator.
     error: function returnError(msg) {
@@ -69,10 +73,18 @@ module.exports = function (id, cliArguments) {
       }
 
       if (scope.generatorType !== 'new') {
-        logger.info('Generated a new ' + scope.generatorType + ' `' + scope.humanizeId + '` at ' + scope.humanizedPath + '.'); // eslint-disable-line prefer-template
+        logger.info(
+          'Generated a new ' +
+            scope.generatorType +
+            ' `' +
+            scope.humanizeId +
+            '` at ' +
+            scope.humanizedPath +
+            '.'
+        ); // eslint-disable-line prefer-template
       }
 
       process.exit(0);
-    }
+    },
   });
 };

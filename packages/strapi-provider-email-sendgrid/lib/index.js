@@ -17,19 +17,18 @@ module.exports = {
   auth: {
     sendgrid_default_from: {
       label: 'Sendgrid Default From',
-      type: 'text'
+      type: 'text',
     },
     sendgrid_default_replyto: {
       label: 'Sendgrid Default Reply-To',
-      type: 'text'
+      type: 'text',
     },
     sendgrid_api_key: {
       label: 'Sendgrid API Key',
-      type: 'text'
-    }
+      type: 'text',
+    },
   },
-  init: (config) => {
-
+  init: config => {
     sendgrid.setApiKey(config.sendgrid_api_key);
 
     return {
@@ -48,10 +47,10 @@ module.exports = {
             reply_to: options.replyTo,
             subject: options.subject,
             text: options.text,
-            html: options.html
+            html: options.html,
           };
 
-          sendgrid.send(msg, function (err) {
+          sendgrid.send(msg, function(err) {
             if (err) {
               reject([{ messages: [{ id: 'Auth.form.error.email.invalid' }] }]);
             } else {
@@ -59,7 +58,7 @@ module.exports = {
             }
           });
         });
-      }
+      },
     };
-  }
+  },
 };

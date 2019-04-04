@@ -25,7 +25,9 @@ import {
 export function* editContentType(action) {
   try {
     const initialContentType = yield select(makeSelectInitialDataEdit());
-    const requestUrl = `/content-type-builder/models/${initialContentType.name}`;
+    const requestUrl = `/content-type-builder/models/${
+      initialContentType.name
+    }`;
     const body = yield select(makeSelectModifiedDataEdit());
     const opts = {
       method: 'PUT',
@@ -34,8 +36,16 @@ export function* editContentType(action) {
 
     yield put(setButtonLoading());
 
-    const leftMenuContentTypes = get(action.context.plugins.toJS(), ['content-manager', 'leftMenuSections']);
-    const leftMenuContentTypesIndex = !isEmpty(leftMenuContentTypes) ? findIndex(get(leftMenuContentTypes[0], 'links'), ['destination', initialContentType.name.toLowerCase()]) : -1;
+    const leftMenuContentTypes = get(action.context.plugins.toJS(), [
+      'content-manager',
+      'leftMenuSections',
+    ]);
+    const leftMenuContentTypesIndex = !isEmpty(leftMenuContentTypes)
+      ? findIndex(get(leftMenuContentTypes[0], 'links'), [
+          'destination',
+          initialContentType.name.toLowerCase(),
+        ])
+      : -1;
     const response = yield call(request, requestUrl, opts, true);
 
     if (response.ok) {
@@ -52,14 +62,29 @@ export function* editContentType(action) {
           label: capitalize(pluralize(name)),
         };
 
-        leftMenuContentTypes[0].links.splice(leftMenuContentTypesIndex, 1, updatedSectionLink);
-        leftMenuContentTypes[0].links = sortBy(leftMenuContentTypes[0].links, 'label');
-        action.context.updatePlugin('content-manager', 'leftMenuSections', leftMenuContentTypes);
+        leftMenuContentTypes[0].links.splice(
+          leftMenuContentTypesIndex,
+          1,
+          updatedSectionLink
+        );
+        leftMenuContentTypes[0].links = sortBy(
+          leftMenuContentTypes[0].links,
+          'label'
+        );
+        action.context.updatePlugin(
+          'content-manager',
+          'leftMenuSections',
+          leftMenuContentTypes
+        );
       }
-      strapi.notification.success('content-type-builder.notification.success.message.contentType.edit');
+      strapi.notification.success(
+        'content-type-builder.notification.success.message.contentType.edit'
+      );
     }
-  } catch(error) {
-    strapi.notification.error(get(error, ['response', 'payload', 'message'], 'notification.error'));
+  } catch (error) {
+    strapi.notification.error(
+      get(error, ['response', 'payload', 'message'], 'notification.error')
+    );
   }
 }
 
@@ -69,15 +94,18 @@ export function* fetchConnections() {
     const data = yield call(request, requestUrl, { method: 'GET' });
 
     yield put(connectionsFetchSucceeded(data));
-
-  } catch(error) {
-    strapi.notification.error('content-type-builder.notification.error.message');
+  } catch (error) {
+    strapi.notification.error(
+      'content-type-builder.notification.error.message'
+    );
   }
 }
 
 export function* fetchContentType(action) {
   try {
-    const requestUrl = `/content-type-builder/models/${action.contentTypeName.split('&source=')[0]}`;
+    const requestUrl = `/content-type-builder/models/${
+      action.contentTypeName.split('&source=')[0]
+    }`;
     const params = {};
     const source = action.contentTypeName.split('&source=')[1];
 
@@ -88,9 +116,10 @@ export function* fetchContentType(action) {
     const data = yield call(request, requestUrl, { method: 'GET', params });
 
     yield put(contentTypeFetchSucceeded(data));
-
-  } catch(error) {
-    strapi.notification.error('content-type-builder.notification.error.message');
+  } catch (error) {
+    strapi.notification.error(
+      'content-type-builder.notification.error.message'
+    );
   }
 }
 

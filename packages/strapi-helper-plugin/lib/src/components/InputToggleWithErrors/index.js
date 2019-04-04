@@ -18,7 +18,7 @@ import InputSpacer from '../InputSpacer';
 import styles from './styles.scss';
 
 class InputToggleWithErrors extends React.Component {
-  state = { errors: [] }
+  state = { errors: [] };
   componentDidMount() {
     const { errors } = this.props;
 
@@ -73,7 +73,7 @@ class InputToggleWithErrors extends React.Component {
         className={cn(
           styles.containerToggleErrors,
           customBootstrapClass,
-          !isEmpty(className) && className,
+          !isEmpty(className) && className
         )}
         style={style}
       >
@@ -104,7 +104,7 @@ class InputToggleWithErrors extends React.Component {
         />
         <InputErrors
           className={errorsClassName}
-          errors={!noErrorsDescription && this.state.errors || []}
+          errors={(!noErrorsDescription && this.state.errors) || []}
           name={name}
           style={errorsStyle}
         />

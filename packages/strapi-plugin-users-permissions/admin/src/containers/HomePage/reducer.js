@@ -48,10 +48,12 @@ function homePageReducer(state = initialState, action) {
         .set('deleteEndPoint', action.deleteEndPoint);
     case DELETE_DATA_SUCCEEDED:
       return state
-        .updateIn(['data', state.get('endPoint')], list => list.splice(action.indexDataToDelete, 1))
+        .updateIn(['data', state.get('endPoint')], list =>
+          list.splice(action.indexDataToDelete, 1)
+        )
         .set('deleteEndPoint', '')
         .set('dataToDelete', Map({}))
-        .update('didDeleteData', (v) => !v);
+        .update('didDeleteData', v => !v);
     case FETCH_DATA:
       return state
         .update('endPoint', () => action.endPoint)
@@ -59,12 +61,17 @@ function homePageReducer(state = initialState, action) {
     case FETCH_DATA_SUCCEEDED:
       return state
         .updateIn(['data', state.get('endPoint')], () => List(action.data))
-        .updateIn(['initialData', state.get('endPoint')], () => action.modifiedData)
+        .updateIn(
+          ['initialData', state.get('endPoint')],
+          () => action.modifiedData
+        )
         .update('isLoading', () => false)
-        .updateIn(['modifiedData', state.get('endPoint')], () => action.modifiedData);
+        .updateIn(
+          ['modifiedData', state.get('endPoint')],
+          () => action.modifiedData
+        );
     case ON_CHANGE:
-      return state
-        .updateIn(action.keys, () => action.value);
+      return state.updateIn(action.keys, () => action.value);
     case RESET_PROPS:
       return initialState
         .update('data', () => state.get('data'))
@@ -80,7 +87,7 @@ function homePageReducer(state = initialState, action) {
         .updateIn(['modifiedData', state.get('endPoint')], () => action.form);
     case SET_FORM_ERRORS:
       return state
-        .update('didCheckErrors', (v) => v = !v)
+        .update('didCheckErrors', v => (v = !v))
         .set('formErrors', List(action.formErrors));
     case SUBMIT_SUCCEEDED:
       return state

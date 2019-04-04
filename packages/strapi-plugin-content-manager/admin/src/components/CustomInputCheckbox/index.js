@@ -9,7 +9,13 @@ import cn from 'classnames';
 
 import styles from './styles.scss';
 
-function CustomInputCheckbox({ entriesToDelete, isAll, name, onChange, value }) {
+function CustomInputCheckbox({
+  entriesToDelete,
+  isAll,
+  name,
+  onChange,
+  value,
+}) {
   return (
     <span className={cn('form-check', styles.customSpan)}>
       <label
@@ -17,9 +23,12 @@ function CustomInputCheckbox({ entriesToDelete, isAll, name, onChange, value }) 
           'form-check-label',
           styles.customLabel,
           isAll ? styles.customLabelHeader : styles.customLabelRow,
-          isAll && entriesToDelete.length > 0 && !value && styles.customLabelUnCheckedHeader,
+          isAll &&
+            entriesToDelete.length > 0 &&
+            !value &&
+            styles.customLabelUnCheckedHeader,
           value && isAll && styles.customLabelCheckedHeader,
-          value && !isAll && styles.customLabelCheckedRow,
+          value && !isAll && styles.customLabelCheckedRow
         )}
         htmlFor={name}
       >
@@ -46,10 +55,7 @@ CustomInputCheckbox.defaultProps = {
 CustomInputCheckbox.propTypes = {
   entriesToDelete: PropTypes.array,
   isAll: PropTypes.bool,
-  name: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  name: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
   value: PropTypes.bool,
 };

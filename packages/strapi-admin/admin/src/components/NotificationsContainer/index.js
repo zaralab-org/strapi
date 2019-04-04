@@ -1,8 +1,8 @@
 /**
-*
-* NotificationsContainer
-*
-*/
+ *
+ * NotificationsContainer
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -12,10 +12,11 @@ import Notification from '../Notification';
 
 import styles from './styles.scss';
 
-class NotificationsContainer extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class NotificationsContainer extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   render() {
     if (this.props.notifications.length === 0) {
-      return (false);
+      return false;
     }
 
     const notifications = this.props.notifications.map((notification, i) => (
@@ -54,10 +55,7 @@ NotificationsContainer.defaultProps = {
 };
 
 NotificationsContainer.propTypes = {
-  notifications: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array,
-  ]),
+  notifications: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onHideNotification: PropTypes.func.isRequired,
 };
 

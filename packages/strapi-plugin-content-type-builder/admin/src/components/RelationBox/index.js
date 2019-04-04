@@ -10,7 +10,12 @@ import { FormattedMessage } from 'react-intl';
 import { get, isEmpty, map, startCase } from 'lodash';
 import pluralize from 'pluralize';
 
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
 import Input from 'components/InputsIndex';
 import styles from './styles.scss';
 
@@ -28,16 +33,18 @@ class RelationBox extends React.Component {
 
   getPlaceholder = () => {
     switch (true) {
-      case this.props.relationType === 'oneToMany' && this.props.isFirstContentType:
+      case this.props.relationType === 'oneToMany' &&
+        this.props.isFirstContentType:
         return pluralize(this.props.contentTypeTargetPlaceholder);
-      case this.props.relationType === 'manyToOne' && !this.props.isFirstContentType:
+      case this.props.relationType === 'manyToOne' &&
+        !this.props.isFirstContentType:
         return pluralize(this.props.contentTypeTargetPlaceholder);
       case this.props.relationType === 'manyToMany':
         return pluralize(this.props.contentTypeTargetPlaceholder);
       default:
         return this.props.contentTypeTargetPlaceholder;
     }
-  }
+  };
 
   toggle = () => this.setState({ showMenu: !this.state.showMenu });
 
@@ -51,7 +58,9 @@ class RelationBox extends React.Component {
         <DropdownToggle caret />
         <DropdownMenu className={styles.dropDownContent}>
           {map(this.props.dropDownItems, (value, key) => {
-            const id = value.source ? `${value.name}.${value.source}` : `${value.name}. `;
+            const id = value.source
+              ? `${value.name}.${value.source}`
+              : `${value.name}. `;
             let divStyle;
 
             if (
@@ -73,7 +82,11 @@ class RelationBox extends React.Component {
               <div style={{ height: '3.6rem' }} key={key}>
                 <DropdownItem onClick={this.props.onClick} id={id}>
                   <div style={divStyle} id={`${value.name}.${value.source}`}>
-                    <i className={`fa ${value.icon}`} style={divStyle} id={id} />
+                    <i
+                      className={`fa ${value.icon}`}
+                      style={divStyle}
+                      id={id}
+                    />
                     {value.name}&nbsp;
                     {value.source && (
                       <FormattedMessage id="content-type-builder.from">
@@ -101,7 +114,9 @@ class RelationBox extends React.Component {
           <i className={`fa ${get(this.props.header, 'icon')}`} />
           {startCase(get(this.props.header, 'name'))}&nbsp;
           <span style={{ fontStyle: 'italic', fontWeight: '500' }}>
-            {get(this.props.header, 'source') ? `(${get(this.props.header, 'source')})` : ''}
+            {get(this.props.header, 'source')
+              ? `(${get(this.props.header, 'source')})`
+              : ''}
           </span>
           {!isEmpty(this.props.dropDownItems) && this.renderDropdownMenu()}
         </div>
@@ -111,7 +126,10 @@ class RelationBox extends React.Component {
               <div className={`row ${styles.input}`}>
                 {!isEmpty(this.props.input) && (
                   <Input
-                    disabled={this.props.relationType === 'oneWay' && this.props.tabIndex === '2'}
+                    disabled={
+                      this.props.relationType === 'oneWay' &&
+                      this.props.tabIndex === '2'
+                    }
                     tabIndex={this.props.tabIndex}
                     type={get(this.props.input, 'type')}
                     onChange={this.props.onChange}

@@ -7,7 +7,11 @@ const _ = require('lodash');
 
 module.exports = async function() {
   // The regex removes possible slashes from the beginning and end of the value
-  const folder = _.get(strapi.config.currentEnvironment.server, 'admin.path', 'admin').replace(/^\/|\/$/g, '');
+  const folder = _.get(
+    strapi.config.currentEnvironment.server,
+    'admin.path',
+    'admin'
+  ).replace(/^\/|\/$/g, '');
 
   const configuratePlugin = (acc, current, source, name) => {
     switch (source) {
@@ -15,13 +19,22 @@ module.exports = async function() {
         let host;
 
         try {
-          host = _.get(this.config.environments[current].server, 'admin.build.host').replace(/\/$/, '') || '/';
-
+          host =
+            _.get(
+              this.config.environments[current].server,
+              'admin.build.host'
+            ).replace(/\/$/, '') || '/';
         } catch (e) {
-          throw new Error("You can't use `remote` as a source without set the `host` configuration.");
+          throw new Error(
+            "You can't use `remote` as a source without set the `host` configuration."
+          );
         }
 
-        const folder = _.get(this.config.environments[current].server, 'admin.build.plugins.folder', null);
+        const folder = _.get(
+          this.config.environments[current].server,
+          'admin.build.plugins.folder',
+          null
+        );
 
         if (_.isString(folder)) {
           const cleanFolder = folder[0] === '/' ? folder.substring(1) : folder;
@@ -33,7 +46,9 @@ module.exports = async function() {
       }
 
       case 'custom':
-        if (!_.isEmpty(_.get(this.plugins[name].config, `sources.${current}`, {}))) {
+        if (
+          !_.isEmpty(_.get(this.plugins[name].config, `sources.${current}`, {}))
+        ) {
           return (acc[current] = this.plugins[name].config.sources[current]);
         }
 
@@ -47,7 +62,7 @@ module.exports = async function() {
           'server.admin.build.backend',
           `http://${this.config.environments[current].server.host}:${
             this.config.environments[current].server.port
-          }`,
+          }`
         ).replace(/\/$/, '');
 
         return `${backend}/${folder.replace(/\/$/, '')}/${name}/main.js`;
@@ -60,30 +75,46 @@ module.exports = async function() {
 
   const sourcePath =
     this.config.environment !== 'test'
-      ? path.resolve(this.config.appPath, 'admin', 'admin', 'src', 'config', 'plugins.json')
+      ? path.resolve(
+          this.config.appPath,
+          'admin',
+          'admin',
+          'src',
+          'config',
+          'plugins.json'
+        )
       : path.resolve(
-        this.config.appPath,
-        'packages',
-        'strapi-admin',
-        'admin',
-        'src',
-        'config',
-        'plugins.json',
-      );
+          this.config.appPath,
+          'packages',
+          'strapi-admin',
+          'admin',
+          'src',
+          'config',
+          'plugins.json'
+        );
   const buildPath =
     this.config.environment !== 'test'
-      ? path.resolve(this.config.appPath, 'admin', 'admin', 'build', 'config', 'plugins.json')
+      ? path.resolve(
+          this.config.appPath,
+          'admin',
+          'admin',
+          'build',
+          'config',
+          'plugins.json'
+        )
       : path.resolve(
-        this.config.appPath,
-        'packages',
-        'strapi-admin',
-        'admin',
-        'build',
-        'config',
-        'plugins.json',
-      );
+          this.config.appPath,
+          'packages',
+          'strapi-admin',
+          'admin',
+          'build',
+          'config',
+          'plugins.json'
+        );
 
-  const isAdmin = await fs.pathExists(path.resolve(this.config.appPath, 'admin', 'admin'));
+  const isAdmin = await fs.pathExists(
+    path.resolve(this.config.appPath, 'admin', 'admin')
+  );
   if (!isAdmin) {
     return;
   }
@@ -91,8 +122,13 @@ module.exports = async function() {
   const existBuildPath = await fs.pathExists(buildPath);
   if (strapi.config.currentEnvironment.server.production && existBuildPath) {
     return;
-  } else if (strapi.config.currentEnvironment.server.production && !existBuildPath) {
-    console.log('The plugins.json file is missing and the front-end cannot work without it. Please, create it first at development environment.');
+  } else if (
+    strapi.config.currentEnvironment.server.production &&
+    !existBuildPath
+  ) {
+    console.log(
+      'The plugins.json file is missing and the front-end cannot work without it. Please, create it first at development environment.'
+    );
   }
 
   // arrange system directories
@@ -115,9 +151,19 @@ module.exports = async function() {
   // Don't inject the plugins without an Admin
   const existingPlugins = Object.keys(this.plugins).filter(plugin => {
     try {
-      fs.accessSync(path.resolve(this.config.appPath, 'plugins', plugin, 'admin', 'src', 'containers', 'App'));
+      fs.accessSync(
+        path.resolve(
+          this.config.appPath,
+          'plugins',
+          plugin,
+          'admin',
+          'src',
+          'containers',
+          'App'
+        )
+      );
       return true;
-    } catch(err) {
+    } catch (err) {
       return false;
     }
   });
@@ -125,7 +171,11 @@ module.exports = async function() {
   const existingPluginsInfo = existingPlugins.map(id => ({
     id,
     source: Object.keys(this.config.environments).reduce((acc, current) => {
-      const source = _.get(this.config.environments[current].server, 'admin.build.plugins.source', 'default');
+      const source = _.get(
+        this.config.environments[current].server,
+        'admin.build.plugins.source',
+        'default'
+      );
 
       if (_.isString(source)) {
         acc[current] = configuratePlugin(acc, current, source, id);

@@ -14,11 +14,10 @@ import PropTypes from 'prop-types';
 
 import NotFound from 'components/NotFound';
 
-export default class NotFoundPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class NotFoundPage extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   render() {
-    return (
-      <NotFound {...this.props} />
-    );
+    return <NotFound {...this.props} />;
   }
 }
 

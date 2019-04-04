@@ -1,8 +1,8 @@
 /*
-*
-* Form actions
-*
-*/
+ *
+ * Form actions
+ *
+ */
 
 /* eslint-disable new-cap */
 
@@ -60,7 +60,10 @@ export function connectionsFetch() {
 }
 
 export function connectionsFetchSucceeded(data) {
-  const connections = map(data.connections, (connection) => ({ name: connection, value: connection }));
+  const connections = map(data.connections, connection => ({
+    name: connection,
+    value: connection,
+  }));
   return {
     type: CONNECTIONS_FETCH_SUCCEEDED,
     connections,
@@ -74,7 +77,8 @@ export function contentTypeActionSucceeded() {
 }
 
 export function contentTypeCreate(newModel) {
-  const shouldSetUpdatedContentTypeProp = storeData.getIsModelTemporary() || false;
+  const shouldSetUpdatedContentTypeProp =
+    storeData.getIsModelTemporary() || false;
   storeData.setContentType(newModel);
 
   return {
@@ -144,7 +148,7 @@ export function setAttributeForm(hash) {
     params: Map({
       columnName: '',
       target: '',
-      targetColumnName: "",
+      targetColumnName: '',
       key: '',
       nature: 'oneToOne',
       required: false,
@@ -152,8 +156,13 @@ export function setAttributeForm(hash) {
       dominant: false,
     }),
   });
-  const attribute = includes(hash, 'attributerelation') ? attributeRelation : data.attribute;
-  const formValidations = concat(getValidationsFromForm(data.form, []), { name: 'name', validations: { required: true } });
+  const attribute = includes(hash, 'attributerelation')
+    ? attributeRelation
+    : data.attribute;
+  const formValidations = concat(getValidationsFromForm(data.form, []), {
+    name: 'name',
+    validations: { required: true },
+  });
 
   return {
     type: SET_ATTRIBUTE_FORM,
@@ -190,7 +199,10 @@ export function setButtonLoading() {
 export function setForm(hash) {
   const form = forms[hash.split('::')[1]][hash.split('::')[2]];
   const data = getDataFromForm(forms[hash.split('::')[1]]);
-  const formValidations = getValidationsFromForm(forms[hash.split('::')[1]], []);
+  const formValidations = getValidationsFromForm(
+    forms[hash.split('::')[1]],
+    []
+  );
 
   return {
     type: SET_FORM,
@@ -199,7 +211,6 @@ export function setForm(hash) {
     formValidations,
   };
 }
-
 
 export function setFormErrors(formErrors) {
   return {
@@ -215,16 +226,16 @@ export function unsetButtonLoading() {
 }
 
 /**
-*
-* @param  {object} form
-* @return {object} data : An object { name: value }
-*/
+ *
+ * @param  {object} form
+ * @return {object} data : An object { name: value }
+ */
 
 function getDataFromForm(form) {
   const dataArray = [['attributes', List()]];
 
-  forEach(form, (formSection) => {
-    map(formSection.items, (item) => dataArray.push([item.name, item.value]));
+  forEach(form, formSection => {
+    map(formSection.items, item => dataArray.push([item.name, item.value]));
   });
 
   const data = Map(dataArray);
