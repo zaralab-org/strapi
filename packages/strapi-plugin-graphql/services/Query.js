@@ -266,7 +266,7 @@ module.exports = {
         });
 
         if (isController) {
-          const values = await resolver.call(null, ctx, null);
+          const values = await resolver.call(null, ctx, null, { populate: [] });
 
           if (ctx.body) {
             return ctx.body;
