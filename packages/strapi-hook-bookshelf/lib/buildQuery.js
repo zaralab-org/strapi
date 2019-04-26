@@ -83,7 +83,7 @@ const buildJoinsAndFilter = (qb, model, whereClauses) => {
       const joinTableAlias = generateAlias(assoc.tableCollectionName);
 
       qb.leftJoin(
-        `${originInfo.model.databaseName}.${assoc.tableCollectionName} AS ${joinTableAlias}`,
+        `${assoc.tableCollectionName} AS ${joinTableAlias}`,
         `${joinTableAlias}.${originInfo.model.info.name}_${
           originInfo.model.attributes[assoc.alias].column
         }`,
@@ -91,7 +91,7 @@ const buildJoinsAndFilter = (qb, model, whereClauses) => {
       );
 
       qb.leftJoin(
-        `${destinationInfo.model.databaseName}.${destinationInfo.model.collectionName} AS ${destinationInfo.alias}`,
+        `${destinationInfo.model.collectionName} AS ${destinationInfo.alias}`,
         `${joinTableAlias}.${destinationInfo.model.info.name}_${
           destinationInfo.model.primaryKey
         }`,
