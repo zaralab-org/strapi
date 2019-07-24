@@ -26,6 +26,7 @@ module.exports = function(strapi) {
     defaults: {
       port: 6379,
       host: 'localhost',
+      password: null,
       options: {
         db: 0
       },
@@ -64,6 +65,7 @@ module.exports = function(strapi) {
           const redis = new Redis(_.defaultsDeep({
             port: _.get(connection.settings, 'port'),
             host: _.get(connection.settings, 'host'),
+            password: _.get(connection.settings, 'password'),
             options: {
               db: _.get(connection.options, 'database') || 0
             }

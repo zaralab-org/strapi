@@ -5,7 +5,10 @@
   "strapi": {
     "name": "graphql",
     "icon": "plug",
-    "description": "Description of graphql plugin."
+    "description": "Description of graphql plugin.",
+    "dependencies": [
+      "strapi-hook-redis"
+    ]
   },
   "scripts": {
     "analyze:clean": "rimraf stats.json",
