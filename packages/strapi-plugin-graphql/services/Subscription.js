@@ -15,10 +15,10 @@ const Query = require('./Query.js');
 /* eslint-disable no-unused-vars */
 
 const options = {
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  password: process.env.REDIS_PASSWORD,
-  db: 1,
+  host: strapi.config.hook.settings.redis.host,
+  port:  strapi.config.hook.settings.redis.port,
+  password: strapi.config.hook.settings.redis.password,
+  db: strapi.config.hook.settings.redis.options.db,
   retry_strategy: options => {
     // reconnect after
     return Math.max(options.attempt * 100, 3000);

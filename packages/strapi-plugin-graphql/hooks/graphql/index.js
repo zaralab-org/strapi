@@ -185,15 +185,12 @@ module.exports = strapi => {
         };
 
         serverParams.introspection = true;
-      }
-      else if(['production', 'staging'].indexOf(process.env.NODE_ENV) >= 0 &&
-                process.env.REDIS_HOST){
-                  
+      } else if (['production', 'staging'].indexOf(process.env.NODE_ENV) >= 0) {
         serverParams.cache = new RedisCache({
-          host: process.env.REDIS_HOST,
-          port: process.env.REDIS_PORT,
-          password: process.env.REDIS_PASSWORD,
-          db: 1
+          host: strapi.config.hook.settings.redis.host,
+          port: strapi.config.hook.settings.redis.port,
+          password: strapi.config.hook.settings.redis.password,
+          db: strapi.config.hook.settings.redis.options.db
           // Options are passed through to the Redis client
         });
       }
